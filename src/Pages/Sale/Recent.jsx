@@ -40,7 +40,7 @@ const Recent = () => {
       <main className="border mt-7">
         <Table>
           <thead>
-            <tr>
+            <tr className="">
               <th>Customer</th>
               <th>Phone</th>
               <th>Voucher No.</th>
@@ -79,7 +79,7 @@ const Recent = () => {
       {/* total and tax */}
       <div>
         <p className="flex gap-3 pb-5">
-          <span>Total sale this month: </span>
+          <span>Total sale: </span>
           <span>{totals?.reduce((pv, cv) => pv + cv, 0).toFixed(2)} MMK</span>
         </p>
       </div>
