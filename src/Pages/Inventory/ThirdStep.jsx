@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addProductPhoto } from '../../Feature/Service/productSlice';
 const ThirdStep = ({toggleShow}) => {
 
-  const {user_photo} = useSelector(state => state.userSlice)
-  console.log(user_photo)
+  const {photo} = useSelector(state => state.productSlice)
+  console.log(photo)
   return (
     <div>
        <section className={`w-full bg-[#161618]`}>
@@ -17,7 +17,7 @@ const ThirdStep = ({toggleShow}) => {
           >
             <img
               className={`w-full h-full object-cover rounded-full`}
-              src={user_photo ? user_photo : `https://img.icons8.com/?size=512&id=108652&format=png`}
+              src={photo ? photo : `https://img.icons8.com/?size=512&id=108652&format=png`}
               alt=""
             />
             <div

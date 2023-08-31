@@ -64,8 +64,13 @@ const AddProduct = () => {
  const handleCreateProduct = async (e) => {
   e.preventDefault();
   const {data} = await createProduct({productData, token})
-  console.log(data)
-  data?.message == "Product adding successful" && nav('/adding-product')
+  console.log(data.message)
+ if(data.error){
+  console.log('error',error);
+ }else{
+  console.log(data?.message);
+  nav('/inventory-overview')
+ }
 };
   return (
     <>
