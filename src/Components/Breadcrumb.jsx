@@ -54,7 +54,7 @@ export default function Breadcrumb({
                 (editUser && nav("/user-overview"));
                 save && save()
             }}
-            className="bg-blue-400 text-[#f5f5f5] w-fit px-6 py-2 flex items-center gap-2 rounded font-semibold"
+            className="bg-[#8AB4F8] text-[#161618]  px-6 py-3 flex items-center gap-2 rounded font-semibold"
           >
             {icon && <BsPlus className="text-white text-2xl" />}
             {btnText}
