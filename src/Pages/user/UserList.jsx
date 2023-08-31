@@ -18,25 +18,7 @@ export default function UserList() {
   const users = data?.users.data;
   console.log(data);
 
-  const rows = users?.map((i, index) => (
-    <tr key={i.id}>
-      <td>{index + 1}</td>
-      <td>{i.name}</td>
-      <td>{i.role}</td>
-      <td>{i.email}</td>
-      <td className="flex gap-5">
-        <BsDash className="text-3xl hover:bg-gray-50 hover:text-gray-500 rounded-full bg-gray-500 text-gray-50 p-1.5 cursor-pointer transition-all duration-200 ease-in" />
-        <MdOutlineEdit
-          onClick={() => nav(`/edit-user/${i.id}`)}
-          className="text-3xl hover:bg-gray-50 hover:text-gray-500 rounded-full bg-gray-500 text-gray-50 p-1.5 cursor-pointer transition-all duration-200 ease-in"
-        />
-        <BsArrowRight
-          onClick={() => nav(`/user-detail/${i.id}`)}
-          className="text-3xl hover:bg-gray-50 hover:text-gray-500 rounded-full bg-gray-500 text-gray-50 p-1.5 cursor-pointer transition-all duration-200 ease-in"
-        />
-      </td>
-    </tr>
-  ));
+ 
 
   return (
     <>
@@ -55,28 +37,54 @@ export default function UserList() {
       <div>
         <ManageOverview tableType={"Staff Overview"} />
       </div>
-      <main className="border border-b-0 rounded mt-7">
-        <Table verticalSpacing={"md"} sx={{ color: "#F5F5F5" }}>
-          <TableHead
-            
+      <main className="border border-[#3f4245] rounded-sm mt-7">
+        <table className="w-full text-sm text-center text-[#f5f5f5]">
+          <thead className="text-xs text-[#f5f5f5] uppercase"
           >
-            <TableRow>
-              <TableCell>No.</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Position</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell></TableCell>
-            </TableRow>
-          </TableHead>
-          <tbody>{rows}</tbody>
-        </Table>
+            <tr className="border-b border-[#3f4245]">
+              <th className="px-6 py-4" >No.</th>
+              <th className="px-6 py-4" >Name</th>
+              <th className="px-6 py-4" >Position</th>
+              <th className="px-6 py-4" >Email</th>
+              <th className="px-6 py-4" ></th>
+            </tr>
+          </thead>
+          <tbody className="text-[#f5f5f5]">
+            {users?.map((i,index)=>{
+              return(
+                <tr key={i.id} className="border-b border-[#3f4245]">
+                <td className="px-6 py-3">{index + 1}</td>
+                <td className="px-6 py-3">{i.name}</td>
+                <td className="px-6 py-3">{i.role}</td>
+                <td className="px-6 py-3">{i.email}</td>
+                <td  className="flex gap-5 px-6 py-3">
+                  <BsDash className="text-3xl hover:bg-gray-50 hover:text-gray-500 rounded-full bg-gray-500 text-gray-50 p-1.5 cursor-pointer transition-all duration-200 ease-in" />
+                  <MdOutlineEdit
+                    onClick={() => nav(`/edit-user/${i.id}`)}
+                    className="text-3xl hover:bg-gray-50 hover:text-gray-500 rounded-full bg-gray-500 text-gray-50 p-1.5 cursor-pointer transition-all duration-200 ease-in"
+                  />
+                  <BsArrowRight
+                    onClick={() => nav(`/user-detail/${i.id}`)}
+                    className="text-3xl hover:bg-gray-50 hover:text-gray-500 rounded-full bg-gray-500 text-gray-50 p-1.5 cursor-pointer transition-all duration-200 ease-in"
+                  />
+                </td>
+              </tr>
+              )
+            })}
+          </tbody>
+        </table>
       </main>
       <div>
-        <Pagination
+
+      <div className="flex justify-end my-3 ">
+        
+        <div className=" py-5">Pagination</div>
+      </div>
+        {/* <Pagination
           setCurrentPage={setCurrentPage}
           currentPage={currentPage}
           last_page={data?.users.to}
-        />
+        /> */}
       </div>
     </>
   );

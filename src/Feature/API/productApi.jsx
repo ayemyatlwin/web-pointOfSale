@@ -13,6 +13,7 @@ export const productApi = createApi({
         headers: {
           authorization: `Bearer ${token}`,
         },
+       
       }),
       invalidatesTags: ["productApi"],
     }),
