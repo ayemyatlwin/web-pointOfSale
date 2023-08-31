@@ -22,10 +22,17 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import { PiCopyDuotone } from "react-icons/pi";
 import { IoMdAdd } from "react-icons/io";
 import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useGetProductInfoQuery } from "../../Feature/API/productApi";
+import Cookies from "js-cookie";
+import Pagination from "../../Components/Pagination";
 
 const InventoryOverview = () => {
   const nav = useNavigate();
-  
+  const token=Cookies.get('token');
+  const [currentPage, setCurrentPage] = useState(1);
+  const {data}=useGetProductInfoQuery({token,currentPage});
+  const productDetailedInfo=data?.data;
+  console.log(data?.meta.to);
   const [opened, { open, close }] = useDisclosure(false);
   const theme = useMantineTheme();
   const [displayState, setDisplayState] = useState(false);
@@ -203,15 +210,33 @@ const InventoryOverview = () => {
       ),
     },
   ];
-  const rows = elements.map((element) => (
-    <tr key={element.No}>
-      <td className=" text-white">{element.No}</td>
+  const rows = productDetailedInfo?.map((element) => (
+    <tr key={element.product_id}>
+      <td className=" text-white">{element.product_id}</td>
       <td className=" text-white">{element.name}</td>
-      <td className=" text-white">{element.account}</td>
-      <td className=" text-white">{element.date}</td>
-      <td className=" text-white">{element.time}</td>
-      <td className=" text-white">{element.filesize}</td>
-      <td className=" text-white">{element.action}</td>
+      <td className=" text-white">{element.brand_name}</td>
+      <td className=" text-white">{element.unit}</td>
+      <td className=" text-white">{element.sale_price}</td>
+   
+      <td className=" text-white">   <div className="  flex  ">
+          <Group>
+            <Button onClick={open}>
+              <IoMdAdd className=" cursor-pointer hover:text-blue-700" />
+            </Button>
+          </Group>
+          <Group position="center">
+            <Button>
+              {" "}
+              <AiFillEdit className="cursor-pointer hover:text-blue-700" />
+            </Button>
+          </Group>
+          <Group position="center">
+            <Button>
+              {" "}
+              <AiOutlineArrowRight className="cursor-pointer hover:text-blue-700" />
+            </Button>
+          </Group>
+        </div></td>
     </tr>
   ));
 
@@ -346,6 +371,14 @@ const InventoryOverview = () => {
             </thead>
             <tbody>{rows}</tbody>
           </Table>
+          <div>
+        <Pagination
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+          last_page={data?.meta.to}
+         
+        />
+      </div>
         </div>
         <div
           className={`${

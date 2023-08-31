@@ -17,7 +17,19 @@ export const productApi = createApi({
       }),
       invalidatesTags: ["productApi"],
     }),
+    getProductInfo: builder.query({
+      query: ({token,currentPage}) => ({
+        url:`/products?page=${currentPage}`,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+        
+      }),
+      providesTags:['productApi']
+
+    }),
+
   }),
 });
 
-export const { useCreateProductMutation } = productApi;
+export const { useCreateProductMutation ,useGetProductInfoQuery} = productApi;
