@@ -10,7 +10,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const [email, setEmail] = useState("tth123@gmail.com");
+  const [email, setEmail] = useState("tth@gmail.com");
   const [password, setPassword] = useState("11223344");
   const [login] = useLoginMutation();
   const nav = useNavigate();
@@ -66,8 +66,8 @@ const Login = () => {
     <div className="bg-[#161618] h-screen w-screen">
       <div className="flex flex-col items-center flex-1 h-full justify-center px-4 sm:px-0">
         <div
-          className="flex rounded-lg shadow-lg w-full sm:w-3/4 lg:w-1/2 bg-[#202124] sm:mx-0"
-          style={{ height: 500 }}
+          className="flex rounded-lg shadow-lg w-full  lg:w-2/3 bg-[#202124] sm:mx-0"
+          style={{ height: 550 }}
         >
           <div className="flex flex-col w-full md:w-1/2 p-4">
             <div className="flex flex-col flex-1 justify-center mb-8">
