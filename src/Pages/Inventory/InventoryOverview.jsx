@@ -32,7 +32,7 @@ const InventoryOverview = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const {data}=useGetProductInfoQuery({token,currentPage});
   const productDetailedInfo=data?.data;
-  console.log(data?.meta.to);
+  console.log(productDetailedInfo);
   const [opened, { open, close }] = useDisclosure(false);
   const theme = useMantineTheme();
   const [displayState, setDisplayState] = useState(false);
@@ -217,6 +217,7 @@ const InventoryOverview = () => {
       <td className=" text-white">{element.brand_name}</td>
       <td className=" text-white">{element.unit}</td>
       <td className=" text-white">{element.sale_price}</td>
+      <td className=" text-white">{element.actual_price}</td>
    
       <td className=" text-white">   <div className="  flex  ">
           <Group>
@@ -365,8 +366,8 @@ const InventoryOverview = () => {
                 <th className=" text-gray-300">BRAND</th>
                 <th className=" text-gray-300">UNIT</th>
                 <th className=" text-gray-300">SALE PRICE</th>
-                <th className=" text-gray-300">TOTAL STOCK</th>
-                <th className=" text-gray-300"></th>
+                <th className=" text-gray-300">ACTUAL PRICE</th>
+                <th className=" text-gray-300">ACTIONS</th>
               </tr>
             </thead>
             <tbody>{rows}</tbody>
@@ -385,20 +386,20 @@ const InventoryOverview = () => {
             displayState ? "flex" : "hidden"
           }   my-6 overflow-y-auto  flex-wrap  justify-center gap-10 items-center`}
         >
-          {images.map((i) => {
+          {productDetailedInfo.map((i) => {
             return (
-              <div key={i.id}>
+              <div key={i.product_id}>
                 <img
-                  src={i.link}
+                  src={i.photo}
                   className=" border  rounded-lg border-y-white block cursor-pointer  hover:opacity-80  w-[300px] h-[200px]"
                   alt=""
                 />
                 <div className="  border border-white opacity-50">
                   <p className=" mx-4 text-3xl font-bold tracking-wider  text-right">
-                    Abcd
+                   {i.name}
                   </p>
                   <p className=" mx-4 text-xl font-thin tracking-normal text-right">
-                    price
+                    {i.sale_price}
                   </p>
                 </div>
               </div>
