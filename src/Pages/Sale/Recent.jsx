@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import Breadcrumb from "../../Components/Breadcrumb";
-import ManageOverview from "../../Components/ManageOverview";
-import { Table } from "@mantine/core";
 import Pagination from "../../Components/Pagination";
 import { useRecordedVoucherQuery } from "../../Feature/API/saleApi";
 import Cookies from "js-cookie";
+import { Typography } from "@mui/material";
+import DropDownBtn from "../../Components/DropDownBtn";
+import {PiCalculatorDuotone} from "react-icons/pi"
 
 const Recent = () => {
   const token = Cookies.get("token");
@@ -34,9 +35,19 @@ const Recent = () => {
       </div>
       {/* path breadcrumbs */}
 
-      {/* sort filter tablename component */}
-      <ManageOverview tableType={"Sale Overview"} />
-      {/* sort filter tablename component */}
+      <div className="py-5 pb-3 ">
+        <div className=" flex justify-between">
+        <Typography sx={{ fontSize: "1.5rem" }} gutterBottom>
+        Today Sales Overview
+      </Typography>
+        <div className="flex gap-3">
+          <DropDownBtn/>
+          <button className="text-white border border-[#7E7F80]  font-medium rounded-lg text-sm px-5 text-center inline-flex items-center ">
+            < PiCalculatorDuotone className="text-[#8AB4F8] h-5 w-5 me-2"/>
+            Sales Close</button>
+        </div>
+        </div>
+      </div>
 
       <main className="border border-[#3f4245] rounded-sm mt-7">
         <table className="w-full text-sm text-center text-[#f5f5f5]" >
