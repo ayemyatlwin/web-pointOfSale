@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Table } from "@mantine/core";
 import { BsArrowRight, BsDash } from "react-icons/bs";
 import { MdOutlineEdit } from "react-icons/md";
 import Breadcrumb from "../../Components/Breadcrumb";
@@ -8,7 +7,6 @@ import Cookies from "js-cookie";
 import { useGetAllUsersQuery } from "../../Feature/API/userApi";
 import { useNavigate } from "react-router-dom";
 import ManageOverview from "../../Components/ManageOverview";
-import { TableCell, TableHead, TableRow } from "@mui/material";
 
 export default function UserList() {
   const token = Cookies.get("token");

@@ -5,9 +5,9 @@ const ManageOverview = ({tableType}) => {
   return (
     // Table name and sort filter Component
     <div className="py-2 mt-2 mb-1">
-      <Typography sx={{ fontSize: "1.3rem" }} gutterBottom>
+      <h2 className="tracking-wide text-[1.5rem] pb-3" >
         {tableType}
-      </Typography>
+      </h2>
       <div className="flex justify-between">
         <input
           id="exampleSearch2"

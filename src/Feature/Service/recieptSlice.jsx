@@ -7,6 +7,7 @@ const initialState = {
   initialChanged: null,
   tax: 0,
   listSelector: 1,
+  saleClose:false
 }; 
 
 const totalAmount = (reciept) => {
@@ -36,6 +37,7 @@ export const recieptSlice = createSlice({
       }
       state.totalPrice = totalAmount(state.reciept);
       state.tax = totalTax(state.reciept);
+      state.listSelector=payload.product_id
     },
     setListSelector: (state, { payload }) => {
       state.listSelector = payload;
@@ -86,6 +88,10 @@ export const recieptSlice = createSlice({
     clearList: (state) => {
       state.reciept = [];
     },
+    // sale close
+    setSaleClose:(state,{payload})=>{
+      state.saleClose=payload;
+    }
   },
 });
 export const {
@@ -95,5 +101,6 @@ export const {
   voucherUpdate,
   clearList,
   setListSelector,
+  setSaleClose
 } = recieptSlice.actions;
 export default recieptSlice.reducer;

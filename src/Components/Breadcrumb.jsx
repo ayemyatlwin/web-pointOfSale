@@ -22,9 +22,9 @@ export default function Breadcrumb({
     <div>
       <div className="flex justify-between py-2 mb-2">
         <div>
-          <Typography sx={{ fontSize: "1.5rem" }} gutterBottom>
+          <h2 className="tracking-wide text-[1.5rem]">
             {title}
-          </Typography>
+          </h2>
           <Breadcrumbs aria-label="breadcrumb" style={{}}>
             <Link
               sx={{ fontSize: "0.9rem" }}

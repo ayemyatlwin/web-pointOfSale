@@ -1,6 +1,5 @@
 import React from "react";
 import Calculator from "./Calculator";
-import { Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -29,9 +28,10 @@ const Reciept = () => {
         product_id: ele.product_id,
         quantity: Number(ele.quantity),
       };
-    }),
+    }), 
   };
   //console.log(newVoucherData);
+  // const newVoucherDataWithTime={...newVoucherData,timeStamp:new Date().toTimeString()}
 
   const navigate = useNavigate();
   // after voucher done click on the payment button to send data to Api
@@ -70,26 +70,25 @@ const Reciept = () => {
       <div className="flex flex-col h-full">
         {/* bought list Header */}
         <div className='h-[50%]  overflow-scroll overflow-x-hidden bg-[#161618]'>
-          <Typography
-            sx={{ fontSize: "1.5rem", paddingX: "10px" }}
-            gutterBottom
+          <h2
+          className="tracking-wide text-[1.5rem] px-3 py-2"
           >
             Reciept
-          </Typography>
+          </h2>
           {/* map data from SaleCard */}
           <div className="boughtList">
             {reciept?.map((item) => {
               return (
                 <Link
-                  onClick={(e) => listActiveUpdate(item?.product_id)}
+                  onClick={() => listActiveUpdate(item?.product_id)}
                   key={item?.product_id}
-                  className="mt-5  px-4 pt-2 mx-auto overflow-visible"
+                  className="  px-4  mx-auto overflow-visible"
                 >
-                  <div className="flex justify-between border-b mb-1 pb-2 border-gray-600">
+                  <div className={`${listSelector===item?.product_id && "bg-[#3f4245]"} flex justify-between  border-b  border-[#3f4245]`}>
                     <div className="flex flex-col">
                       <p
                         className={`${
-                          listSelector == item?.product_id && "text-blue-600"
+                          listSelector == item?.product_id && "text-[#f5f5f5]"
                         } font-semibold leading-loose tracking-wider text-[1rem] `}
                       >
                         {item?.name.slice(0, 7)}
