@@ -3,11 +3,17 @@ import { MdOutlineEdit } from "react-icons/md";
 import { TbMailOpenedFilled } from "react-icons/tb";
 import { FaPhoneVolume } from "react-icons/fa";
 import { BiSolidUser } from "react-icons/bi";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { Table } from '@mantine/core';
 import Pagination from '../../Components/Pagination';
+import { useGetSingleProductInfoQuery } from '../../Feature/API/productApi';
+import Cookies from 'js-cookie';
 
 const ProductDetail = () => {
+const {id}=useParams();
+const token=Cookies.get('token');
+const {data}=useGetSingleProductInfoQuery({id,token});
+console.log(data?.data);
     const editImage = document.querySelector(".file");
     const elements = [
         {
@@ -58,14 +64,14 @@ const ProductDetail = () => {
   return (
     <div className={`w-full flex justify-around items-center`}>
       <main className={`flex items-center mt-24`}>
-        <section className={`w-full h-[70%] p-1`}>
+        <section className={`w-full  p-1`}>
           <div className={`w-full relative p-8 bg-[#171717]`}>
             <div
               className={`w-40 h-40 absolute -top-16 rounded-full border p-1 flex justify-center items-center`}
             >
               <img
-                className={`w-full`}
-                src={`https://cdn-icons-png.flaticon.com/512/8787/8787106.png`}
+                className={`w-full h-full object-cover rounded-full`}
+                src={data?.data?.photo}
                 alt=""
               />
               <div
@@ -78,9 +84,17 @@ const ProductDetail = () => {
             </div>
             <div className={`flex items-center justify-between mx-10 ml-52`}>
               <div className={``}>
-                <h2>Watemelon</h2>
-                <p>Sale Price:10,000 mml</p>
-                <p>Actual Price:8,000 mml</p>
+                <h2>{data?.data?.name}</h2>
+                <div className=" my-4 block">
+                  <p className="inline">Sale Price:</p>{" "}
+                  <span className=" inline">{data?.data?.sale_price}</span>{" "}
+                  <p className=" inline">mmk</p>
+                </div>
+                <div className=" my-4 block">
+                  <p className="inline">Actual Price:</p>
+                  <span className="inline">{data?.data?.actual_price}</span>
+                  <p className=" inline">mmk</p>
+                </div>
               </div>
             </div>
           </div>
@@ -95,26 +109,26 @@ const ProductDetail = () => {
                 </div>
               </NavLink>
             </div>
-            <div className="px-10 py-5 flex flex-col gap-5 bg-[#1a1a1a]">
+            <div className=" w-[800px] px-10 py-5 flex flex-col gap-5 bg-[#1a1a1a]">
               <div className="flex">
                 <p className="w-[30%]">Name</p>
-                <p className="w-[70%]">: Watermelon</p>
+                <p className="w-[70%]">: {data?.data?.name}</p>
               </div>
               <div className="flex">
                 <p className="w-[30%]">Brand</p>
-                <p className="w-[70%]">: LV</p>
+                <p className="w-[70%]">: {data?.data?.brand_name}</p>
               </div>
               <div className="flex">
                 <p className="w-[30%]">Stock</p>
-                <p className="w-[70%]">: 100000</p>
+                <p className="w-[70%]">: {data?.data?.stock}</p>
               </div>
               <div className="flex">
                 <p className="w-[30%]">Unit</p>
-                <p className="w-[70%]">: S</p>
+                <p className="w-[70%]">: {data?.data?.unit}</p>
               </div>
-              <div className="flex">
-                <p className="w-[30%]">More info</p>
-                <p className="w-[70%]">: Fresh fruit </p>
+              <div className="flex ">
+                <p className="w-[30%] inline">More info</p>
+                <p className="w-[70%] inline ">: {data?.data?.more_information} </p>
               </div>
             </div>
           </div>

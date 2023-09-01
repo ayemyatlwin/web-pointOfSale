@@ -20,13 +20,15 @@ import {
 import { BsFillGridFill } from "react-icons/bs";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { PiCopyDuotone } from "react-icons/pi";
-import { IoMdAdd } from "react-icons/io";
+import { IoMdAdd, IoMdRemoveCircle, IoMdRemoveCircleOutline } from "react-icons/io";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { useGetProductInfoQuery } from "../../Feature/API/productApi";
+import { useDeleteProductsMutation, useGetProductInfoQuery } from "../../Feature/API/productApi";
 import Cookies from "js-cookie";
 import Pagination from "../../Components/Pagination";
 
+
 const InventoryOverview = () => {
+  const [delProduct]=useDeleteProductsMutation()
   const nav = useNavigate();
   const token=Cookies.get('token');
   const [currentPage, setCurrentPage] = useState(1);
@@ -37,179 +39,28 @@ const InventoryOverview = () => {
   const theme = useMantineTheme();
   const [displayState, setDisplayState] = useState(false);
   const [displayState2, setDisplayState2] = useState(false);
-  const images = [
-    {
-      id: 1,
-      link: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGljfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
-    },
-    {
-      id: 2,
-      link: "https://plus.unsplash.com/premium_photo-1666273190872-1ad5f89e39f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGljfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
-    },
-    {
-      id: 3,
-      link: "https://plus.unsplash.com/premium_photo-1661476072172-359e53eb83d0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8cGljfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
-    },
-    {
-      id: 4,
-      link: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGljfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
-    },
-    {
-      id: 5,
-      link: "https://plus.unsplash.com/premium_photo-1666273190872-1ad5f89e39f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGljfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
-    },
-    {
-      id: 6,
-      link: "https://plus.unsplash.com/premium_photo-1661476072172-359e53eb83d0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8cGljfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60",
-    },
-  ];
-  const elements = [
-    {
-      No: 1,
-      name: "abcd",
-      account: "ab",
-      date: "-",
-      time: "10,000",
-      filesize: "20",
-      action: (
-        <div className="  flex  ">
-          <Group>
-            <Button onClick={open}>
-              <IoMdAdd className=" cursor-pointer hover:text-blue-700" />
-            </Button>
-          </Group>
-          <Group position="center">
-            <Button>
-              {" "}
-              <AiFillEdit className="cursor-pointer hover:text-blue-700" />
-            </Button>
-          </Group>
-          <Group position="center">
-            <Button>
-              {" "}
-              <AiOutlineArrowRight className="cursor-pointer hover:text-blue-700" />
-            </Button>
-          </Group>
-        </div>
-      ),
-    },
-    {
-      No: 2,
-      name: "efgh",
-      account: "ef",
-      date: "-",
-      time: "10,000",
-      filesize: "20",
-      action: (
-        <div className="  flex  ">
-          <Group>
-            <Button onClick={open}>
-              <IoMdAdd className=" cursor-pointer hover:text-blue-700" />
-            </Button>
-          </Group>
-          <Group position="center">
-            <Button>
-              {" "}
-              <AiFillEdit className="cursor-pointer hover:text-blue-700" />
-            </Button>
-          </Group>
-          <Group position="center">
-            <Button>
-              {" "}
-              <AiOutlineArrowRight className="cursor-pointer hover:text-blue-700" />
-            </Button>
-          </Group>
-        </div>
-      ),
-    },
-    {
-      No: 3,
-      name: "ijkl",
-      account: "ij",
-      date: "-",
-      time: "10,000",
-      filesize: "20",
-      action: (
-        <div className="  flex  ">
-          <Group>
-            <Button onClick={open}>
-              <IoMdAdd className=" cursor-pointer hover:text-blue-700" />
-            </Button>
-          </Group>
-          <Group position="center">
-            <Button>
-              {" "}
-              <AiFillEdit className="cursor-pointer hover:text-blue-700" />
-            </Button>
-          </Group>
-          <Group position="center">
-            <Button>
-              {" "}
-              <AiOutlineArrowRight className="cursor-pointer hover:text-blue-700" />
-            </Button>
-          </Group>
-        </div>
-      ),
-    },
-    {
-      No: 4,
-      name: "mnop",
-      account: "mn",
-      date: "-",
-      time: "10,000",
-      filesize: "20",
-      action: (
-        <div className="  flex  ">
-          <Group>
-            <Button onClick={open}>
-              <IoMdAdd className=" cursor-pointer hover:text-blue-700" />
-            </Button>
-          </Group>
-          <Group position="center">
-            <Button>
-              {" "}
-              <AiFillEdit className="cursor-pointer hover:text-blue-700" />
-            </Button>
-          </Group>
-          <Group position="center">
-            <Button>
-              {" "}
-              <AiOutlineArrowRight className="cursor-pointer hover:text-blue-700" />
-            </Button>
-          </Group>
-        </div>
-      ),
-    },
-    {
-      No: 5,
-      name: "qrst",
-      account: "qr",
-      date: "-",
-      time: "10,000",
-      filesize: "20",
-      action: (
-        <div className="  flex  ">
-          <Group>
-            <Button onClick={open}>
-              <IoMdAdd className=" cursor-pointer hover:text-blue-700" />
-            </Button>
-          </Group>
-          <Group position="center">
-            <Button>
-              {" "}
-              <AiFillEdit className="cursor-pointer hover:text-blue-700" />
-            </Button>
-          </Group>
-          <Group position="center">
-            <Button>
-              {" "}
-              <AiOutlineArrowRight className="cursor-pointer hover:text-blue-700" />
-            </Button>
-          </Group>
-        </div>
-      ),
-    },
-  ];
+  const handleDelete = async (id, token) => {
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this product?"
+    );
+    if (isConfirmed) {
+      try {
+        // Call the deleteMedia mutation with the id of the picture to delete
+        const result = await delProduct({ id, token });
+
+        if (result.error) {
+          // Handle any errors here
+          console.error("Error deleting media:", result.error);
+        } else {
+          // Handle success, e.g., update your component state
+          console.log("Media deleted successfully:", result.data);
+        }
+      } catch (error) {
+        console.error("An error occurred:", error);
+      }
+    }
+  };
+  
   const rows = productDetailedInfo?.map((element) => (
     <tr key={element.product_id}>
       <td className=" text-white">{element.product_id}</td>
@@ -221,8 +72,8 @@ const InventoryOverview = () => {
    
       <td className=" text-white">   <div className="  flex  ">
           <Group>
-            <Button onClick={open}>
-              <IoMdAdd className=" cursor-pointer hover:text-blue-700" />
+            <Button onClick={()=>handleDelete(element?.product_id,token)}>
+              <IoMdRemoveCircleOutline className=" cursor-pointer hover:text-blue-700" />
             </Button>
           </Group>
           <Group position="center">
@@ -232,10 +83,12 @@ const InventoryOverview = () => {
             </Button>
           </Group>
           <Group position="center">
-            <Button>
-              {" "}
-              <AiOutlineArrowRight className="cursor-pointer hover:text-blue-700" />
-            </Button>
+         <Link to={`/product-detail/${element.product_id}`}>
+         <Button >
+           
+           <AiOutlineArrowRight className="cursor-pointer hover:text-blue-700" />
+         </Button>
+         </Link>
           </Group>
         </div></td>
     </tr>
@@ -386,7 +239,7 @@ const InventoryOverview = () => {
             displayState ? "flex" : "hidden"
           }   my-6 overflow-y-auto  flex-wrap  justify-center gap-10 items-center`}
         >
-          {productDetailedInfo.map((i) => {
+          {productDetailedInfo?.map((i) => {
             return (
               <div key={i.product_id}>
                 <img

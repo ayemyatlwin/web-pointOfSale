@@ -28,8 +28,28 @@ export const productApi = createApi({
       providesTags:['productApi']
 
     }),
+    deleteProducts:builder.mutation({
+      query:({id,token})=>({
+       
+        url: `products/${id}`,
+        method:"DELETE",
+       
+        headers:{authorization:`Bearer ${token}`}
+      }),
+      invalidatesTags:['productApi']
+     
+    }),
+    getSingleProductInfo:builder.query({
+      query:({token,id})=>({
+        url:`/products/${id}`,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+
+      })
+    })
 
   }),
 });
 
-export const { useCreateProductMutation ,useGetProductInfoQuery} = productApi;
+export const { useCreateProductMutation ,useGetProductInfoQuery,useGetSingleProductInfoQuery,useDeleteProductsMutation} = productApi;
