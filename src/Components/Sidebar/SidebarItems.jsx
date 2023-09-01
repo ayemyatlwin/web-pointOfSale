@@ -96,7 +96,7 @@ const SidebarItems = () => {
           <Accordion.Panel className="">
             <NavLink
               to={"sale-cashier"}
-              className={`pt-1 pb-2 border-s-2 border-[#3f4245] hover:text-blue-400 cursor-pointer text-[#f5f5f5]  px-2`}
+              className={`pt-1 pb-2 border-s-2 block active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] cursor-pointer text-[#f5f5f5]  px-2`}
             >
               Cashier
             </NavLink>
@@ -105,7 +105,7 @@ const SidebarItems = () => {
             <NavLink
               to={"sale-recent"}
               className={
-                "pt-1 pb-2 border-s-2 border-[#3f4245] hover:text-blue-400 cursor-pointer text-[#f5f5f5]  px-2"
+                "pt-1 pb-2 border-s-2 block active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] cursor-pointer text-[#f5f5f5]  px-2"
               }
             >
               Recent
@@ -125,7 +125,7 @@ const SidebarItems = () => {
           <Accordion.Panel>
             <NavLink
               to={"inventory-overview"}
-              className={`pt-1 pb-2 border-s-2 border-[#3f4245] hover:text-blue-400 cursor-pointer text-[#f5f5f5]  px-2`}
+              className={`pt-1 pb-2 border-s-2 active:text-[#8AB4F8] block hover:bg-[#202124] border-[#3f4245]  cursor-pointer text-[#f5f5f5]  px-2`}
             >
               Products
             </NavLink>
@@ -133,21 +133,21 @@ const SidebarItems = () => {
           <Accordion.Panel>
             <NavLink
               to={"adding-product"}
-              className={`pt-1 pb-2 border-s-2 border-[#3f4245] hover:text-blue-400 cursor-pointer text-[#f5f5f5]  px-2`}
+              className={`pt-1 pb-2 border-s-2 active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] block cursor-pointer text-[#f5f5f5]  px-2`}
             >
               Add Products
             </NavLink>
           </Accordion.Panel>
           <Accordion.Panel>
             <NavLink
-              className={`pt-1 pb-2 border-s-2 border-[#3f4245] hover:text-blue-400 cursor-pointer text-[#f5f5f5]  px-2`}
+              className={`pt-1 pb-2 border-s-2 active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] block cursor-pointer text-[#f5f5f5]  px-2`}
             >
               Stock Control
             </NavLink>
           </Accordion.Panel>
           <Accordion.Panel>
             <NavLink
-              className={`pt-1 pb-2 border-s-2 border-[#3f4245] hover:text-blue-400 cursor-pointer text-[#f5f5f5]  px-2`}
+              className={`pt-1 pb-2 border-s-2 active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] block cursor-pointer text-[#f5f5f5]  px-2`}
             >
               Manage Brands
             </NavLink>
@@ -165,7 +165,7 @@ const SidebarItems = () => {
           </Accordion.Control>
           <Accordion.Panel className="">
             <NavLink
-              className={`pt-1 pb-2 border-s-2 border-[#3f4245] hover:text-blue-400 cursor-pointer text-[#f5f5f5]  px-2`}
+              className={`pt-1 pb-2 border-s-2 active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] block cursor-pointer text-[#f5f5f5]  px-2`}
             >
               Stock
             </NavLink>
@@ -173,7 +173,7 @@ const SidebarItems = () => {
           <Accordion.Panel>
             <NavLink
               className={
-                "pt-1 pb-2 border-s-2 border-[#3f4245] hover:text-blue-400 cursor-pointer text-[#f5f5f5]  px-2"
+                "pt-1 pb-2 border-s-2 active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] block cursor-pointer text-[#f5f5f5]  px-2"
               }
             >
               Sale
@@ -192,28 +192,28 @@ const SidebarItems = () => {
           </Accordion.Control>
           <Accordion.Panel>
             <NavLink
-              className={`pt-1 pb-2 border-s-2 border-[#3f4245] hover:text-blue-400 cursor-pointer text-[#f5f5f5]  px-2`}
+              className={`pt-1 pb-2 border-s-2 active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] block cursor-pointer text-[#f5f5f5]  px-2`}
             >
               Daily
             </NavLink>
           </Accordion.Panel>
           <Accordion.Panel>
             <NavLink
-              className={`pt-1 pb-2 border-s-2 border-[#3f4245] hover:text-blue-400 cursor-pointer text-[#f5f5f5]  px-2`}
+              className={`pt-1 pb-2 border-s-2 active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] block cursor-pointer text-[#f5f5f5]  px-2`}
             >
               Monthly
             </NavLink>
           </Accordion.Panel>
           <Accordion.Panel>
             <NavLink
-              className={`pt-1 pb-2 border-s-2 border-[#3f4245] hover:text-blue-400 cursor-pointer text-[#f5f5f5]  px-2`}
+              className={`pt-1 pb-2 border-s-2 active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] block cursor-pointer text-[#f5f5f5]  px-2`}
             >
               Yearly
             </NavLink>
           </Accordion.Panel>
           <Accordion.Panel>
             <NavLink
-              className={`pt-1 pb-2 border-s-2 border-[#3f4245] hover:text-blue-400 cursor-pointer text-[#f5f5f5]  px-2`}
+              className={`pt-1 pb-2 border-s-2 active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] block cursor-pointer text-[#f5f5f5]  px-2`}
             >
               Custom
             </NavLink>
@@ -232,7 +232,7 @@ const SidebarItems = () => {
           <Accordion.Panel>
             <NavLink
               to={"user-overview"}
-              className={`pt-1 pb-2 border-s-2 border-[#3f4245] hover:text-blue-400 cursor-pointer text-[#f5f5f5]  px-2`}
+              className={`pt-1 pb-2 border-s-2 active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] block cursor-pointer text-[#f5f5f5]  px-2`}
             >
               Overview
             </NavLink>
@@ -240,7 +240,7 @@ const SidebarItems = () => {
           <Accordion.Panel className="">
             <NavLink
               to={"/create-user"}
-              className={`pt-1 pb-2 border-s-2 border-[#3f4245] hover:text-blue-400 cursor-pointer text-[#f5f5f5]  px-2`}
+              className={`pt-1 pb-2 border-s-2 active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] block cursor-pointer text-[#f5f5f5]  px-2`}
             >
               Create User
             </NavLink>
@@ -278,7 +278,7 @@ const SidebarItems = () => {
             <NavLink
               to={"/my-account"}
               className={
-                "pt-1 pb-2 border-s-2 border-[#3f4245] hover:text-blue-400 cursor-pointer text-[#f5f5f5]  px-2"
+                "pt-1 pb-2 border-s-2 active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] block cursor-pointer text-[#f5f5f5]  px-2"
               }
             >
               My Account
@@ -288,7 +288,7 @@ const SidebarItems = () => {
             <NavLink
               to={"/edit-profile"}
               className={
-                "pt-1 pb-2 border-s-2 border-[#3f4245] hover:text-blue-400 cursor-pointer text-[#f5f5f5]  px-2"
+                "pt-1 pb-2 border-s-2 border-[#3f4245] active:text-[#8AB4F8] hover:bg-[#202124] block cursor-pointer text-[#f5f5f5]  px-2"
               }
             >
               Edit
