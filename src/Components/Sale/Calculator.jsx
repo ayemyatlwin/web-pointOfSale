@@ -98,7 +98,7 @@ const Calculator = ({ paymentHandler }) => {
           onClick={paymentHandler}
           className={`${
             reciept?.length == 0 && ` cursor-not-allowed `
-          } flex justify-center border hover:bg-[#3f4245] cursor-pointer transition-all active:bg-[#161618] border-[#3f4245] items-center py-3 `}
+          } flex justify-center border hover:bg-[#3f4245] cursor-pointer tracking-wider font-semibold  transition-all active:bg-[#161618] border-[#3f4245] items-center py-3 `}
         >
           payment
         </div>
