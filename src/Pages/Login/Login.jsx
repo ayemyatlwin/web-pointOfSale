@@ -121,7 +121,7 @@ const Login = () => {
                     <button
                       type="submit"
                       onClick={loginHandler}
-                      className="bg-blue-500   text-center hover:bg-blue-700 text-white text-sm font-semibold py-2 px-4 rounded"
+                      className="bg-blue-500 tracking-wider  text-center hover:bg-blue-700 text-white text-sm font-semibold py-2 px-4 rounded"
                     >
                       {isLoading ? (
                         <CircularProgress size={20} color="inherit" />

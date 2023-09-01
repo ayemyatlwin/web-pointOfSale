@@ -16,6 +16,7 @@ import Breadcrumb from "../../Components/Breadcrumb";
 import { useUploadMediaMutation } from "../../Feature/API/mediaApi";
 import Cookies from "js-cookie";
 import { useDeleteMediaMutation } from "../../Feature/API/mediaApi";
+import Pagination from "../../Components/Pagination";
 
 //Expanded image component
 const ExpandedImageView = ({ image, onClose }) => (
@@ -32,6 +33,7 @@ const ExpandedImageView = ({ image, onClose }) => (
   </div>
 );
 const Mediapgwpic = (props) => {
+  const [currentPage, setCurrentPage] = useState(1);
   const [deleteMedia] = useDeleteMediaMutation(); //deleting media calling
   const token = Cookies.get("token"); //cookie retrieving
   const [uploadMedia] = useUploadMediaMutation(); //media upload calling
@@ -41,6 +43,7 @@ const Mediapgwpic = (props) => {
   const [displayState, setDisplayState] = useState(false); //toggle view state
   const [displayState2, setDisplayState2] = useState(false); //toggle view sttae
   const [pictures,setPictures]=useState([]);
+  console.log(mediaData);
  
   //func that upload media from dropzone
   const handleDropzoneUpload = async (acceptedFiles) => {
@@ -249,6 +252,14 @@ const Mediapgwpic = (props) => {
             </thead>
             <tbody>{rows}</tbody>
           </Table>
+          <div>
+        <Pagination
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+          last_page={mediaData.to}
+         
+        />
+      </div>
         </div>
       </div>
     </div>

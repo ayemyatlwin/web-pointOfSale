@@ -5,21 +5,20 @@ import SidebarItems from "./SidebarItems";
 export default function Sidebar({ children }) {
   return (
     <AppShell
-    
 
-      padding="md"
-      
+    padding="md"
+
+    
       //drawer sidebar here
       navbar={
         <Navbar
           width={{ base: 270 }}
-          height={1000}
-          p="xs"
+          sx={{overflowY:"scroll"}}
           bg={"#161618"}
           withBorder={0}
         
         >
-          {<SidebarItems />}
+          {<SidebarItems  />}
         </Navbar>
       }
       // navbar header here
@@ -30,7 +29,6 @@ export default function Sidebar({ children }) {
           }}
           bg={"#3F4245"}
           height={60}
-          p="xs"
         >
           {<NavBar />}
         </Header>

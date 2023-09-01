@@ -6,10 +6,13 @@ import Cookies from "js-cookie";
 import { Typography } from "@mui/material";
 import DropDownBtn from "../../Components/DropDownBtn";
 import {PiCalculatorDuotone} from "react-icons/pi"
+import { setSaleClose } from "../../Feature/Service/recieptSlice";
+import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
 
 const Recent = () => {
   const token = Cookies.get("token");
-
+const dispatch=useDispatch();
   const recordedVoucher = useRecordedVoucherQuery(token);
   console.log(recordedVoucher?.currentData?.data);
   const oldData = recordedVoucher?.currentData?.data;
@@ -18,6 +21,27 @@ const Recent = () => {
 
   const totals = oldData?.map((eachData) => eachData?.net_total);
   console.log(totals);
+
+  const {saleClose}=useSelector((state) => state.recieptSlice)
+  console.log(saleClose);
+
+  const saleCloseHandler=()=>{
+    Swal.fire({
+      title: `Are you sure to sale ${saleClose ? "Open" : "Close"} ?`,
+      icon: 'question',
+      iconColor: "#fff",
+      background: "#161618",
+      showCancelButton: true,
+      showCloseButton: true,
+      confirmButtonColor: '#3f4245',
+      cancelButtonColor: '#24262b',
+      confirmButtonText: `${saleClose ? "Open" : "CACULATE"}`,
+    }).then(async(result) => {
+      if (result.isConfirmed) {
+        dispatch(setSaleClose(!saleClose))
+      }
+    })
+  }
 
 
   return (
@@ -37,14 +61,15 @@ const Recent = () => {
 
       <div className="py-5 pb-3 ">
         <div className=" flex justify-between">
-        <Typography sx={{ fontSize: "1.5rem" }} gutterBottom>
+        <h2 className=" tracking-wide text-[1.5rem]">
         Today Sales Overview
-      </Typography>
+      </h2>
         <div className="flex gap-3">
           <DropDownBtn/>
-          <button className="text-white border border-[#7E7F80]  font-medium rounded-lg text-sm px-5 text-center inline-flex items-center ">
+          <button onClick={()=>saleCloseHandler()} className="text-white border border-[#7E7F80]  font-medium rounded-lg text-sm px-5 text-center inline-flex items-center ">
             < PiCalculatorDuotone className="text-[#8AB4F8] h-5 w-5 me-2"/>
-            Sales Close</button>
+            {saleClose? `Sale Open`:`Sale Close`}
+            </button>
         </div>
         </div>
       </div>
@@ -87,11 +112,29 @@ const Recent = () => {
       
       {/* total and tax */}
       <div className="flex justify-between ">
-        <p className="flex gap-3 py-5">
-          <span>Total sale: </span>
-          <span>{totals?.reduce((pv, cv) => pv + cv, 0).toFixed(2)} MMK</span>
-        </p>
-        <div className=" py-5">Pagination</div>
+        <div className="flex gap-3 mb-2 mt-5 border border-[#3f4245]">
+          {/* <span>Total sale: </span>
+          <span>{totals?.reduce((pv, cv) => pv + cv, 0).toFixed(2)} MMK</span> */}
+          <button className="border-r border-[#3f4245] flex flex-col w-[7rem] py-2 px-2 ">
+            <span className="text-xs self-end text-[#8AB4F8] ">Total Vouchers</span>
+            <span className="text-lg self-end">45675</span>
+
+          </button>
+          <button className="border-r border-[#3f4245]  flex flex-col w-[7rem] py-2 px-2 ">
+          <span className="text-xs self-end text-[#8AB4F8] ">Total Cash</span>
+            <span className="text-lg self-end">45675</span>
+          </button>
+          <button className="border-r border-[#3f4245] flex flex-col w-[7rem] py-2 px-2 ">
+          <span className="text-xs self-end text-[#8AB4F8] ">Total Tax</span>
+            <span className="text-lg self-end">45675</span>
+          </button>
+          <button className="border-r border-[#3f4245] flex flex-col w-[7rem] py-2 px-2 ">
+          <span className="text-xs self-end text-[#8AB4F8] ">Total </span>
+            <span className="text-lg self-end">45675</span>
+          </button>
+
+        </div>
+        <div className=" py-5 place-self-end">Pagination</div>
       </div>
     </>
   );

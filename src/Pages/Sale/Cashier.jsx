@@ -19,7 +19,7 @@ const Cashier = () => {
       <div className="bg-[#202124] text-[#f5f5f5] w-full h-screen overflow-auto ">
         {/* nav to / */}
         <NavLink to={"/"}>
-        <h1 className="px-2 w-full py-2 flex text-xl bg-[#3F4245] justify-between border-b border-gray-700">MMS POS
+        <h1 className="px-2 w-full py-3 flex text-2xl text-[#f5f5f5] border-none font-semibold tracking-wider bg-[#3F4245] justify-between border-b border-gray-700">MMS POS
         </h1>
         </NavLink>
         <div className="flex gap-1">

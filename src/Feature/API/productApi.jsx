@@ -17,7 +17,39 @@ export const productApi = createApi({
       }),
       invalidatesTags: ["productApi"],
     }),
+    getProductInfo: builder.query({
+      query: ({token,currentPage}) => ({
+        url:`/products?page=${currentPage}`,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+        
+      }),
+      providesTags:['productApi']
+
+    }),
+    deleteProducts:builder.mutation({
+      query:({id,token})=>({
+       
+        url: `products/${id}`,
+        method:"DELETE",
+       
+        headers:{authorization:`Bearer ${token}`}
+      }),
+      invalidatesTags:['productApi']
+     
+    }),
+    getSingleProductInfo:builder.query({
+      query:({token,id})=>({
+        url:`/products/${id}`,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+
+      })
+    })
+
   }),
 });
 
-export const { useCreateProductMutation } = productApi;
+export const { useCreateProductMutation ,useGetProductInfoQuery,useGetSingleProductInfoQuery,useDeleteProductsMutation} = productApi;
