@@ -50,7 +50,7 @@ export default function Path() {
           <Route path="sale-recent" element={<Recent/>}/>
           <Route path="inventory-overview" element={<InventoryOverview/>}/>
           <Route path="adding-product" element={<AddProduct/>}/>
-          <Route path="product-detail" element={<ProductDetail/>}/>
+          <Route path="product-detail/:id" element={<ProductDetail/>}/>
           <Route path="product-editing" element={<ProductEditing/>}/>
         
         </Route>

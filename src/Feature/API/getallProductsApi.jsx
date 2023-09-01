@@ -13,7 +13,8 @@ export const getallProductsApi=createApi({
                 headers:{authorization:`Bearer ${token}`},
             }),
             providesTags:['getallProductApi']
-        })
+        }),
+      
     })
 });
 
