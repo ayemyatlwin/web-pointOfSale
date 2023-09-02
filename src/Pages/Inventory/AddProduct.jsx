@@ -14,6 +14,7 @@ import Cookies from "js-cookie";
 import { useCreateProductMutation } from "../../Feature/API/productApi";
 import SelectPhotoModal from "../../Components/SelectPhotoModal";
 import ProductSelectPhotoModal from "./ProductSelectPhotoModal";
+import { toast } from "react-toastify";
 
 
 const AddProduct = () => {
@@ -69,7 +70,14 @@ const AddProduct = () => {
   console.log('error',error);
  }else{
   console.log(data?.message);
-  nav('/inventory-overview')
+  nav('/inventory-overview');
+  toast.success("Product created! !", {
+    position: toast.POSITION.BOTTOM_CENTER,
+    autoClose: 2000,
+
+    hideProgressBar: true,
+    theme: "dark",
+  });
  }
 };
   return (
