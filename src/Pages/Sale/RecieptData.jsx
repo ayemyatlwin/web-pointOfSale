@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
-import { Typography } from "@mui/material";
 import { useSelector } from "react-redux";
+import {PiPrinterDuotone} from "react-icons/pi"
 
 const RecieptData = () => {
   const { totalPrice, tax, voucherData } = useSelector(
@@ -14,11 +14,11 @@ const RecieptData = () => {
   };
   return (
     <>
-      <div className="bg-[#202124] vendorListHeading print:h-auto text-[#f5f5f5] w-full h-screen ">
+      <div className="bg-[#202124] vendorListHeading print:h-auto text-[#f5f5f5] w-full h-screen overflow-scroll ">
         <div className=" print:hidden px-5 py-3 border-b">
           {/* back btn to go to dashboard */}
           <Link className="text-xl flex gap-1 " to="/">
-          <BiArrowBack className="mt-1" />
+            <BiArrowBack className="mt-1" />
             Back
           </Link>
         </div>
@@ -28,12 +28,9 @@ const RecieptData = () => {
               <div
                 className={`h-full w-full  bg-[#161618] print:bg-[#f5f5f5] print:text-[#202124]`}
               >
-                <Typography
-                  sx={{ fontSize: "2rem", paddingX: "10px" }}
-                  gutterBottom
-                >
+                <h2 className="tracking-wide text-[1.5rem] text-center py-2">
                   Reciept
-                </Typography>
+                </h2>
                 {/* map data from bought list  */}
                 <div className="boughtList print:bg-[#f5f5f5] print:text-[#202124]">
                   {voucherData?.data?.voucher_records?.map((item) => {
@@ -44,19 +41,19 @@ const RecieptData = () => {
                       >
                         <div className="flex justify-between border-b mb-1 pb-2 border-gray-600">
                           <div className="flex flex-col">
-                            <p className="font-semibold leading-loose tracking-wider text-[1rem]">
+                            <p className="font-medium leading-loose tracking-wider text-[1rem]">
                               {/* {item?.name.slice(0, 7)} */}
                               {item?.product_id}
                             </p>
-                            <span className="text-[0.8rem] font-semibold">
-                              <span className="mr-2">
+                            <span className="text-[0.8rem] font-medium">
+                              <span className="mr-2 font-medium">
                                 {item?.quantity}
                                 pcs
                               </span>
                               <span>{item?.cost} MMK</span>
                             </span>
                           </div>
-                          <span className="text-semibold">
+                          <span className="text-medium">
                             {Number(item?.quantity) * item?.cost}
                           </span>
                         </div>
@@ -74,20 +71,22 @@ const RecieptData = () => {
                   <h1 className="text-xl font-medium">
                     Total Amount : <span>{totalPrice}</span> MMK
                   </h1>
-                  <span className="text-sm font-semibold print:bg-[#f5f5f5] print:text-[#202124]">
+                  <span className="text-sm font-medium print:bg-[#f5f5f5] print:text-[#202124]">
                     Tax : {tax.toFixed(2)}
                   </span>
                 </div>
 
-                {/* Print Button */}
-                <button
-                  onClick={printHandler}
-                  className="print:hidden mt-5 px-3 py-2 rounded self-center bg-[#202124] "
-                >
-                  Print
-                </button>
+               
               </div>
             </div>
+          </div>
+        </div>
+        <div className="flex justify-center print:hidden">
+          <div className="flex gap-3 text-[#f5f5f5]">
+            <Link to={"/sale-recent"} className="rounded-md px-2 py-3 border border-[#3f4245]">Recent</Link>
+            <Link to={"/sale-cashier"} className="rounded-md px-2 py-3 border border-[#3f4245]">Next Sale</Link>
+            <Link  onClick={printHandler} className="rounded-md px-4 py-3 border border-[#3f4245]"> <PiPrinterDuotone className="mt-1 text-[#8AB4F8]"/> </Link>
+
           </div>
         </div>
       </div>

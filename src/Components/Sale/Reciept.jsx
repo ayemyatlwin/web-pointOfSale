@@ -76,15 +76,15 @@ const Reciept = () => {
             Reciept
           </h2>
           {/* map data from SaleCard */}
-          <div className="boughtList">
+          <div className=" px-3">
             {reciept?.map((item) => {
               return (
                 <Link
                   onClick={() => listActiveUpdate(item?.product_id)}
                   key={item?.product_id}
-                  className="  px-4  mx-auto overflow-visible"
+                  className="    mx-auto overflow-visible"
                 >
-                  <div className={`${listSelector===item?.product_id && "bg-[#3f4245]"} flex justify-between  border-b  border-[#3f4245]`}>
+                  <div className={`${listSelector===item?.product_id && "bg-[#3f4245]"} flex justify-between px-2 py-2  border-b   border-[#3f4245]`}>
                     <div className="flex flex-col">
                       <p
                         className={`${
