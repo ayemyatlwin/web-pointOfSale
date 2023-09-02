@@ -17,6 +17,8 @@ import { useUploadMediaMutation } from "../../Feature/API/mediaApi";
 import Cookies from "js-cookie";
 import { useDeleteMediaMutation } from "../../Feature/API/mediaApi";
 import Pagination from "../../Components/Pagination";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 //Expanded image component
 const ExpandedImageView = ({ image, onClose }) => (
@@ -66,16 +68,27 @@ const Mediapgwpic = (props) => {
         console.error("Error uploading files:", result.error);
       } else {
         // Handle success, e.g., update your component state
-      alert('File uploaded sucessfully')
+        toast.success("Media uploaded !", {
+          position: toast.POSITION.BOTTOM_CENTER,
+          autoClose: 2000,
+
+          hideProgressBar: true,
+          theme: "dark",
+        });
       }
     } catch (error) {
-      alert.error("An error occurred:", error)
+      toast.error("Please enter a valid email !", {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 2000,
+        hideProgressBar: true,
+        theme: "dark",
+      });
     }
   };
   const images = mediaData?.data; 
   console.log(images);//inserting retrieved arr from server into a veraible
   //data within the table
-  const rows = images?.map((element) => {
+  const rows = images?.map((element,index) => {
     let date_time = element.updated_at.split("T");
     const copyPictureInfo = (element) => {
       const infoToCopy = `Name: ${element.name}\nAccount: ${element.account}\nDate: ${date_time[0]}\nTime: ${date_time[1]}\nFile Size: ${element.file_size}`;
@@ -95,21 +108,27 @@ const Mediapgwpic = (props) => {
       document.body.removeChild(textArea);
 
       // Alert the user that the information has been copied
-      alert("Picture information copied to clipboard.");
+      toast.info("Media informations copied !", {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 2000,
+
+        hideProgressBar: true,
+        theme: "dark",
+      });
     };
     console.log(element);
 
     return (
-      <tr key={element.id}>
-        <td className=" text-white">{element.id}</td>
-        <td className=" text-white">
-          <img className=" w-[50px] h-[50px] my-6" src={element.url} alt="" />
+      <tr key={element.id} className="border-b border-[#3f4245]">
+        <td className="px-6 py-4">{index+1}</td>
+        <td className="px-6 py-4">
+          <img className=" rounded-2xl mx-28 w-[70px] h-[70px] " src={element.url} alt="" />
         </td>
-        <td className=" text-white">{element.account}</td>
-        <td className=" text-white">{date_time[0]}</td>
-        <td className=" text-white">{date_time[1]}</td>
-        <td className=" text-white">{element.file_size}</td>
-        <td className=" text-white">
+        <td className="px-6 py-4">{element.account}</td>
+        <td className="px-6 py-4">{date_time[0]}</td>
+        <td className="px-6 py-4">{date_time[1]}</td>
+        <td className="px-6 py-4">{element.file_size}</td>
+        <td className="px-6 py-4">
           {" "}
           <div className="  flex">
             <RiDeleteBin5Line
@@ -127,25 +146,45 @@ const Mediapgwpic = (props) => {
   });
   //func for deleting media
   const handleDelete = async (id, token) => {
-    const isConfirmed = window.confirm(
-      "Are you sure you want to delete this media?"
-    );
-    if (isConfirmed) {
-      try {
-        // Call the deleteMedia mutation with the id of the picture to delete
-        const result = await deleteMedia({ id, token });
-
-        if (result.error) {
-          // Handle any errors here
-          console.error("Error deleting media:", result.error);
-        } else {
-          // Handle success, e.g., update your component state
-          console.log("Media deleted successfully:", result.data);
+    Swal.fire({
+      title: `Are you sure you want to delete this media? ?`,
+      icon: "question",
+      iconColor: "#FF0000",
+      background: "#161618",
+      showCancelButton: true,
+      showCloseButton: true,
+      confirmButtonColor: "#FF0000",
+      cancelButtonColor: "#24262b",
+      confirmButtonText: `Delete`,
+    }).then(async (result) => {
+   
+      if (result.isConfirmed) {
+        try {
+          // Call the deleteMedia mutation with the id of the picture to delete
+          const resulted = await deleteMedia({ id, token });
+          console.log(resulted);
+  
+          if (resulted.error) {
+            // Handle any errors here
+            console.error("Error deleting media:", resulted.error);
+          } else {
+            // Handle success, e.g., update your component state
+            toast.success("Media deleted successfuly!", {
+              position: toast.POSITION.BOTTOM_CENTER,
+              autoClose: 2000,
+      
+              hideProgressBar: true,
+              theme: "dark",
+            });
+          }
+        } catch (error) {
+          console.error("An error occurred:", error);
         }
-      } catch (error) {
-        console.error("An error occurred:", error);
       }
-    }
+    });
+    
+
+ 
   };
 
   return (
@@ -238,25 +277,31 @@ const Mediapgwpic = (props) => {
         <div
           className={`${!displayState ? "block" : "hidden"} overflow-y-auto`}
         >
-          <Table>
-            <thead>
-              <tr>
-                <th className=" text-gray-300">NO</th>
-                <th className=" text-gray-300">File PREVIEW</th>
-                <th className=" text-gray-300">ACCOUNT</th>
-                <th className=" text-gray-300">DATE</th>
-                <th className=" text-gray-300">TIME</th>
-                <th className=" text-gray-300">FILE SIZE</th>
-                <th className=" text-gray-300">ACTION</th>
-              </tr>
-            </thead>
-            <tbody>{rows}</tbody>
-          </Table>
+       <main className="border border-[#3f4245] rounded-sm mt-7">
+        <table className="w-full text-sm text-center text-[#f5f5f5]">
+          <thead className="text-xs text-[#f5f5f5] uppercase ">
+            <tr className="border-b border-[#3f4245]">
+              <th className="px-6 py-4">No.</th>
+              <th className="px-6 py-4">File preview</th>
+              <th className="px-6 py-4">Account</th>
+              <th className="px-6 py-4">Date</th>
+              <th className="px-6 py-4">Time</th>
+              <th className="px-6 py-4">File size</th>
+              <th className="px-6 py-4">Action</th>
+          
+            </tr>
+          </thead>
+          {/* map data from old recorded voucher list from api */}
+          <tbody className="text-[#f5f5f5]">
+           {rows}
+          </tbody>
+        </table>
+      </main>
           <div>
         <Pagination
           setCurrentPage={setCurrentPage}
           currentPage={currentPage}
-          last_page={mediaData.to}
+          last_page={mediaData?.to}
          
         />
       </div>

@@ -25,6 +25,8 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useDeleteProductsMutation, useGetProductInfoQuery } from "../../Feature/API/productApi";
 import Cookies from "js-cookie";
 import Pagination from "../../Components/Pagination";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 
 
 const InventoryOverview = () => {
@@ -40,35 +42,55 @@ const InventoryOverview = () => {
   const [displayState, setDisplayState] = useState(false);
   const [displayState2, setDisplayState2] = useState(false);
   const handleDelete = async (id, token) => {
-    const isConfirmed = window.confirm(
-      "Are you sure you want to delete this product?"
-    );
-    if (isConfirmed) {
-      try {
-        // Call the deleteMedia mutation with the id of the picture to delete
-        const result = await delProduct({ id, token });
-
-        if (result.error) {
-          // Handle any errors here
-          console.error("Error deleting media:", result.error);
-        } else {
-          // Handle success, e.g., update your component state
-          console.log("Media deleted successfully:", result.data);
+    Swal.fire({
+      title: `Are you sure you want to delete this product??`,
+      icon: "question",
+      iconColor: "#FF0000",
+      background: "#161618",
+      showCancelButton: true,
+      showCloseButton: true,
+      confirmButtonColor: "#FF0000",
+      cancelButtonColor: "#24262b",
+      confirmButtonText: `Delete`,
+    }).then(async (result) => {
+   
+      if (result.isConfirmed) {
+        try {
+          // Call the deleteMedia mutation with the id of the picture to delete
+          const resulted = await delProduct({ id, token });
+          console.log(resulted);
+  
+          if (resulted.error) {
+            // Handle any errors here
+            console.error("Error deleting media:", resulted.error);
+          } else {
+            // Handle success, e.g., update your component state
+            toast.success("Product deleted successfuly!", {
+              position: toast.POSITION.BOTTOM_CENTER,
+              autoClose: 2000,
+      
+              hideProgressBar: true,
+              theme: "dark",
+            });
+          }
+        } catch (error) {
+          console.error("An error occurred:", error);
         }
-      } catch (error) {
-        console.error("An error occurred:", error);
       }
-    }
+    });
+    
+
+ 
   };
   
-  const rows = productDetailedInfo?.map((element) => (
-    <tr key={element.product_id}>
-      <td className=" text-white">{element.product_id}</td>
-      <td className=" text-white">{element.name}</td>
-      <td className=" text-white">{element.brand_name}</td>
-      <td className=" text-white">{element.unit}</td>
-      <td className=" text-white">{element.sale_price}</td>
-      <td className=" text-white">{element.actual_price}</td>
+  const rows = productDetailedInfo?.map((element,i) => (
+    <tr key={element.product_id} className="border-b border-[#3f4245]">
+      <td className="px-6 py-4">{i+1}</td>
+      <td className="px-6 py-4">{element.name}</td>
+      <td className="px-6 py-4">{element.brand_name}</td>
+      <td className="px-6 py-4">{element.unit}</td>
+      <td className="px-6 py-4">{element.sale_price}</td>
+      <td className="px-6 py-4">{element.actual_price}</td>
    
       <td className=" text-white">   <div className="  flex  ">
           <Group>
@@ -211,20 +233,28 @@ const InventoryOverview = () => {
         <div
           className={`${!displayState ? "block" : "hidden"} overflow-y-auto`}
         >
-          <Table>
-            <thead>
-              <tr>
-                <th className=" text-gray-300">NO</th>
-                <th className=" text-gray-300">NAME</th>
-                <th className=" text-gray-300">BRAND</th>
-                <th className=" text-gray-300">UNIT</th>
-                <th className=" text-gray-300">SALE PRICE</th>
-                <th className=" text-gray-300">ACTUAL PRICE</th>
-                <th className=" text-gray-300">ACTIONS</th>
-              </tr>
-            </thead>
-            <tbody>{rows}</tbody>
-          </Table>
+           <main className="border border-[#3f4245] rounded-sm mt-7">
+        <table className="w-full text-sm text-center text-[#f5f5f5]">
+          <thead className="text-xs text-[#f5f5f5] uppercase ">
+            <tr className="border-b border-[#3f4245]">
+              <th className="px-6 py-4">No.</th>
+              <th className="px-6 py-4">Name</th>
+              <th className="px-6 py-4">Brand</th>
+              <th className="px-6 py-4">Unit</th>
+              <th className="px-6 py-4">Sale price</th>
+              <th className="px-6 py-4">Actual price</th>
+              <th className="px-6 py-4">Actions</th>
+           
+            </tr>
+          </thead>
+          {/* map data from old recorded voucher list from api */}
+          <tbody className="text-[#f5f5f5]">
+            {rows}
+        
+          </tbody>
+        </table>
+      </main>
+
           <div>
         <Pagination
           setCurrentPage={setCurrentPage}
