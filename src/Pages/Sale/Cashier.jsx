@@ -19,13 +19,13 @@ const Cashier = () => {
       <div className="bg-[#202124] text-[#f5f5f5] w-full h-screen overflow-auto ">
         {/* nav to / */}
         <NavLink to={"/"}>
-        <h1 className="px-2 w-full py-3 flex text-2xl text-[#f5f5f5] border-none font-semibold tracking-wider bg-[#3F4245] justify-between border-b border-gray-700">MMS POS
+        <h1 className="px-3 w-full py-3 flex text-2xl text-[#f5f5f5] border-none font-semibold tracking-wider bg-[#3F4245] justify-between border-b border-[#3f4245]">MMS POS
         </h1>
         </NavLink>
         <div className="flex gap-1">
           {/* receipt section 1 (bought product list) */}
 
-          <div className="w-[70%]  h-full px-2 pt-3 ">
+          <div className="w-[70%]  h-full px-2 pt-3  ">
             <Breadcrumbs aria-label="breadcrumb" style={{ color: "#f5f5f5" }}>
               <Link
                 sx={{ fontSize: "1rem" }}
@@ -44,7 +44,7 @@ const Cashier = () => {
                 Cashier
               </Link>
             </Breadcrumbs>
-            <div className=" flex justify-between pb-3 border-b border-gray-700 ">
+            <div className=" flex justify-between pb-3 px-1 border-b border-[#3f4245] ">
               <div className="flex gap-5 mt-2">
                 <a className="text-[#f5f5f5] underline hover:text-blue-500 active:text-blue-700">
                   All
@@ -65,12 +65,12 @@ const Cashier = () => {
               <input
                 id="exampleSearch2"
                 placeholder="search"
-                className=" w-44 px-2 py-1 rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding text-base font-normal leading-[1.6] text-white outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-white "
+                className=" w-44 px-2 py-1 rounded border border-solid border-[#3f4245] bg-transparent bg-clip-padding text-base font-normal leading-[1.6] text-white outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-white "
                 type="search"
               />
             </div>
             {/* sale cards */}
-            <div className="px-5 pt-4  flex flex-wrap gap-4 overflow-scroll   ">
+            <div className="ps-10 py-5 flex-wrap  flex gap-4 overflow-scroll   ">
               {products?.map((pd,i)=>{
                 return(
                   <SaleCard key={i} pd={pd}  />
