@@ -9,7 +9,7 @@ const DropDownBtn = () => {
       <button
         id="dropdownDefaultButton"
         data-dropdown-toggle="dropdown"
-        className="text-white border border-[#7E7F80]  font-medium rounded-lg text-sm px-5 py-3 text-center inline-flex items-center "
+        className="text-white border border-[#7E7F80]  font-medium rounded-lg text-sm px-5 py-3.5 text-center inline-flex items-center "
         type="button"
       >
         <PiExportDuotone className="text-[#8AB4F8] h-5 w-5 me-2"/>
@@ -19,7 +19,7 @@ const DropDownBtn = () => {
       {/* Dropdown menu */}
       <div
         id="dropdown"
-        className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 "
+        className="z-10 hidden bg-white  rounded-lg shadow w-44 "
       >
         <ul
           className="py-2 text-sm text-gray-700 "
