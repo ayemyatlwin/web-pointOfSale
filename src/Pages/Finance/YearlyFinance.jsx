@@ -3,6 +3,7 @@ import Breadcrumb from "../../Components/Breadcrumb";
 import DropDownBtn from "../../Components/DropDownBtn";
 import { PiCalculatorDuotone } from "react-icons/pi";
 import { AiOutlineArrowRight } from "react-icons/ai";
+import YearPickers from "../../Components/Pickers/YearPickers";
 
 const YearlyFinance = () => {
   return (
@@ -27,10 +28,7 @@ const YearlyFinance = () => {
           </h2>
           <div className="flex gap-3">
             <DropDownBtn />
-            <button className="text-white border border-[#7E7F80]  font-medium rounded-lg text-sm px-5 text-center inline-flex items-center ">
-              <PiCalculatorDuotone className="text-[#8AB4F8] h-5 w-5 me-2" />
-              ntntn
-            </button>
+            <YearPickers/>
           </div>
         </div>
       </div>
@@ -59,7 +57,8 @@ const YearlyFinance = () => {
               <td className="px-6 py-4">1</td>
               <td className="px-6 py-4">1</td>
               <td className="px-6 py-4">
-                <AiOutlineArrowRight />{" "}
+                <button className="px-2 py-2 bg-[#3f4245] rounded-full"><AiOutlineArrowRight /></button>
+                {" "}
               </td>
             </tr>
           </tbody>

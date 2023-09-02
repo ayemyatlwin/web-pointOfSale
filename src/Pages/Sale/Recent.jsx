@@ -103,8 +103,9 @@ const Recent = () => {
                   <td className="px-6 py-4">{data.tax}</td>
                   <td className="px-6 py-4">{data.net_total}</td>
                   <td className="px-6 py-4">
-                    <AiOutlineArrowRight />{" "}
-                  </td>
+                <button className="px-2 py-2 bg-[#3f4245] rounded-full"><AiOutlineArrowRight /></button>
+                {" "}
+              </td>
                 </tr>
               );
             })}
