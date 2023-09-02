@@ -1,33 +1,29 @@
 import React from "react";
-import Card from "@mui/material/Card";
 
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-
-import Typography from "@mui/material/Typography";
 import { useDispatch } from "react-redux";
 import { addtoReciept } from "../../Feature/Service/recieptSlice";
 
 const SaleCard = ({ pd }) => {
   //console.log(pd);
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
   return (
-    <div className="mt-1 " onClick={() => dispatch(addtoReciept(pd)) }>
-      <Card sx={{ minWidth: 150 }}>
-        <CardMedia
-          sx={{ height: 120, objectFit:"fill" }}
-          image={pd?.photo}
-          title={pd?.name}
-        />
-        <CardContent sx={{height:75,background:"#161618"}}>
-          <Typography  sx={{ color: "#f5f5f5",fontSize:"1rem",fontWeight:"bold",textAlign:"end" }}  component="div">
-           {pd?.name.slice(0,5)}
-          </Typography>
-          <Typography sx={{ color: "#f5f5f5",textAlign:"end" }} variant="p" component="div">
-            {pd?.sale_price} MMK
-          </Typography>
-        </CardContent>
-      </Card>
+    <div
+      onClick={() => dispatch(addtoReciept(pd))}
+      className=" max-w-[300px]  bg-white border overflow-hidden  border-[#3f4245] rounded-lg shadow "
+    >
+      <a href="#">
+        <img className=" object-contain h-40" src={pd?.photo} alt="" />
+      </a>
+      <div className="p-2 bg-[#161618] ">
+        <a href="#">
+          <h5 className="mb-1 text-lg text-right font-medium tracking-wide text-[#E8EAED] ">
+            {pd?.name.slice(0, 7)}
+          </h5>
+        </a>
+        <p className="mb-1 text-right text-md text-[#E8EAED] font-normal  ">
+          {pd?.sale_price} MMK
+        </p>
+      </div>
     </div>
   );
 };
