@@ -81,7 +81,7 @@ const RecieptData = () => {
             </div>
           </div>
         </div>
-        <div className="flex justify-center print:hidden">
+        <div className="flex justify-center py-5 print:hidden">
           <div className="flex gap-3 text-[#f5f5f5]">
             <Link to={"/sale-recent"} className="rounded-md px-2 py-3 border border-[#3f4245]">Recent</Link>
             <Link to={"/sale-cashier"} className="rounded-md px-2 py-3 border border-[#3f4245]">Next Sale</Link>
