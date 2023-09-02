@@ -23,6 +23,10 @@ import EditUser from "../Pages/user/EditUser";
 import ProductDetail from "../Pages/Inventory/ProductDetail";
 import ProductEditing from "../Pages/Inventory/ProductEditing";
 import RecieptData from "../Pages/Sale/RecieptData";
+import DailyFinance from "../Pages/Finance/DailyFinance";
+import MonthlyFinance from "../Pages/Finance/MonthlyFinance";
+import YearlyFinance from "../Pages/Finance/YearlyFinance";
+import CustomFinance from "../Pages/Finance/CustomFinance";
 
 
 export default function Path() {
@@ -52,6 +56,11 @@ export default function Path() {
           <Route path="adding-product" element={<AddProduct/>}/>
           <Route path="product-detail/:id" element={<ProductDetail/>}/>
           <Route path="product-editing" element={<ProductEditing/>}/>
+          <Route path="finance-daily" element={<DailyFinance/>}/>
+          <Route path="finance-monthly" element={<MonthlyFinance/>}/>
+          <Route path="finance-yearly" element={<YearlyFinance/>}/>
+          <Route path="finance-custom" element={<CustomFinance/>}/>
+
         
         </Route>
         <Route path="sale-cashier" element={<Cashier/>}/>
