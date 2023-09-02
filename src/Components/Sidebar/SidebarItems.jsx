@@ -191,28 +191,28 @@ const SidebarItems = () => {
             </span>
           </Accordion.Control>
           <Accordion.Panel>
-            <NavLink
+            <NavLink to={"finance-daily"}
               className={`pt-1 pb-2 border-s-2 active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] block cursor-pointer text-[#f5f5f5]  px-2`}
             >
               Daily
             </NavLink>
           </Accordion.Panel>
           <Accordion.Panel>
-            <NavLink
+            <NavLink to={"finance-monthly"}
               className={`pt-1 pb-2 border-s-2 active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] block cursor-pointer text-[#f5f5f5]  px-2`}
             >
               Monthly
             </NavLink>
           </Accordion.Panel>
           <Accordion.Panel>
-            <NavLink
+            <NavLink to={"finance-yearly"}
               className={`pt-1 pb-2 border-s-2 active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] block cursor-pointer text-[#f5f5f5]  px-2`}
             >
               Yearly
             </NavLink>
           </Accordion.Panel>
           <Accordion.Panel>
-            <NavLink
+            <NavLink to={"finance-custom"}
               className={`pt-1 pb-2 border-s-2 active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] block cursor-pointer text-[#f5f5f5]  px-2`}
             >
               Custom
