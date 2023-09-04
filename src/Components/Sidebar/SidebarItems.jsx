@@ -171,7 +171,7 @@ const SidebarItems = () => {
             </NavLink>
           </Accordion.Panel>
           <Accordion.Panel>
-            <NavLink
+            <NavLink to={"report-sale"}
               className={
                 "pt-1 pb-2 border-s-2 active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] block cursor-pointer text-[#f5f5f5]  px-2"
               }

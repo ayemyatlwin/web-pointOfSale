@@ -42,6 +42,7 @@ export default function EditUser() {
   };
 
   const editUserData = useSelector((state) => state.userSlice);
+  console.log(editUserData);
   const name = editUserData?.name;
   const email = editUserData?.email;
   const phone = editUserData?.phone;

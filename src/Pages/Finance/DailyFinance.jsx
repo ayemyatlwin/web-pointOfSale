@@ -4,6 +4,8 @@ import DropDownBtn from "../../Components/DropDownBtn";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import DatePickers from "../../Components/Pickers/DatePickers";
 const DailyFinance = () => {
+  const [selectedDate, setSelectedDate] = useState(null);
+  
   return (
     <>
       {/* path breadcrumbs */}
@@ -21,14 +23,15 @@ const DailyFinance = () => {
 
       <div className="py-5 pb-3 ">
         <div className=" flex justify-between">
-          <h2 className=" tracking-wide text-[1.5rem]">Today Sales Overview</h2>
+          <h2 className=" tracking-wide text-[1.5rem]">{selectedDate!== null ? `${selectedDate.toLocaleDateString()} Sales Overview` : `Today Sales Overview`}</h2>
           <div className="flex gap-3">
             <DropDownBtn />
             {/* <button className="text-white border border-[#7E7F80]  font-medium rounded-lg text-sm px-5 text-center inline-flex items-center ">
               <PiCalculatorDuotone className="text-[#8AB4F8] h-5 w-5 me-2" />
               ntntn
             </button> */}
-            <DatePickers/>
+            <DatePickers selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>
+
           </div>
         </div>
       </div>
