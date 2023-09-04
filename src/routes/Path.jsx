@@ -63,8 +63,6 @@ export default function Path() {
           <Route path="finance-monthly" element={<MonthlyFinance/>}/>
           <Route path="finance-yearly" element={<YearlyFinance/>}/>
           <Route path="finance-custom" element={<CustomFinance/>}/>
-
-        
         </Route>
         <Route path="sale-cashier" element={<Cashier/>}/>
         <Route path="/sale-reciept" element={<RecieptData/>}/>
