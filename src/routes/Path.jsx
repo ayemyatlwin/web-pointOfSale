@@ -55,7 +55,7 @@ export default function Path() {
           <Route path="inventory-overview" element={<InventoryOverview/>}/>
           <Route path="adding-product" element={<AddProduct/>}/>
           <Route path="product-detail/:id" element={<ProductDetail/>}/>
-          <Route path="product-editing" element={<ProductEditing/>}/>
+          <Route path="product-editing/:id" element={<ProductEditing/>}/>
           <Route path="finance-daily" element={<DailyFinance/>}/>
           <Route path="finance-monthly" element={<MonthlyFinance/>}/>
           <Route path="finance-yearly" element={<YearlyFinance/>}/>

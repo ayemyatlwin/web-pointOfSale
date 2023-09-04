@@ -99,10 +99,12 @@ const InventoryOverview = () => {
             </Button>
           </Group>
           <Group position="center">
-            <Button>
-              {" "}
-              <AiFillEdit className="cursor-pointer hover:text-blue-700" />
-            </Button>
+          <Link to={`/product-editing/${element.product_id}`}>
+          <Button>
+             
+             <AiFillEdit className="cursor-pointer hover:text-blue-700" />
+           </Button>
+          </Link>
           </Group>
           <Group position="center">
          <Link to={`/product-detail/${element.product_id}`}>

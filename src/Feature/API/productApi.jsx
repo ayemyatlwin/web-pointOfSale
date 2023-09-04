@@ -40,10 +40,10 @@ export const productApi = createApi({
      
     }),
     updateProduct: builder.mutation({
-      query: ({ token, id, updateProductData }) => ({
+      query: ({ token, id, productData }) => ({
         url: `/products/${id}`,
-        method: "PATCH",
-        body: updateProductData,
+        method: "PUT",
+        body: productData,
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -63,4 +63,4 @@ export const productApi = createApi({
   }),
 });
 
-export const { useCreateProductMutation ,useGetProductInfoQuery,useGetSingleProductInfoQuery,useDeleteProductsMutation} = productApi;
+export const { useCreateProductMutation ,useGetProductInfoQuery,useGetSingleProductInfoQuery,useDeleteProductsMutation,useUpdateProductMutation} = productApi;
