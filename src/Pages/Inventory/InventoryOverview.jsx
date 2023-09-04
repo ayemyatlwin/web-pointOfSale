@@ -20,22 +20,28 @@ import {
 import { BsFillGridFill } from "react-icons/bs";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { PiCopyDuotone } from "react-icons/pi";
-import { IoMdAdd, IoMdRemoveCircle, IoMdRemoveCircleOutline } from "react-icons/io";
+import {
+  IoMdAdd,
+  IoMdRemoveCircle,
+  IoMdRemoveCircleOutline,
+} from "react-icons/io";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { useDeleteProductsMutation, useGetProductInfoQuery } from "../../Feature/API/productApi";
+import {
+  useDeleteProductsMutation,
+  useGetProductInfoQuery,
+} from "../../Feature/API/productApi";
 import Cookies from "js-cookie";
 import Pagination from "../../Components/Pagination";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 
-
 const InventoryOverview = () => {
-  const [delProduct]=useDeleteProductsMutation()
+  const [delProduct] = useDeleteProductsMutation();
   const nav = useNavigate();
-  const token=Cookies.get('token');
+  const token = Cookies.get("token");
   const [currentPage, setCurrentPage] = useState(1);
-  const {data}=useGetProductInfoQuery({token,currentPage});
-  const productDetailedInfo=data?.data;
+  const { data } = useGetProductInfoQuery({ token, currentPage });
+  const productDetailedInfo = data?.data;
   console.log(productDetailedInfo);
   const [opened, { open, close }] = useDisclosure(false);
   const theme = useMantineTheme();
@@ -53,13 +59,12 @@ const InventoryOverview = () => {
       cancelButtonColor: "#24262b",
       confirmButtonText: `Delete`,
     }).then(async (result) => {
-   
       if (result.isConfirmed) {
         try {
           // Call the deleteMedia mutation with the id of the picture to delete
           const resulted = await delProduct({ id, token });
           console.log(resulted);
-  
+
           if (resulted.error) {
             // Handle any errors here
             console.error("Error deleting media:", resulted.error);
@@ -68,7 +73,7 @@ const InventoryOverview = () => {
             toast.success("Product deleted successfuly!", {
               position: toast.POSITION.BOTTOM_CENTER,
               autoClose: 2000,
-      
+
               hideProgressBar: true,
               theme: "dark",
             });
@@ -78,43 +83,41 @@ const InventoryOverview = () => {
         }
       }
     });
-    
-
- 
   };
-  
-  const rows = productDetailedInfo?.map((element,i) => (
+
+  const rows = productDetailedInfo?.map((element, i) => (
     <tr key={element.product_id} className="border-b border-[#3f4245]">
-      <td className="px-6 py-4">{i+1}</td>
+      <td className="px-6 py-4">{i + 1}</td>
       <td className="px-6 py-4">{element.name}</td>
       <td className="px-6 py-4">{element.brand_name}</td>
       <td className="px-6 py-4">{element.unit}</td>
       <td className="px-6 py-4">{element.sale_price}</td>
       <td className="px-6 py-4">{element.actual_price}</td>
-   
-      <td className=" text-white">   <div className="  flex  ">
+
+      <td className=" text-white">
+        {" "}
+        <div className="  flex  ">
           <Group>
-            <Button onClick={()=>handleDelete(element?.product_id,token)}>
+            <Button onClick={() => handleDelete(element?.product_id, token)}>
               <IoMdRemoveCircleOutline className=" cursor-pointer hover:text-blue-700" />
             </Button>
           </Group>
           <Group position="center">
-          <Link to={`/product-editing/${element.product_id}`}>
-          <Button>
-             
-             <AiFillEdit className="cursor-pointer hover:text-blue-700" />
-           </Button>
-          </Link>
+            <Link to={`/product-editing/${element.product_id}`}>
+              <Button>
+                <AiFillEdit className="cursor-pointer hover:text-blue-700" />
+              </Button>
+            </Link>
           </Group>
           <Group position="center">
-         <Link to={`/product-detail/${element.product_id}`}>
-         <Button >
-           
-           <AiOutlineArrowRight className="cursor-pointer hover:text-blue-700" />
-         </Button>
-         </Link>
+            <Link to={`/product-detail/${element.product_id}`}>
+              <Button>
+                <AiOutlineArrowRight className="cursor-pointer hover:text-blue-700" />
+              </Button>
+            </Link>
           </Group>
-        </div></td>
+        </div>
+      </td>
     </tr>
   ));
 
@@ -235,36 +238,31 @@ const InventoryOverview = () => {
         <div
           className={`${!displayState ? "block" : "hidden"} overflow-y-auto`}
         >
-           <main className="border border-[#3f4245] rounded-sm mt-7">
-        <table className="w-full text-sm text-center text-[#f5f5f5]">
-          <thead className="text-xs text-[#f5f5f5] uppercase ">
-            <tr className="border-b border-[#3f4245]">
-              <th className="px-6 py-4">No.</th>
-              <th className="px-6 py-4">Name</th>
-              <th className="px-6 py-4">Brand</th>
-              <th className="px-6 py-4">Unit</th>
-              <th className="px-6 py-4">Sale price</th>
-              <th className="px-6 py-4">Actual price</th>
-              <th className="px-6 py-4">Actions</th>
-           
-            </tr>
-          </thead>
-          {/* map data from old recorded voucher list from api */}
-          <tbody className="text-[#f5f5f5]">
-            {rows}
-        
-          </tbody>
-        </table>
-      </main>
+          <main className="border border-[#3f4245] rounded-sm mt-7">
+            <table className="w-full text-sm text-center text-[#f5f5f5]">
+              <thead className="text-xs text-[#f5f5f5] uppercase ">
+                <tr className="border-b border-[#3f4245]">
+                  <th className="px-6 py-4">No.</th>
+                  <th className="px-6 py-4">Name</th>
+                  <th className="px-6 py-4">Brand</th>
+                  <th className="px-6 py-4">Unit</th>
+                  <th className="px-6 py-4">Sale price</th>
+                  <th className="px-6 py-4">Actual price</th>
+                  <th className="px-6 py-4">Actions</th>
+                </tr>
+              </thead>
+              {/* map data from old recorded voucher list from api */}
+              <tbody className="text-[#f5f5f5]">{rows}</tbody>
+            </table>
+          </main>
 
           <div>
-        <Pagination
-          setCurrentPage={setCurrentPage}
-          currentPage={currentPage}
-          last_page={data?.meta.to}
-         
-        />
-      </div>
+            <Pagination
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+              last_page={data?.meta.to}
+            />
+          </div>
         </div>
         <div
           className={`${
@@ -281,7 +279,7 @@ const InventoryOverview = () => {
                 />
                 <div className="  border border-white opacity-50">
                   <p className=" mx-4 text-3xl font-bold tracking-wider  text-right">
-                   {i.name}
+                    {i.name}
                   </p>
                   <p className=" mx-4 text-xl font-thin tracking-normal text-right">
                     {i.sale_price}
