@@ -7,10 +7,11 @@ import { LuCalendarCheck } from "react-icons/lu";
 const DatePickers = ({setSelectedDate,selectedDate}) => {
 
 
+
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
-  
+
 
   const handleSearch = () => {
     // Add your search logic here using the selectedDate
