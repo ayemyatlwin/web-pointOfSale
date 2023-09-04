@@ -58,12 +58,11 @@ export default function Path() {
           <Route path="product-detail/:id" element={<ProductDetail/>}/>
           <Route path="product-editing" element={<ProductEditing/>}/>
           <Route path="report-sale" element={<ReportSale/>} />
+          <Route path="product-editing/:id" element={<ProductEditing/>}/>
           <Route path="finance-daily" element={<DailyFinance/>}/>
           <Route path="finance-monthly" element={<MonthlyFinance/>}/>
           <Route path="finance-yearly" element={<YearlyFinance/>}/>
           <Route path="finance-custom" element={<CustomFinance/>}/>
-
-        
         </Route>
         <Route path="sale-cashier" element={<Cashier/>}/>
         <Route path="/sale-reciept" element={<RecieptData/>}/>

@@ -1,12 +1,13 @@
 import React from "react";
-
 import { MdOutlineEdit } from "react-icons/md";
-
 import { BiSolidUser } from "react-icons/bi";
-import { NavLink } from "react-router-dom";
-
+import { NavLink, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 const EditProductRef = () => {
+  const dataFromSlice = useSelector((state) => state.productSlice);
+
     const editImage = document.querySelector(".file");
+    
   return (
     <div className={`w-full`}>
     <main className={`flex items-center mt-24`}>
@@ -16,8 +17,8 @@ const EditProductRef = () => {
             className={`w-40 h-40 absolute -top-16 rounded-full border p-1 flex justify-center items-center`}
           >
             <img
-              className={`w-full`}
-              src={`https://cdn-icons-png.flaticon.com/512/8787/8787106.png`}
+             className={`w-full h-full border border-dashed bg-[#434446] rounded-full p-2`}
+             src={dataFromSlice.photo}
               alt=""
             />
             <div
@@ -29,11 +30,19 @@ const EditProductRef = () => {
             </div>
           </div>
           <div className={`flex items-center justify-between mx-10 ml-52`}>
-            <div className={``}>
-              <h2>Watemelon</h2>
-              <p>Sale Price:10,000 mml</p>
-              <p>Actual Price:8,000 mml</p>
-            </div>
+          <div className={``}>
+                <h2>{dataFromSlice.name}</h2>
+                <div className=" my-4 block">
+                  <p className="inline">Sale Price:</p>{" "}
+                  <span className=" inline">{dataFromSlice.sale_price}</span>{" "}
+                  <p className=" inline">mmk</p>
+                </div>
+                <div className=" my-4 block">
+                  <p className="inline">Actual Price:</p>
+                  <span className="inline">{dataFromSlice.actual_price}</span>
+                  <p className=" inline">mmk</p>
+                </div>
+              </div>
           </div>
         </div>
         <div>
@@ -48,27 +57,24 @@ const EditProductRef = () => {
             </NavLink>
           </div>
           <div className="px-10 py-5 flex flex-col gap-5 bg-[#1a1a1a]">
-            <div className="flex">
-              <p className="w-[30%]">Name</p>
-              <p className="w-[70%]">: Watermelon</p>
+              <div className="flex">
+                <p className="w-[30%]">Name</p>
+                <p className="w-[70%]">: {dataFromSlice.name}</p>
+              </div>
+              <div className="flex">
+                <p className="w-[30%]">Brand</p>
+                <p className="w-[70%]">: {dataFromSlice.brand_id}</p>
+              </div>
+          
+              <div className="flex">
+                <p className="w-[30%]">Unit</p>
+                <p className="w-[70%]">: {dataFromSlice.unit}</p>
+              </div>
+              <div className="flex">
+                <p className="w-[30%]">More info</p>
+                <p className="w-[70%]">: {dataFromSlice.more_information} </p>
+              </div>
             </div>
-            <div className="flex">
-              <p className="w-[30%]">Brand</p>
-              <p className="w-[70%]">: LV</p>
-            </div>
-            <div className="flex">
-              <p className="w-[30%]">Stock</p>
-              <p className="w-[70%]">: 100000</p>
-            </div>
-            <div className="flex">
-              <p className="w-[30%]">Unit</p>
-              <p className="w-[70%]">: S</p>
-            </div>
-            <div className="flex">
-              <p className="w-[30%]">More info</p>
-              <p className="w-[70%]">: Fresh fruit </p>
-            </div>
-          </div>
         </div>
       </section>
     </main>
