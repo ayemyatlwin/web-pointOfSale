@@ -27,6 +27,7 @@ import DailyFinance from "../Pages/Finance/DailyFinance";
 import MonthlyFinance from "../Pages/Finance/MonthlyFinance";
 import YearlyFinance from "../Pages/Finance/YearlyFinance";
 import CustomFinance from "../Pages/Finance/CustomFinance";
+import ReportSale from "../Pages/Report/ReportSale";
 
 
 export default function Path() {
@@ -56,6 +57,7 @@ export default function Path() {
           <Route path="adding-product" element={<AddProduct/>}/>
           <Route path="product-detail/:id" element={<ProductDetail/>}/>
           <Route path="product-editing" element={<ProductEditing/>}/>
+          <Route path="report-sale" element={<ReportSale/>} />
           <Route path="finance-daily" element={<DailyFinance/>}/>
           <Route path="finance-monthly" element={<MonthlyFinance/>}/>
           <Route path="finance-yearly" element={<YearlyFinance/>}/>
