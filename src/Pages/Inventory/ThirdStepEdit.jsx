@@ -1,9 +1,12 @@
 import React from 'react'
 import Button from '../../Components/Button'
 import { MdOutlineEdit } from 'react-icons/md'
+import { useSelector } from 'react-redux'
 
-const ThirdStepEdit = () => {
-    const editImage = document.querySelector(".file")
+const ThirdStepEdit = ({toggleShow}) => {
+  const {photo} = useSelector(state => state.productSlice)
+  console.log(photo)
+  
   return (
     <div>
     <section
@@ -15,12 +18,12 @@ const ThirdStepEdit = () => {
               className={`w-40 h-40 relative rounded-full border-2 border-dashed p-1 flex justify-center items-center`}
             >
               <img
-                className={`w-full`}
-                src={`https://cdn-icons-png.flaticon.com/512/8787/8787106.png`}
+                 className={`w-full h-full object-cover rounded-full`}
+                src={photo ? photo : `https://img.icons8.com/?size=512&id=108652&format=png`}
                 alt=""
               />
               <div
-                onClick={() => editImage.click()}
+                onClick={toggleShow}
                 className={`flex justify-center cursor-pointer absolute bg-[#202124] right-3  bottom-1 items-center text-xs gap-1 border-2 rounded-full w-8 h-8 px-1 py-0.5`}
               >
                 <MdOutlineEdit />
