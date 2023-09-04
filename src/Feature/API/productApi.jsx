@@ -42,7 +42,7 @@ export const productApi = createApi({
     updateProduct: builder.mutation({
       query: ({ token, id, productData }) => ({
         url: `/products/${id}`,
-        method: "PUT",
+        method: "PATCH",
         body: productData,
         headers: {
           authorization: `Bearer ${token}`,

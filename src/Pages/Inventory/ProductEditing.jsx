@@ -20,12 +20,17 @@ import { useGetSingleProductInfoQuery, useUpdateProductMutation } from "../../Fe
 
 
 const ProductEditing = () => {
- 
-  const {id}=useParams();
-  console.log(id);
-  const [updateProduct]=useUpdateProductMutation()
   const token = Cookies.get("token");
   const nav = useNavigate();
+  const {id}=useParams();
+  console.log(id);
+  const detailData=useGetSingleProductInfoQuery({token,id});
+  // console.log(detailData?.data?.data);
+  const editData=detailData?.data?.data;
+  console.log(editData);
+
+  const [updateProduct]=useUpdateProductMutation()
+ 
   const [show, setShow] = useState(false);
   const toggleShow = () => {
     setShow(!show);
@@ -65,53 +70,65 @@ const ProductEditing = () => {
   const toggleSelect = () => {
     setSelect(!select);
   };
-  console.log();
+
  const productData =useSelector(state=> state.productSlice);
  console.log(productData);
 
- const handleEditProduct = async (e) => {
-  e.preventDefault();
-  console.log(token);
-  console.log(id);
-  const {data} = await updateProduct({token,id, editProduct});
-  console.log(data)
- if(data.error){
-  console.log('error',error);
- }else{
-  console.log(data?.message);
-  nav('/inventory-overview');
-  toast.success("Product updated! !", {
-    position: toast.POSITION.BOTTOM_CENTER,
-    autoClose: 2000,
-
-    hideProgressBar: true,
-    theme: "dark",
-  });
+ const handleEditProduct=async(e)=>{
+  try{
+    e.preventDefault();
+  const dataResult=await updateProduct({token,id,productData});
+  console.log(dataResult);
+  }catch(error){
+    console.log(error);
+  }
  }
-};
-const dataEdit=useGetSingleProductInfoQuery({token,id});
-const[ editProduct,setEditProduct] =useState({
-  name:'',
-  brand_id:3,
-  unit:'',
-  more_information:'',
-  actual_price:null,
-  sale_price:null,
-  photo: null
-});
-console.log(dataEdit?.data?.data);
-useEffect(()=>{
-setEditProduct({
-  name:dataEdit?.data?.data?.name,
-  brand_id:3,
-  unit:dataEdit?.data?.data?.unit,
-  more_information:dataEdit?.data?.data?.more_information,
-  actual_price:dataEdit?.data?.data?.actual_price,
-  sale_price:dataEdit?.data?.data?.actual_price,
-  photo:dataEdit?.data?.data?.photo
-})
-},[dataEdit])
-console.log(editProduct);
+ 
+
+//  const handleEditProduct = async (e) => {
+//   e.preventDefault();
+//   console.log(token);
+//   console.log(id);
+//   const {data} = await updateProduct({token,id, productData});
+//   console.log(data)
+//  if(data.error){
+//   console.log('error',error);
+//  }else{
+//   console.log(data?.message);
+//   nav('/inventory-overview');
+//   toast.success("Product updated!!", {
+//     position: toast.POSITION.BOTTOM_CENTER,
+//     autoClose: 2000,
+
+//     hideProgressBar: true,
+//     theme: "dark",
+//   });
+//  }
+// };
+
+// const dataEdit=useGetSingleProductInfoQuery({token,id});
+// const[ editProduct,setEditProduct] =useState({
+//   name:'',
+//   // brand_id:null,
+//   unit:'',
+//   more_information:'',
+//   actual_price:null,
+//   sale_price:null,
+//   photo: null
+// });
+// console.log(dataEdit?.data?.data);
+// useEffect(()=>{
+// setEditProduct({
+//   name:dataEdit?.data?.data?.name,
+//   brand_id:null,
+//   unit:dataEdit?.data?.data?.unit,
+//   more_information:dataEdit?.data?.data?.more_information,
+//   actual_price:dataEdit?.data?.data?.actual_price,
+//   sale_price:dataEdit?.data?.data?.actual_price,
+//   photo:dataEdit?.data?.data?.photo
+// })
+// },[dataEdit])
+// console.log(editProduct);
  
   return (
     <>
@@ -132,7 +149,9 @@ console.log(editProduct);
           show ? "scale-y-1" : "scale-y-0"
         } transition-all duration-400 origin-center absolute z-20 items-center bg-[#202124] justify-center`}
       >
-        <ProductSelectPhotoModalEdit editProduct={editProduct} setEditProduct={setEditProduct} setShow={setShow} toggleShow={toggleShow} />
+        <ProductSelectPhotoModalEdit  
+        // setEditProduct={setEditProduct} 
+        setShow={setShow} toggleShow={toggleShow} />
       </div>
       <main className="mt-7">
         <form action="" className={`flex gap-10`}>
@@ -140,9 +159,8 @@ console.log(editProduct);
           {state.FirstStep && (
             <div className="w-[70%]">
               <FirstStepEdit
-              editProduct={editProduct}
-              setEditProduct={setEditProduct}
-              
+             
+               editData={editData}
                 select={select}
                 toggleSelect={toggleSelect}
                 display={display}
@@ -154,9 +172,8 @@ console.log(editProduct);
           {state.SconStep && (
             <div className="w-[70%]">
               <SconStepEdit
-               editProduct={editProduct}
-               setEditProduct={setEditProduct}
-               
+             
+             editData={editData}
                 select={select}
                 toggleSelect={toggleSelect}
                 display={display}
@@ -167,8 +184,8 @@ console.log(editProduct);
           {/* Photo Upload  */}
           {state.ThirdStep && (
             <div className="w-[70%]">
-              <ThirdStepEdit  editProduct={editProduct}
-              setEditProduct={setEditProduct}
+              <ThirdStepEdit  
+             
                 toggleShow={toggleShow}  />
             </div>
           )}

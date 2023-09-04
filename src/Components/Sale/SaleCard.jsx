@@ -12,7 +12,7 @@ const SaleCard = ({ pd }) => {
       className=" max-w-[300px]  bg-white border overflow-hidden  border-[#3f4245] rounded-lg shadow "
     >
       <a href="#">
-        <img className=" object-contain h-40" src={pd?.photo} alt="" />
+        <img className=" object-fill h-40 w-40" src={pd?.photo} alt="" />
       </a>
       <div className="p-2 bg-[#161618] ">
         <a href="#">
@@ -21,7 +21,7 @@ const SaleCard = ({ pd }) => {
           </h5>
         </a>
         <p className="mb-1 text-right text-md text-[#E8EAED] font-normal  ">
-          {pd?.sale_price} MMK
+          {pd?.sale_price.toFixed()} MMK
         </p>
       </div>
     </div>
