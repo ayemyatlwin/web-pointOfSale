@@ -1,7 +1,18 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { BiChevronDown } from 'react-icons/bi';
+import { useDispatch } from 'react-redux';
+import { addProductMore_information, addProductName, addProductUnit } from '../../Feature/Service/productSlice';
+import { useGetSingleProductInfoQuery } from '../../Feature/API/productApi';
 
-const FirstStepEdit = ({toggleSelect, display, setDisplay, select}) => {
+const FirstStepEdit = ({toggleSelect, display, setDisplay, select,setEditProduct,editProduct}) => {
+
+const dispatch=useDispatch();
+
+useEffect(()=>{
+dispatch(addProductName({name:editProduct?.name}))
+dispatch(addProductUnit({unit:editProduct?.unit}))
+dispatch(addProductMore_information({more_information:editProduct?.more_information}))
+},[editProduct])
   return (
     <div>
         <section
@@ -10,6 +21,11 @@ const FirstStepEdit = ({toggleSelect, display, setDisplay, select}) => {
               <div className="flex">
                 <label className="w-[30%]">Name</label>
                 <input
+               value={editProduct?.name}
+               onChange={(e) => setEditProduct((prevState) => ({
+                 ...prevState,
+                 name: e.target.value,
+               }))}
                   placeholder="Enter product name"
                   className={`w-[70%] outline-none border rounded px-5 py-2`}
                   type="text"
@@ -57,19 +73,15 @@ const FirstStepEdit = ({toggleSelect, display, setDisplay, select}) => {
               </div>
             </div>
           </div>
-              <div className="flex">
-                <label className="w-[30%]">Stock</label>
-                <input
-                  placeholder="Enter your Stock of product"
-                  className={`w-[70%] outline-none border rounded px-5 py-2`}
-                  type="number"
-                  name=""
-                  id=""
-                />
-              </div>
+             
               <div className="flex">
                 <label className="w-[30%]">Unit</label>
                 <input
+                    value={editProduct?.unit}
+                    onChange={(e) => setEditProduct((prevState) => ({
+                      ...prevState,
+                      unit: e.target.value,
+                    }))}
                   placeholder="Enter unit"
                   className={`w-[70%] outline-none border rounded px-5 py-2`}
                   type="text"
@@ -80,6 +92,11 @@ const FirstStepEdit = ({toggleSelect, display, setDisplay, select}) => {
               <div className="flex">
                 <label className="w-[30%]">More info</label>
                 <textarea
+                  value={editProduct?.more_information}
+                  onChange={(e) => setEditProduct((prevState) => ({
+                    ...prevState,
+                    more_information: e.target.value,
+                  }))}
                   rows={3}
                   placeholder="Enter more info about the product"
                   className={`w-[70%] bg-[#202124] outline-none border rounded px-5 py-2`}
