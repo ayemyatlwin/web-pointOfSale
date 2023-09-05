@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 
 const initialState = {
   name: null,
-  // brand_id: null,
+  brand_id: 3,
   actual_price: null,
   sale_price: null,
   unit: null,
@@ -19,9 +19,9 @@ export const productSlice = createSlice({
     addProductName: (state, { payload }) => {
       state.name = payload.name;
     },
-    // addProductBrand_id: (state, { payload }) => {
-    //   state.brand_id = payload.brand_id;
-    // },
+    addProductBrand_id: (state, { payload }) => {
+      state.brand_id = payload.brand_id;
+    },
     addProductActual_price: (state, {payload}) => {
       state.actual_price = payload.actual_price
     },
@@ -45,7 +45,7 @@ export const productSlice = createSlice({
 
 export const {
     addProductName,
-    // addProductBrand_id,
+    addProductBrand_id,
     addProductActual_price,
     addProductSale_price,
     addProductUnit,

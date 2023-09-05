@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import React, { useEffect, useRef } from "react";
 import { RxCross1 } from "react-icons/rx";
 import { useGetMediaQuery } from '../../Feature/API/mediaApi'
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addProductPhoto } from "../../Feature/Service/productSlice";
 const ProductSelectPhotoModalEdit = ({toggleShow,editProduct,setEditProduct }) => {
     const token = Cookies.get("token");
@@ -15,9 +15,11 @@ const ProductSelectPhotoModalEdit = ({toggleShow,editProduct,setEditProduct }) =
       }
     };
     useEffect(()=>{
+      console.log(editProduct?.photo);
       dispatch(addProductPhoto({photo:editProduct?.photo}))
      
-      },[editProduct])
+      },[editProduct]);
+      useSelector(state=>console.log(state?.productSlice?.photo))
     const { data } = useGetMediaQuery(token);
     const image = data?.data.map((i) => i);
     console.log(image);
@@ -70,7 +72,9 @@ const ProductSelectPhotoModalEdit = ({toggleShow,editProduct,setEditProduct }) =
                 key={i.id}
                 className="flex flex-col w-40 h-36 rounded overflow-hidden cursor-pointer justify-center items-center gap-2"
               >
-                <img
+                <img onChange={()=>{
+                  
+                }}
                   className={`w-full h-full object-cover`}
                   src={i.url}
                   alt=""
