@@ -85,6 +85,7 @@ const AddProduct = () => {
       {/* path breadcrumbs */}
       <div>
         <Breadcrumb
+        addProduct={true}
           showBtn={true}
           icon={true}
           btnText={"Product list"}
