@@ -4,7 +4,7 @@ import { BiChevronLeft, BiChevronRight, BiChevronsLeft, BiChevronsRight } from '
 export default function Pagination({currentPage, last_page, setCurrentPage}) {
   return (
     <div>
-        <section className=" border-t py-5 flex items-center justify-end w-full">
+        <section className=" py-5 flex items-center justify-end w-full">
           <div className="flex items-center border rounded ">
             <BiChevronsLeft
               onClick={() => currentPage > 1 && setCurrentPage(1)}
@@ -20,7 +20,7 @@ export default function Pagination({currentPage, last_page, setCurrentPage}) {
                 currentPage === 1 && "text-slate-500"
               } cursor-pointer border-x w-8 h-7 p-1`}
             />
-            <p className=" px-5">{`${currentPage}  -  ${last_page}`}</p>
+            <p className=" px-5">{`${currentPage}  -  ${last_page== undefined ? `loading`:  last_page}`}</p>
             <BiChevronRight
               onClick={() =>
                 currentPage < last_page &&

@@ -45,18 +45,18 @@ const RecieptData = () => {
                           <div className="flex flex-col">
                             <p className="font-medium leading-loose tracking-wider text-[1rem]">
                               {/* {item?.name.slice(0, 7)} */}
-                              {item?.product_id}
+                              {item?.name}
                             </p>
                             <span className="text-[0.8rem] font-medium">
                               <span className="mr-2 font-medium">
                                 {item?.quantity}
                                 pcs
                               </span>
-                              <span>{item?.cost} MMK</span>
+                              <span>{item?.price} MMK</span>
                             </span>
                           </div>
                           <span className="text-medium">
-                            {Number(item?.quantity) * item?.cost}
+                            {Number(item?.cost) }
                           </span>
                         </div>
                       </Link>

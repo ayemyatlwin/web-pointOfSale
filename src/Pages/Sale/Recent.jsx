@@ -3,25 +3,31 @@ import Breadcrumb from "../../Components/Breadcrumb";
 import Pagination from "../../Components/Pagination";
 import { useRecordedVoucherQuery } from "../../Feature/API/saleApi";
 import Cookies from "js-cookie";
-import { Typography } from "@mui/material";
 import DropDownBtn from "../../Components/DropDownBtn";
 import { PiCalculatorDuotone } from "react-icons/pi";
-import { setSaleClose } from "../../Feature/Service/recieptSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { AiOutlineArrowRight } from "react-icons/ai";
+import { Loader } from "@mantine/core";
+import {setSaleClose} from "../../Feature/Service/recieptSlice"
 
 const Recent = () => {
   const token = Cookies.get("token");
   const dispatch = useDispatch();
-  const recordedVoucher = useRecordedVoucherQuery(token);
-  console.log(recordedVoucher);
-  const oldData = recordedVoucher?.currentData?.data;
-
   const [currentPage, setCurrentPage] = useState(1);
+  const recordedVoucher = useRecordedVoucherQuery({ token, currentPage });
+  console.log(recordedVoucher);
+
+  const oldData = recordedVoucher?.currentData?.data;
 
   const totals = oldData?.map((eachData) => eachData?.net_total);
   console.log(totals);
+  const totalTaxs = oldData?.map((eachData) => eachData?.tax);
+  console.log(totalTaxs);
+  const totalsCashs = oldData?.map((eachData) => eachData?.total);
+  console.log(totalsCashs);
+  const totalVouchers = oldData?.map((eachData) => eachData?.voucher_number);
+  console.log(totalVouchers);
 
   const { saleClose } = useSelector((state) => state.recieptSlice);
   console.log(saleClose);
@@ -44,6 +50,7 @@ const Recent = () => {
     });
   };
 
+  
   return (
     <>
       {/* path breadcrumbs */}
@@ -97,15 +104,18 @@ const Recent = () => {
                   <td className="px-6 py-4">{i + 1}</td>
                   <td className="px-6 py-4">{data?.user}</td>
                   <td className="px-6 py-4">{data?.voucher_number}</td>
-                  <td className="px-6 py-4">{data?.date}</td>
-                  <td className="px-6 py-4">{data?.voucher_records?.quantity}</td>
+                  <td className="px-6 py-4">{data?.time}</td>
+                  <td className="px-6 py-4">
+                    {data?.voucher_records?.quantity}
+                  </td>
                   <td className="px-6 py-4">{data?.total}</td>
                   <td className="px-6 py-4">{data?.tax}</td>
                   <td className="px-6 py-4">{data?.net_total}</td>
                   <td className="px-6 py-4">
-                <button className="px-2 py-2 bg-[#3f4245] rounded-full"><AiOutlineArrowRight /></button>
-                {" "}
-              </td>
+                    <button className="px-2 py-2 bg-[#3f4245] rounded-full">
+                      <AiOutlineArrowRight />
+                    </button>{" "}
+                  </td>
                 </tr>
               );
             })}
@@ -115,29 +125,47 @@ const Recent = () => {
 
       {/* total and tax */}
       <div className="flex justify-between ">
-        <div className="flex gap-3 mb-2 mt-5 border border-[#3f4245] rounded-md">
-          {/* <span>Total sale: </span>
-          <span>{totals?.reduce((pv, cv) => pv + cv, 0).toFixed(2)} MMK</span> */}
-          <button className="border-r border-[#3f4245] flex flex-col w-[7rem] py-2 px-2 ">
-            <span className="text-xs self-end text-[#8AB4F8] ">
-              Total Vouchers
-            </span>
-            <span className="text-lg self-end">45675</span>
-          </button>
-          <button className="border-r border-[#3f4245]  flex flex-col w-[7rem] py-2 px-2 ">
-            <span className="text-xs self-end text-[#8AB4F8] ">Total Cash</span>
-            <span className="text-lg self-end">45675</span>
-          </button>
-          <button className="border-r border-[#3f4245] flex flex-col w-[7rem] py-2 px-2 ">
-            <span className="text-xs self-end text-[#8AB4F8] ">Total Tax</span>
-            <span className="text-lg self-end">45675</span>
-          </button>
-          <button className="  flex flex-col w-[7rem] py-2 px-2 ">
-            <span className="text-xs self-end text-[#8AB4F8] ">Total </span>
-            <span className="text-lg self-end">45675</span>
-          </button>
+        {oldData ? (
+          <div className="flex gap-3 mb-2 mt-5 border border-[#3f4245] rounded-md">
+            <button className="border-r border-[#3f4245] flex flex-col w-[7rem] py-2 px-2 ">
+              <span className="text-xs self-end text-[#8AB4F8] ">
+                Total Vouchers
+              </span>
+              <span className="text-md self-end">{totalVouchers?.length}</span>
+            </button>
+            <button className="border-r border-[#3f4245]  flex flex-col w-[7rem] py-2 px-2 ">
+              <span className="text-xs self-end text-[#8AB4F8] ">
+                Total Cash
+              </span>
+              <span className="text-md self-end">
+                {totalsCashs?.reduce((pv, cv) => pv + cv, 0).toFixed(2)}
+              </span>
+            </button>
+            <button className="border-r border-[#3f4245] flex flex-col w-[7rem] py-2 px-2 ">
+              <span className="text-xs self-end text-[#8AB4F8] ">
+                Total Tax
+              </span>
+              <span className="text-md self-end">
+                {totalTaxs?.reduce((pv, cv) => pv + cv, 0).toFixed(2)}
+              </span>
+            </button>
+            <button className="  flex flex-col w-[7rem] py-2 px-2 ">
+              <span className="text-xs self-end text-[#8AB4F8] ">Total </span>
+              <span className="text-md self-end">
+                {totals?.reduce((pv, cv) => pv + cv, 0).toFixed(2)}
+              </span>
+            </button>
+          </div>
+        ) : (
+          <Loader variant="dots" color="gray" />
+        )}
+        <div className=" py-5 place-self-end">
+          <Pagination
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+            last_page={recordedVoucher?.currentData?.meta?.last_page}
+          />
         </div>
-        <div className=" py-5 place-self-end">Pagination</div>
       </div>
     </>
   );
