@@ -14,6 +14,7 @@ export default function Breadcrumb({
   createUser,
   editUser,
   editProfile,
+  editProduct,
   save,
   showBtn
 }) {
@@ -51,7 +52,9 @@ export default function Breadcrumb({
             onClick={() => {
               (createUser && nav("/create-user")) ||
                 (editProfile && nav("/edit-profile") ) ||
-                (editUser && nav("/user-overview"));
+                (editUser && nav("/user-overview"))||
+                (editProduct && nav('/inventory-overview') )||
+                (addProduct && nav('/inventory-overview') );
                 save && save()
             }}
             className="bg-[#8AB4F8] text-[#161618]  px-6 py-3 flex items-center gap-2 rounded font-semibold"

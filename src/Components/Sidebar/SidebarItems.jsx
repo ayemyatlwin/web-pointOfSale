@@ -140,6 +140,7 @@ const SidebarItems = () => {
           </Accordion.Panel>
           <Accordion.Panel>
             <NavLink
+             to={"stock-control"}
               className={`pt-1 pb-2 border-s-2 active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] block cursor-pointer text-[#f5f5f5]  px-2`}
             >
               Stock Control
