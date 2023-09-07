@@ -37,7 +37,9 @@ export const recieptSlice = createSlice({
       }
       state.totalPrice = totalAmount(state.reciept);
       state.tax = totalTax(state.reciept);
-      state.listSelector=payload.product_id
+      state.listSelector=payload.product_id;
+      state.initialChanged = true;
+
     },
     setListSelector: (state, { payload }) => {
       state.listSelector = payload;

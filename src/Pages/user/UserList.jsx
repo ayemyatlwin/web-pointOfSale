@@ -76,13 +76,15 @@ export default function UserList() {
 
       <div className="flex justify-end my-3 ">
         
-        <div className=" py-5">Pagination</div>
-      </div>
-        {/* <Pagination
+        <div className=" py-5">
+        <Pagination
           setCurrentPage={setCurrentPage}
           currentPage={currentPage}
           last_page={data?.users.to}
-        /> */}
+        />
+        </div>
+      </div>
+       
       </div>
     </>
   );
