@@ -8,7 +8,9 @@ const RecieptData = () => {
   const { totalPrice, tax, voucherData } = useSelector(
     (state) => state.recieptSlice
   );
-  //console.log(voucherData?.data?.voucher_records);
+  // console.log(voucherData?.data?.voucher_records);
+
+   console.log(voucherData?.data);
   const printHandler = () => {
     window.print();
   };

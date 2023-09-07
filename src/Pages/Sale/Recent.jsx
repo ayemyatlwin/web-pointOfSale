@@ -15,7 +15,7 @@ const Recent = () => {
   const token = Cookies.get("token");
   const dispatch = useDispatch();
   const recordedVoucher = useRecordedVoucherQuery(token);
-  console.log(recordedVoucher?.currentData?.data);
+  console.log(recordedVoucher);
   const oldData = recordedVoucher?.currentData?.data;
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -28,7 +28,7 @@ const Recent = () => {
 
   const saleCloseHandler = () => {
     Swal.fire({
-      title: `Are you sure to sale ${saleClose ? "Open" : "Close"} ?`,
+      title: `Are you sure to sale ${saleClose ? "Close" : "Open"} ?`,
       icon: "question",
       iconColor: "#fff",
       background: "#161618",
@@ -36,7 +36,7 @@ const Recent = () => {
       showCloseButton: true,
       confirmButtonColor: "#3f4245",
       cancelButtonColor: "#24262b",
-      confirmButtonText: `${saleClose ? "Open" : "CACULATE"}`,
+      confirmButtonText: `${saleClose ? "Close" : "CACULATE"}`,
     }).then(async (result) => {
       if (result.isConfirmed) {
         dispatch(setSaleClose(!saleClose));
@@ -69,7 +69,7 @@ const Recent = () => {
               className="text-white border border-[#7E7F80]  font-medium rounded-lg text-sm px-5 text-center inline-flex items-center "
             >
               <PiCalculatorDuotone className="text-[#8AB4F8] h-5 w-5 me-2" />
-              {saleClose ? `Sale Open` : `Sale Close`}
+              {saleClose ? `Sale Close` : `Sale Open`}
             </button>
           </div>
         </div>
@@ -97,11 +97,11 @@ const Recent = () => {
                   <td className="px-6 py-4">{i + 1}</td>
                   <td className="px-6 py-4">{data?.user}</td>
                   <td className="px-6 py-4">{data?.voucher_number}</td>
-                  <td className="px-6 py-4">{i + 1}</td>
-                  <td className="px-6 py-4">{data.voucher_records.quantity}</td>
-                  <td className="px-6 py-4">{data.total}</td>
-                  <td className="px-6 py-4">{data.tax}</td>
-                  <td className="px-6 py-4">{data.net_total}</td>
+                  <td className="px-6 py-4">{data?.date}</td>
+                  <td className="px-6 py-4">{data?.voucher_records?.quantity}</td>
+                  <td className="px-6 py-4">{data?.total}</td>
+                  <td className="px-6 py-4">{data?.tax}</td>
+                  <td className="px-6 py-4">{data?.net_total}</td>
                   <td className="px-6 py-4">
                 <button className="px-2 py-2 bg-[#3f4245] rounded-full"><AiOutlineArrowRight /></button>
                 {" "}
