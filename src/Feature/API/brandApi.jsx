@@ -26,6 +26,16 @@ export const brandApi = createApi({
         providesTags:['brandApi']
   
       }),
+      deleteBrand:builder.mutation({
+        query:({token,id})=>({
+            url:`/brands/${id}`,
+            method: "DELETE",
+            headers: {
+                authorization: `Bearer ${token}`,
+              },
+        }),
+        invalidatesTags: ["brandApi"],
+    }),
   })
 });
-export const {useCreateBrandMutation,useGetBrandInfoQuery} = brandApi;
+export const {useCreateBrandMutation,useGetBrandInfoQuery,useDeleteBrandMutation} = brandApi;

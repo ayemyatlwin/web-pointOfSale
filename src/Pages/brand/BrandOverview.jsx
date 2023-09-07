@@ -31,7 +31,7 @@ import Cookies from "js-cookie";
 import Pagination from "../../Components/Pagination";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
-import { useGetBrandInfoQuery } from "../../Feature/API/brandApi";
+import { useDeleteBrandMutation, useGetBrandInfoQuery } from "../../Feature/API/brandApi";
 
 const BrandOverview = () => {
 
@@ -43,7 +43,44 @@ const BrandOverview = () => {
   const theme = useMantineTheme();
   const [displayState, setDisplayState] = useState(false);
   const [displayState2, setDisplayState2] = useState(false);
- 
+ const [deleteBrand]=useDeleteBrandMutation();
+ const handleDelete = async (id, token) => {
+    Swal.fire({
+      title: `Are you sure you want to delete this product??`,
+      icon: "question",
+      iconColor: "#FF0000",
+      background: "#161618",
+      showCancelButton: true,
+      showCloseButton: true,
+      confirmButtonColor: "#FF0000",
+      cancelButtonColor: "#24262b",
+      confirmButtonText: `Delete`,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          // Call the deleteMedia mutation with the id of the picture to delete
+          const resulted = await deleteBrand({ id, token });
+          console.log(resulted);
+
+          if (resulted.error) {
+            // Handle any errors here
+            console.error("Error deleting media:", resulted.error);
+          } else {
+            // Handle success, e.g., update your component state
+            toast.success("Product deleted successfuly!", {
+              position: toast.POSITION.BOTTOM_CENTER,
+              autoClose: 2000,
+
+              hideProgressBar: true,
+              theme: "dark",
+            });
+          }
+        } catch (error) {
+          console.error("An error occurred:", error);
+        }
+      }
+    });
+  };
 
 const brandDetailedInfo=data?.data;
 console.log(brandDetailedInfo);
@@ -54,13 +91,13 @@ console.log(brandDetailedInfo);
       <td className="px-6 py-4">{element.company}</td>
       <td className="px-6 py-4">{element.agent}</td>
       <td className="px-6 py-4">{element.phone}</td>
-      <td className="px-6 py-4">{element.information}</td>
+      <td className="px-6 py-4 w-[50px]">{element.information}</td>
 
       <td className=" text-white">
  
         <div className="  flex  ">
           <Group>
-            <Button onClick={''}>
+            <Button onClick={() => handleDelete(element?.brand_id, token)}>
               <IoMdRemoveCircleOutline className=" cursor-pointer hover:text-blue-700" />
             </Button>
           </Group>
@@ -98,7 +135,7 @@ console.log(brandDetailedInfo);
 
           <button
             onClick={() => {
-              nav("/adding-product");
+              nav("/brand-adding");
             }}
             className=" hover:opacity-80 px-6 py-2   font-bold  border  rounded-sm text-black bg-blue-300 "
           >
