@@ -3,6 +3,7 @@ import Breadcrumb from "../../Components/Breadcrumb";
 import DropDownBtn from "../../Components/DropDownBtn";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import DatePickers from "../../Components/Pickers/DatePickers";
+import Pagination from "../../Components/Pagination";
 const DailyFinance = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   
@@ -23,7 +24,7 @@ const DailyFinance = () => {
 
       <div className="py-5 pb-3 ">
         <div className=" flex justify-between">
-          <h2 className=" tracking-wide text-[1.5rem]">{selectedDate!== null ? `${selectedDate.toLocaleDateString()} Sales Overview` : `Today Sales Overview`}</h2>
+          <h2 className=" tracking-wide text-[1.5rem]">{selectedDate!== null ? `${selectedDate.toLocaleDateString("en-GB")} Sales Overview` : `Today Sales Overview`}</h2>
           <div className="flex gap-3">
             <DropDownBtn />
             {/* <button className="text-white border border-[#7E7F80]  font-medium rounded-lg text-sm px-5 text-center inline-flex items-center ">
@@ -54,12 +55,12 @@ const DailyFinance = () => {
           <tbody className="text-[#f5f5f5]">
             <tr className="border-b border-[#3f4245]">
               <td className="px-6 py-4">1</td>
-              <td className="px-6 py-4">1</td>
-              <td className="px-6 py-4">1</td>
-              <td className="px-6 py-4">1</td>
-              <td className="px-6 py-4">1</td>
-              <td className="px-6 py-4">1</td>
-              <td className="px-6 py-4">1</td>
+              <td className="px-6 py-4">09038</td>
+              <td className="px-6 py-4">11:30 PM</td>
+              <td className="px-6 py-4">20</td>
+              <td className="px-6 py-4">5000</td>
+              <td className="px-6 py-4">500</td>
+              <td className="px-6 py-4">5500</td>
               <td className="px-6 py-4">
                 <button className="px-2 py-2 bg-[#3f4245] rounded-full"><AiOutlineArrowRight /></button>
                 {" "}
@@ -91,7 +92,9 @@ const DailyFinance = () => {
             <span className="text-lg self-end">45675</span>
           </button>
         </div>
-        <div className=" py-5 place-self-end">Pagination</div>
+        <div className=" py-5 place-self-end">
+          <Pagination currentPage={1} />
+        </div>
       </div>
     </>
   );
