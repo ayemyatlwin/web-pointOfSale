@@ -29,6 +29,9 @@ import YearlyFinance from "../Pages/Finance/YearlyFinance";
 import CustomFinance from "../Pages/Finance/CustomFinance";
 import ReportSale from "../Pages/Report/ReportSale";
 import SaleHandlerGuard from "./SaleHandlerGuard";
+import StockControl from "../Pages/Stock/StockControl";
+import StockAdding from "../Pages/Stock/StockAdding";
+
 
 export default function Path() {
   return (
@@ -63,6 +66,19 @@ export default function Path() {
           <Route path="finance-monthly" element={<MonthlyFinance />} />
           <Route path="finance-yearly" element={<YearlyFinance />} />
           <Route path="finance-custom" element={<CustomFinance />} />
+          <Route path="sale-recent" element={<Recent/>}/>
+          <Route path="inventory-overview" element={<InventoryOverview/>}/>
+          <Route path="adding-product" element={<AddProduct/>}/>
+          <Route path="product-detail/:id" element={<ProductDetail/>}/>
+          <Route path="product-editing" element={<ProductEditing/>}/>
+          <Route path="report-sale" element={<ReportSale/>} />
+          <Route path="product-editing/:id" element={<ProductEditing/>}/>
+          <Route path="stock-control" element={<StockControl/>}/>
+          <Route path="stock-adding/:id" element={<StockAdding/>}/>
+          <Route path="finance-daily" element={<DailyFinance/>}/>
+          <Route path="finance-monthly" element={<MonthlyFinance/>}/>
+          <Route path="finance-yearly" element={<YearlyFinance/>}/>
+          <Route path="finance-custom" element={<CustomFinance/>}/>
         </Route>
         <Route
           path="sale-cashier"
