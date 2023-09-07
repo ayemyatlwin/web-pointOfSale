@@ -8,17 +8,19 @@ const Error = () => {
 
   return (
     <div>
-      <section className="bg-white ">
-        <div className="py-8 px-4 mx-auto max-w-screen-xl text-center  lg:py-16 lg:px-12">
-          <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl ">
+      <section className="bg-[#161618] h-screen ">
+        <div className=" flex justify-center items-center h-screen  ">
+         <div className="flex flex-col">
+         <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-[#f5f5f5]  ">
             404 NOT FOUND !
           </h1>
 
-          <div className="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
-            <Link to={token? "/" :"/login"}   className="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-lg bg-primary-700 hover:bg-gray-200  ">
+          <div className="flex flex-col mb-8 ">
+            <Link to={token? "/" :"/login"}   className="inline py-3 px-5 text-base font-medium text-center text-[#f5f5f5] rounded-lg bg-primary-700  hover:text-blue-600  ">
               Go Back
             </Link>
           </div>
+         </div>
         </div>
       </section>
     </div>
