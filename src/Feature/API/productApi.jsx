@@ -58,9 +58,21 @@ export const productApi = createApi({
         },
 
       })
+    }),
+    //for stock adding
+    addingStockQuantity:builder.mutation({
+      query:({token,productData}) => ({
+        url: `/stocks`,
+        method: "POST",
+        body: productData,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+        invalidatesTags: ["productApi"],
+      }),
     })
 
   }),
 });
 
-export const { useCreateProductMutation ,useGetProductInfoQuery,useGetSingleProductInfoQuery,useDeleteProductsMutation,useUpdateProductMutation} = productApi;
+export const { useCreateProductMutation ,useGetProductInfoQuery,useGetSingleProductInfoQuery,useDeleteProductsMutation,useUpdateProductMutation,useAddingStockQuantityMutation} = productApi;
