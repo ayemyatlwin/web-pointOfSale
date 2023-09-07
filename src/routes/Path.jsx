@@ -31,6 +31,7 @@ import ReportSale from "../Pages/Report/ReportSale";
 import SaleHandlerGuard from "./SaleHandlerGuard";
 import StockControl from "../Pages/Stock/StockControl";
 import StockAdding from "../Pages/Stock/StockAdding";
+import BrandOverview from "../Pages/brand/BrandOverview";
 
 
 export default function Path() {
@@ -75,6 +76,7 @@ export default function Path() {
           <Route path="product-editing/:id" element={<ProductEditing/>}/>
           <Route path="stock-control" element={<StockControl/>}/>
           <Route path="stock-adding/:id" element={<StockAdding/>}/>
+          <Route path="brand-overview" element={<BrandOverview/>}/>
           <Route path="finance-daily" element={<DailyFinance/>}/>
           <Route path="finance-monthly" element={<MonthlyFinance/>}/>
           <Route path="finance-yearly" element={<YearlyFinance/>}/>
