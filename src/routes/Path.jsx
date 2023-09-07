@@ -28,8 +28,10 @@ import MonthlyFinance from "../Pages/Finance/MonthlyFinance";
 import YearlyFinance from "../Pages/Finance/YearlyFinance";
 import CustomFinance from "../Pages/Finance/CustomFinance";
 import ReportSale from "../Pages/Report/ReportSale";
+import SaleHandlerGuard from "./SaleHandlerGuard";
 import StockControl from "../Pages/Stock/StockControl";
 import StockAdding from "../Pages/Stock/StockAdding";
+import BrandOverview from "../Pages/brand/BrandOverview";
 
 
 export default function Path() {
@@ -54,6 +56,17 @@ export default function Path() {
           <Route path="create-user" element={<CreateUser />} />
           <Route path="update-user" element={<UpdateUser />} />
           <Route path="media-gallery" element={<Mediapgwpic />} />
+          <Route path="sale-recent" element={<Recent />} />
+          <Route path="inventory-overview" element={<InventoryOverview />} />
+          <Route path="adding-product" element={<AddProduct />} />
+          <Route path="product-detail/:id" element={<ProductDetail />} />
+          <Route path="product-editing" element={<ProductEditing />} />
+          <Route path="report-sale" element={<ReportSale />} />
+          <Route path="product-editing/:id" element={<ProductEditing />} />
+          <Route path="finance-daily" element={<DailyFinance />} />
+          <Route path="finance-monthly" element={<MonthlyFinance />} />
+          <Route path="finance-yearly" element={<YearlyFinance />} />
+          <Route path="finance-custom" element={<CustomFinance />} />
           <Route path="sale-recent" element={<Recent/>}/>
           <Route path="inventory-overview" element={<InventoryOverview/>}/>
           <Route path="adding-product" element={<AddProduct/>}/>
@@ -63,16 +76,31 @@ export default function Path() {
           <Route path="product-editing/:id" element={<ProductEditing/>}/>
           <Route path="stock-control" element={<StockControl/>}/>
           <Route path="stock-adding/:id" element={<StockAdding/>}/>
+          <Route path="brand-overview" element={<BrandOverview/>}/>
           <Route path="finance-daily" element={<DailyFinance/>}/>
           <Route path="finance-monthly" element={<MonthlyFinance/>}/>
           <Route path="finance-yearly" element={<YearlyFinance/>}/>
           <Route path="finance-custom" element={<CustomFinance/>}/>
         </Route>
-        <Route path="sale-cashier" element={<Cashier/>}/>
-        <Route path="/sale-reciept" element={<RecieptData/>}/>
-        <Route path="/sale-checkout" element={<Checkout/>}/>
-        <Route path="login" element={<AuthenticatedGuard><Login /></AuthenticatedGuard>} />
-        <Route path="/*" element={<Error/>}/>
+        <Route
+          path="sale-cashier"
+          element={
+            <SaleHandlerGuard>
+              <Cashier />
+            </SaleHandlerGuard>
+          }
+        />
+        <Route path="/sale-reciept" element={<RecieptData />} />
+        <Route path="/sale-checkout" element={<Checkout />} />
+        <Route
+          path="login"
+          element={
+            <AuthenticatedGuard>
+              <Login />
+            </AuthenticatedGuard>
+          }
+        />
+        <Route path="/*" element={<Error />} />
       </Routes>
     </div>
   );
