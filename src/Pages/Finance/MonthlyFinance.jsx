@@ -4,6 +4,7 @@ import DropDownBtn from "../../Components/DropDownBtn";
 import { PiCalculatorDuotone } from "react-icons/pi";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import MonthPickers from "../../Components/Pickers/MonthPickers";
+import Pagination from "../../Components/Pagination";
 const MonthlyFinance = () => {
   return (
     <>
@@ -48,11 +49,11 @@ const MonthlyFinance = () => {
           <tbody className="text-[#f5f5f5]">
             <tr className="border-b border-[#3f4245]">
               <td className="px-6 py-4">1</td>
-              <td className="px-6 py-4">1</td>
-              <td className="px-6 py-4">1</td>
-              <td className="px-6 py-4">1</td>
-              <td className="px-6 py-4">1</td>
-              <td className="px-6 py-4">1</td>
+              <td className="px-6 py-4">1/1/2000</td>
+              <td className="px-6 py-4">09038</td>
+              <td className="px-6 py-4">5000</td>
+              <td className="px-6 py-4">50</td>
+              <td className="px-6 py-4">5050</td>
               <td className="px-6 py-4">
                 <button className="px-2 py-2 bg-[#3f4245] rounded-full"><AiOutlineArrowRight /></button>
                 {" "}
@@ -91,7 +92,9 @@ const MonthlyFinance = () => {
             <span className="text-lg self-end">45675</span>
           </button>
         </div>
-        <div className=" py-5 place-self-end">Pagination</div>
+        <div className=" py-5 place-self-end">
+        <Pagination currentPage={1} />
+        </div>
       </div>
     </>
   );
