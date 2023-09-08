@@ -109,7 +109,7 @@ console.log(brandDetailedInfo);
             </Link>
           </Group>
           <Group position="center">
-            <Link >
+            <Link  to={`/brand-detail/${element?.brand_id}`}>
               <Button>
                 <AiOutlineArrowRight className="cursor-pointer hover:text-blue-700" />
               </Button>

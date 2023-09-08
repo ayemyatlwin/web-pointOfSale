@@ -33,6 +33,7 @@ import StockControl from "../Pages/Stock/StockControl";
 import StockAdding from "../Pages/Stock/StockAdding";
 import BrandOverview from "../Pages/brand/BrandOverview";
 import BrandAdding from "../Pages/brand/BrandAdding";
+import DetailedinformationofBrand from "../Pages/brand/DetailedinformationOfBrand";
 
 
 export default function Path() {
@@ -79,6 +80,7 @@ export default function Path() {
           <Route path="stock-adding/:id" element={<StockAdding/>}/>
           <Route path="brand-overview" element={<BrandOverview/>}/>
           <Route path="brand-adding" element={<BrandAdding/>}/>
+          <Route path="brand-detail/:id" element={<DetailedinformationofBrand/>}/>
           <Route path="finance-daily" element={<DailyFinance/>}/>
           <Route path="finance-monthly" element={<MonthlyFinance/>}/>
           <Route path="finance-yearly" element={<YearlyFinance/>}/>
