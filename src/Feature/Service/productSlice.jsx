@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 
 const initialState = {
   name: null,
-  brand_id: 3,
+  brand_id: null,
   actual_price: null,
   sale_price: null,
   unit: null,
