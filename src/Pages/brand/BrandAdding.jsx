@@ -129,7 +129,7 @@ const BrandAdding = () => {
         >
           <img
             className={`w-full h-full object-cover rounded-full`}
-            src={brandData?.photo ? brandData.photo :`https://img.icons8.com/?size=512&id=108652&format=png`}
+            src={brandData?.photo ? brandData.photo :`https://cdn.shopify.com/s/files/1/0513/1226/3362/products/Asset2_grande.jpg?v=1619802039`}
             alt=""
           />
           <div

@@ -17,7 +17,7 @@ const ThirdStep = ({toggleShow}) => {
           >
             <img
               className={`w-full h-full object-cover rounded-full`}
-              src={photo ? photo : `https://img.icons8.com/?size=512&id=108652&format=png`}
+              src={photo ? photo : `https://www.pngitem.com/pimgs/m/465-4656617_product-icon-png-white-png-download-manufacturing-material.png`}
               alt=""
             />
             <div
