@@ -9,11 +9,7 @@ const Calculator = ({ paymentHandler }) => {
   return (
     <div className=" calc-width    fixed bottom-0 text-xs bg-[#202124] text-[#f5f5f5]">
       <div className="flex flex-col">
-        <div className="flex justify-center tableUi border border-[#3f4245]">
-          <input id="note" className="" type="button" value="Note" />
-          <input id="note" type="button" value="Note" />
-          <input id="note" type="button" value="Note" />
-        </div>
+       
         <div className="flex justify-center btnUi border border-[#3f4245]">
           <input
             onClick={() => dispatch(qtyUpdate({ qty: "1", id: listSelector }))}
