@@ -37,9 +37,10 @@ export const brandApi = createApi({
         invalidatesTags: ["brandApi"],
     }),
     updateBrand:builder.mutation({
-        query:({token,id})=>({
+        query:({token,id,brandData})=>({
             url:`/brands/${id}`,
             method: "PATCH",
+            body: brandData,
             headers: {
                 authorization: `Bearer ${token}`,
               },
