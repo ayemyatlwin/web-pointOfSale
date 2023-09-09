@@ -54,7 +54,7 @@ const BrandEditing = () => {
 
   const handleEditBrand= async (e) => {
       e.preventDefault();
-     const brand =await updateBrand({token,brandData})
+     const brand =await updateBrand({token,brandData,id})
       console.log(brand?.data.message)
      if(brand?.data.error){
       console.log('error',error);
