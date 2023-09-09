@@ -71,8 +71,8 @@ console.log(more_information);
         <div className="  ms-4 flex  ">
       
           <Group position="center">
-            <Button >
-              <IoMdAddCircleOutline onClick={()=>nav(`/stock-adding/${element.product_id}`)}  className=" cursor-pointer hover:text-blue-700" />
+            <Button   onClick={()=>nav(`/stock-adding/${element.product_id}`)}>
+              <IoMdAddCircleOutline  className=" cursor-pointer hover:text-blue-700" />
             </Button>
           </Group>
           
@@ -94,9 +94,14 @@ console.log(more_information);
    
       </div>
       <div>
-        <h1 className=" mt-10 text-4xl text-white ">Stock Overview</h1>
-        <div className="flex items-center justify-between">
+      <h2 className=" mt-12 tracking-wide text-[1.5rem]">Today Sales Overview</h2>
+        <div className=" my-0 flex items-center justify-between">
           <Input
+            styles={() => ({
+              input: {
+                color: '#F8F9FA',
+              },
+            })}
             icon={<FiSearch />}
             variant="unstyled"
             placeholder="Search"
@@ -167,7 +172,7 @@ console.log(more_information);
         <div
           className={`${!displayState ? "block" : "hidden"} overflow-y-auto`}
         >
-          <main className="border border-[#3f4245] rounded-sm mt-7">
+          <main className="border border-[#3f4245] rounded-sm ">
             <table className="w-full text-sm text-center text-[#f5f5f5]">
               <thead className="text-xs text-[#f5f5f5] uppercase ">
                 <tr className="border-b border-[#3f4245]">
@@ -184,7 +189,7 @@ console.log(more_information);
             </table>
           </main>
 
-          <div>
+          <div className=" my-8">
             <Pagination
               setCurrentPage={setCurrentPage}
               currentPage={currentPage}
@@ -199,17 +204,17 @@ console.log(more_information);
         >
           {productDetailedInfo?.map((i) => {
             return (
-              <div key={i.product_id}>
+              <div key={i.product_id} className=" w-[250px]  bg-white border overflow-hidden  border-[#3f4245] rounded-lg shadow ">
                 <img
                   src={i.photo}
-                  className=" border  rounded-lg border-y-white block cursor-pointer  hover:opacity-80  w-[300px] h-[200px]"
+                  className=" w-[250px] object-fill h-40 "
                   alt=""
                 />
-                <div className="  border border-white opacity-50">
-                  <p className=" mx-4 text-3xl font-bold tracking-wider  text-right">
+                <div className="p-2 bg-[#161618] ">
+                  <p className="mb-1  text-lg text-right font-medium tracking-wide text-[#E8EAED] ">
                     {i.name}
                   </p>
-                  <p className=" mx-4 text-xl font-thin tracking-normal text-right">
+                  <p className="mb-1 text-right text-md text-[#E8EAED] font-normal  ">
                     {i.sale_price}
                   </p>
                 </div>

@@ -36,6 +36,16 @@ export const brandApi = createApi({
         }),
         invalidatesTags: ["brandApi"],
     }),
+    updateBrand:builder.mutation({
+        query:({token,id})=>({
+            url:`/brands/${id}`,
+            method: "PATCH",
+            headers: {
+                authorization: `Bearer ${token}`,
+              },
+        }),
+        invalidatesTags: ["brandApi"],
+    }),
     getSingleBrandInfo:builder.query({
         query:({token,id})=>({
           url:`/brands/${id}`,
@@ -47,4 +57,4 @@ export const brandApi = createApi({
       }),
   })
 });
-export const {useCreateBrandMutation,useGetBrandInfoQuery,useDeleteBrandMutation,useGetSingleBrandInfoQuery} = brandApi;
+export const {useCreateBrandMutation,useGetBrandInfoQuery,useDeleteBrandMutation,useUpdateBrandMutation, useGetSingleBrandInfoQuery} = brandApi;
