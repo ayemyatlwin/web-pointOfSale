@@ -1,38 +1,71 @@
+import { Input, Select } from "@mantine/core";
 import { Typography } from "@mui/material";
 import React from "react";
+import { FiSearch } from "react-icons/fi";
 
 const ManageOverview = ({tableType}) => {
   return (
     // Table name and sort filter Component
     <div className="py-2 mt-2 mb-1">
-      <h2 className="tracking-wide text-[1.5rem] pb-3" >
-        {tableType}
-      </h2>
-      <div className="flex justify-between">
-        <input
-          id="exampleSearch2"
-          placeholder="search"
-          className=" w-44 px-3 py-1 rounded border border-[#3f4245] bg-transparent bg-clip-padding text-base font-normal leading-[1.6] text-[#f5f5f5] outline-none transition duration-200 ease-in-out  "
-          type="search"
-        />
-        <div className="flex self-baseline gap-5">
-          <span className="text-gray-500">
-            Sort : 
-            <select data-te-select-init className="bg-inherit text-[#f5f5f5] outline-none focus:bg-inherit">
-              <option className="bg-gray-400" value="1">Last</option>
-              <option className="bg-gray-400" value="2">First</option>
-             
-            </select>
-          </span>
-          <span className="text-gray-500">
-            Filter :
-            <select data-te-select-init className="bg-inherit text-[#f5f5f5] outline-none focus:bg-inherit">
-              <option className="bg-gray-400 " value="1">All Files</option>
-              <option className="bg-gray-400" value="2">Recent</option>
-            </select>
-          </span>
-        </div>
-      </div>
+      <h2 className=" mt-12 tracking-wide text-[1.5rem]">{tableType}</h2>
+        <div className=" my-0 flex items-center justify-between">
+          <Input
+            styles={() => ({
+              input: {
+                color: '#F8F9FA',
+              },
+            })}
+            icon={<FiSearch />}
+            variant="unstyled"
+            placeholder="Search"
+            radius="xs"
+            className=" border border-gray-400 w-[400px] rounded-xl text-gray-400"
+          />
+          <div className=" flex  items-center justify-around ">
+            <p className=" ">Sort:</p>
+            <Select
+              label="Your favorite framework/library"
+              placeholder="Pick one"
+              defaultValue="Last"
+              radius="xs"
+              variant="unstyled"
+              className="  w-[100px] h-[170px]  my-auto mx-6"
+              transitionProps={{
+                transition: "pop-top-left",
+                duration: 80,
+                timingFunction: "ease",
+              }}
+              data={[
+                { value: "react", label: "Last" },
+                { value: "ng", label: "First" },
+
+                ,
+              ]}
+            />
+          </div>
+          <div className=" flex  items-center justify-evenly ">
+            <p className=" ">Sort:</p>
+            <Select
+              label="Your favorite framework/library"
+              placeholder="Pick one"
+              defaultValue="Last"
+              radius="xs"
+              variant="unstyled"
+              className="  w-[100px] h-[170px]  my-auto mx-6"
+              transitionProps={{
+                transition: "pop-top-left",
+                duration: 80,
+                timingFunction: "ease",
+              }}
+              data={[
+                { value: "react", label: "All File" },
+                { value: "ng", label: "Some File" },
+
+                ,
+              ]}
+            />
+          </div>
+    </div>
     </div>
   );
 };

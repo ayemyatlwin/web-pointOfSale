@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import { BiChevronDown } from 'react-icons/bi';
 import { useDispatch } from 'react-redux';
-import { addProductMore_information, addProductName, addProductUnit } from '../../Feature/Service/productSlice';
+import { addProductBrand_id, addProductMore_information, addProductName, addProductUnit } from '../../Feature/Service/productSlice';
 import { useGetSingleProductInfoQuery } from '../../Feature/API/productApi';
+import Cookies from 'js-cookie';
+import { useGetBrandInfoQuery } from '../../Feature/API/brandApi';
 
 const FirstStepEdit = ({toggleSelect, display, setDisplay, select,setEditProduct,editProduct}) => {
 
 const dispatch=useDispatch();
-
+const token = Cookies.get("token");
+const [currentPage, setCurrentPage] = useState(1);
+const {data}=useGetBrandInfoQuery({ token, currentPage });
+const brandInfo=data?.data;
 useEffect(()=>{
 dispatch(addProductName({name:editProduct?.name}))
 dispatch(addProductUnit({unit:editProduct?.unit}))
 dispatch(addProductMore_information({more_information:editProduct?.more_information}))
+dispatch(addProductBrand_id({brand_id:editProduct?.brand_id}))
 },[editProduct])
   return (
     <div>
@@ -42,7 +48,7 @@ dispatch(addProductMore_information({more_information:editProduct?.more_informat
               className="w-[70%] border outline-none py-2.5 relative rounded cursor-pointer"
             >
               <div className="px-5 flex items-center justify-between">
-                <p className="">{display}</p>
+                <p className="">Choose brand...</p>
                 <BiChevronDown
                   className={`text-xl ${
                     select && "rotate-180"
@@ -52,24 +58,23 @@ dispatch(addProductMore_information({more_information:editProduct?.more_informat
               <div
                 className={`${
                   select ? "scale-y-1" : "scale-y-0"
-                } transition-all duration-150 origin-top z-40 border rounded absolute w-full top-14`}
+                } overflow-y-auto max-h-40  transition-all duration-150 origin-top z-40 border rounded absolute w-full top-14`}
               >
-                <div
-                  onClick={(e) => {
-                    setDisplay(e.target.textContent);
-                  }}
+              {
+                brandInfo?.map((i)=>(
+                  <div
+                  key={i?.brand_id}
+                  onClick={(e) => setEditProduct((prevState) => ({
+                    ...prevState,
+                    brand_id: i?.brand_id,
+                  }))}
                   className="w-full outline-none py-3 bg-[#202124] px-5 rounded-t border-b cursor-pointer"
                 >
-                LV
+                {i?.name}
                 </div>
-                <div
-                  onClick={(e) => {
-                    setDisplay(e.target.textContent);
-                  }}
-                  className="w-full outline-none py-3 bg-[#202124] px-5 rounded-b cursor-pointer"
-                >
-                  Gucci
-                </div>
+                ))
+              }
+              
               </div>
             </div>
           </div>
