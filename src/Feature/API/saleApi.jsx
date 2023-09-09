@@ -7,7 +7,7 @@ export const saleApi=createApi({
     endpoints:(builder)=>({
         recordedVoucher:builder.query({
             query:({token,currentPage})=>({
-                url:`/vouchers?page=${currentPage}`,
+                url:`/recent?page=${currentPage}`,
                 headers:{authorization:`Bearer ${token}`}
             }),
             providesTags:['sale'],

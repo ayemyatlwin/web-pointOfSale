@@ -34,6 +34,7 @@ import Cookies from "js-cookie";
 import Pagination from "../../Components/Pagination";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import { colors } from "@mui/material";
 
 const InventoryOverview = () => {
   const [delProduct] = useDeleteProductsMutation();
@@ -89,7 +90,7 @@ const InventoryOverview = () => {
     <tr key={element.product_id} className="border-b border-[#3f4245]">
       <td className="px-6 py-4">{i + 1}</td>
       <td className="px-6 py-4">{element.name}</td>
-      <td className="px-6 py-4">{element.brand_name}</td>
+      <td className="px-6 py-4">{element.brand_name.slice(0,6)}...</td>
       <td className="px-6 py-4">{element.unit}</td>
       <td className="px-6 py-4">{element.sale_price}</td>
       <td className="px-6 py-4">{element.actual_price}</td>
@@ -147,9 +148,14 @@ const InventoryOverview = () => {
         </div>
       </div>
       <div>
-        <h1 className=" mt-10 text-4xl text-white ">Product Overview</h1>
+      <h2 className=" mt-12 tracking-wide text-[1.5rem]">Today Sales Overview</h2>
         <div className="flex items-center justify-between">
           <Input
+          styles={() => ({
+            input: {
+              color: '#F8F9FA',
+            },
+          })}
             icon={<FiSearch />}
             variant="unstyled"
             placeholder="Search"
@@ -220,7 +226,7 @@ const InventoryOverview = () => {
         <div
           className={`${!displayState ? "block" : "hidden"} overflow-y-auto`}
         >
-          <main className="border border-[#3f4245] rounded-sm mt-7">
+          <main className="border border-[#3f4245] rounded-sm ">
             <table className="w-full text-sm text-center text-[#f5f5f5]">
               <thead className="text-xs text-[#f5f5f5] uppercase ">
                 <tr className="border-b border-[#3f4245]">
@@ -238,7 +244,8 @@ const InventoryOverview = () => {
             </table>
           </main>
 
-          <div>
+          <div
+          className=" my-8">
             <Pagination
               setCurrentPage={setCurrentPage}
               currentPage={currentPage}
@@ -253,17 +260,17 @@ const InventoryOverview = () => {
         >
           {productDetailedInfo?.map((i) => {
             return (
-              <div key={i.product_id} className="w-[300px]">
+              <div key={i.product_id}  className=" w-[250px]  bg-white border overflow-hidden  border-[#3f4245] rounded-lg shadow ">
                 <img
                   src={i.photo}
-                  className=" border  rounded-lg border-y-white block cursor-pointer  hover:opacity-80  w-[300px] h-[200px]"
+                  className=" w-[250px] object-fill h-40 "
                   alt=""
                 />
-                <div className="  border border-white opacity-50">
-                  <p className=" mx-4 text-3xl font-bold tracking-wider  text-right">
+                <div className="p-2 bg-[#161618] ">
+                  <p className="mb-1  text-lg text-right font-medium tracking-wide text-[#E8EAED] ">
                     {i.name.substring(0,10)}...
                   </p>
-                  <p className=" mx-4 text-xl font-thin tracking-normal text-right">
+                  <p className="mb-1 text-right text-md text-[#E8EAED] font-normal  ">
                     {i.sale_price}
                   </p>
                 </div>

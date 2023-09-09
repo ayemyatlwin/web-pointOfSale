@@ -92,7 +92,7 @@ const ProductEditing = () => {
 const dataEdit=useGetSingleProductInfoQuery({token,id});
 const[ editProduct,setEditProduct] =useState({
   name:'',
-  brand_id:3,
+  brand_id:null,
   unit:'',
   more_information:'',
   actual_price:null,
@@ -103,7 +103,7 @@ console.log(dataEdit?.data?.data);
 useEffect(()=>{
 setEditProduct({
   name:dataEdit?.data?.data?.name,
-  brand_id:3,
+  brand_id:dataEdit?.data?.data?.brand_id,
   unit:dataEdit?.data?.data?.unit,
   more_information:dataEdit?.data?.data?.more_information,
   actual_price:dataEdit?.data?.data?.actual_price,

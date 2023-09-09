@@ -1,10 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { BiChevronDown } from 'react-icons/bi';
 import { useDispatch } from 'react-redux';
-import { addProductMore_information, addProductName, addProductUnit } from '../../Feature/Service/productSlice';
+import { addProductBrand_id, addProductMore_information, addProductName, addProductUnit } from '../../Feature/Service/productSlice';
+import { useGetBrandInfoQuery } from '../../Feature/API/brandApi';
+import Cookies from 'js-cookie';
 
 
 const FirstStep = ({toggleSelect, display, setDisplay, select}) => {
+  const token = Cookies.get("token");
+  const [currentPage, setCurrentPage] = useState(1);
+  const {data}=useGetBrandInfoQuery({ token, currentPage });
+const brandInfo=data?.data;
   const dispatch=useDispatch()
   return (
     <div>
@@ -28,38 +34,38 @@ const FirstStep = ({toggleSelect, display, setDisplay, select}) => {
             </label>
             <div
               onClick={toggleSelect}
-              className="w-[70%] border outline-none py-2.5 relative rounded cursor-pointer"
+              className="w-[70%] border  outline-none py-2.5 relative rounded cursor-pointer"
             >
-              <div className="px-5 flex items-center justify-between">
-                <p className="">{display}</p>
+              <div className="px-5  flex items-center justify-between">
+                <p className="">Choose brand...</p>
                 <BiChevronDown
                   className={`text-xl ${
                     select && "rotate-180"
                   } transition-all duration-150`}
                 />
               </div>
+          
+         
               <div
-                className={`${
-                  select ? "scale-y-1" : "scale-y-0"
-                } transition-all duration-150 origin-top z-40 border rounded absolute w-full top-14`}
+              className={`${
+                select ? "scale-y-1 " : "scale-y-0"
+              } overflow-y-auto max-h-40 transition-all duration-150 origin-top z-40 border rounded absolute w-full top-14  `}
+            >
+            {
+              brandInfo?.map((i)=>(
+                <div
+                key={i?.brand_id}
+                onClick={()=>dispatch(addProductBrand_id({brand_id:i?.brand_id}))}
+                className="w-full outline-none py-3 bg-[#202124] px-5 rounded-t border-b cursor-pointer"
               >
-                <div
-                  onClick={(e) => {
-                    setDisplay(e.target.textContent);
-                  }}
-                  className="w-full outline-none py-3 bg-[#202124] px-5 rounded-t border-b cursor-pointer"
-                >
-                LV
-                </div>
-                <div
-                  onClick={(e) => {
-                    setDisplay(e.target.textContent);
-                  }}
-                  className="w-full outline-none py-3 bg-[#202124] px-5 rounded-b cursor-pointer"
-                >
-                  Gucci
-                </div>
+              {i?.name}
               </div>
+              ))
+            }
+             
+            </div>
+         
+           
             </div>
           </div>
               {/* <div className="flex">
