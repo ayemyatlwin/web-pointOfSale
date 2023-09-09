@@ -9,10 +9,10 @@ const SaleCard = ({ pd }) => {
   return (
     <div
       onClick={() => dispatch(addtoReciept(pd))}
-      className=" max-w-[300px]  bg-white border overflow-hidden  border-[#3f4245] rounded-lg shadow "
+      className="w-[200px]   border overflow-hidden  border-[#3f4245] rounded-lg shadow "
     >
       <a href="#">
-        <img className=" object-fill h-40 w-40" src={pd?.photo} alt="" />
+        <img className=" object-fill h-40 w-[200px]  " src={pd?.photo} alt="" />
       </a>
       <div className="p-2 bg-[#161618] ">
         <a href="#">
