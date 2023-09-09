@@ -18,16 +18,18 @@ const Recent = () => {
   const recordedVoucher = useRecordedVoucherQuery({ token, currentPage });
   console.log(recordedVoucher);
 
-  const oldData = recordedVoucher?.currentData?.data;
-
-  const totals = oldData?.map((eachData) => eachData?.net_total);
+  const oldData = recordedVoucher?.data?.data;
+  const totals=recordedVoucher?.data?.total;
   console.log(totals);
-  const totalTaxs = oldData?.map((eachData) => eachData?.tax);
-  console.log(totalTaxs);
-  const totalsCashs = oldData?.map((eachData) => eachData?.total);
-  console.log(totalsCashs);
-  const totalVouchers = oldData?.map((eachData) => eachData?.voucher_number);
-  console.log(totalVouchers);
+
+  // const totals = oldData?.map((eachData) => eachData?.net_total);
+  // console.log(totals);
+  // const totalTaxs = oldData?.map((eachData) => eachData?.tax);
+  // console.log(totalTaxs);
+  // const totalsCashs = oldData?.map((eachData) => eachData?.total);
+  // console.log(totalsCashs);
+  // const totalVouchers = oldData?.map((eachData) => eachData?.voucher_number);
+  // console.log(totalVouchers);
 
   const { saleClose } = useSelector((state) => state.recieptSlice);
   console.log(saleClose);
@@ -131,14 +133,14 @@ const Recent = () => {
               <span className="text-xs self-end text-[#8AB4F8] ">
                 Total Vouchers
               </span>
-              <span className="text-md self-end">{totalVouchers?.length}</span>
+              <span className="text-md self-end">{totals?.total_voucher}</span>
             </button>
             <button className="border-r border-[#3f4245]  flex flex-col w-[7rem] py-2 px-2 ">
               <span className="text-xs self-end text-[#8AB4F8] ">
                 Total Cash
               </span>
               <span className="text-md self-end">
-                {totalsCashs?.reduce((pv, cv) => pv + cv, 0).toFixed(2)}
+                {totals?.total_cash.toFixed(2)}
               </span>
             </button>
             <button className="border-r border-[#3f4245] flex flex-col w-[7rem] py-2 px-2 ">
@@ -146,13 +148,13 @@ const Recent = () => {
                 Total Tax
               </span>
               <span className="text-md self-end">
-                {totalTaxs?.reduce((pv, cv) => pv + cv, 0).toFixed(2)}
+                {totals?.total_tax.toFixed(2)}
               </span>
             </button>
             <button className="  flex flex-col w-[7rem] py-2 px-2 ">
               <span className="text-xs self-end text-[#8AB4F8] ">Total </span>
               <span className="text-md self-end">
-                {totals?.reduce((pv, cv) => pv + cv, 0).toFixed(2)}
+                {totals?.total.toFixed(2)}
               </span>
             </button>
           </div>
