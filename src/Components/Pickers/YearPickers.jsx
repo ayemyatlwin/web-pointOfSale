@@ -3,8 +3,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { BiSearch } from "react-icons/bi";
 import { LuCalendarCheck } from "react-icons/lu";
-const YearPickers = () => {
-    const [selectedDate, setSelectedDate] = useState(null);
+const YearPickers = ({selectedDate,setSelectedDate}) => {
+    
 
   const handleDateChange = (date) => {
     setSelectedDate(date);

@@ -4,9 +4,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { BiSearch } from "react-icons/bi";
 import { LuCalendarCheck } from "react-icons/lu";
 
-const RangeDatePickers = () => {
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+const RangeDatePickers = ({startDate,setStartDate,endDate,setEndDate}) => {
+  
 
   const handleStartDateChange = (date) => {
     setStartDate(date);
