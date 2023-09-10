@@ -11,24 +11,27 @@ import recieptSlice from "./recieptSlice";
 import { productApi } from "../API/productApi";
 import productSlice from "./productSlice";
 import { brandApi } from "../API/brandApi";
+import { financeApi } from "../API/financeApi";
 
 export const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
-    authSlice: authSlice,
     [userApi.reducerPath]: userApi.reducer,
-    userSlice: userSlice,
     [productApi.reducerPath]: productApi.reducer,
-    productSlice: productSlice,
     [brandApi.reducerPath]: brandApi.reducer,
     [getallProductsApi.reducerPath]:getallProductsApi.reducer,
-    recieptSlice:recieptSlice,
     [saleApi.reducerPath]:saleApi.reducer,
-    [api.reducerPath]: api.reducer,
     [profileApi.reducerPath] : profileApi.reducer,
+    [financeApi.reducerPath] : financeApi.reducer,
+    [api.reducerPath]: api.reducer,
+
+    authSlice: authSlice,
+    userSlice: userSlice,
+    productSlice: productSlice,
+    recieptSlice:recieptSlice,
   },
   middleware: (getDefaultMiddleware) =>
 
-    getDefaultMiddleware().concat(authApi.middleware, userApi.middleware,api.middleware,getallProductsApi.middleware, saleApi.middleware, profileApi.middleware,productApi.middleware,brandApi.middleware),
+    getDefaultMiddleware().concat(authApi.middleware, userApi.middleware,api.middleware,getallProductsApi.middleware, saleApi.middleware, profileApi.middleware,productApi.middleware,brandApi.middleware,financeApi.middleware),
 
 });

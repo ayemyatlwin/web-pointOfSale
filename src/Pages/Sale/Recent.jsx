@@ -9,18 +9,18 @@ import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { Loader } from "@mantine/core";
-import {setSaleClose} from "../../Feature/Service/recieptSlice"
+import { setSaleClose } from "../../Feature/Service/recieptSlice";
 
 const Recent = () => {
   const token = Cookies.get("token");
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
   const recordedVoucher = useRecordedVoucherQuery({ token, currentPage });
-  console.log(recordedVoucher);
+  //console.log(recordedVoucher);
 
   const oldData = recordedVoucher?.data?.data;
-  const totals=recordedVoucher?.data?.total;
-  console.log(totals);
+  const totals = recordedVoucher?.data?.total;
+  //console.log(totals);
 
   // const totals = oldData?.map((eachData) => eachData?.net_total);
   // console.log(totals);
@@ -52,7 +52,6 @@ const Recent = () => {
     });
   };
 
-  
   return (
     <>
       {/* path breadcrumbs */}
