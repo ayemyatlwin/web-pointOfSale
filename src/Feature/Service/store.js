@@ -11,7 +11,7 @@ import recieptSlice from "./recieptSlice";
 import { productApi } from "../API/productApi";
 import productSlice from "./productSlice";
 import { brandApi } from "../API/brandApi";
-import { financeApi } from "../API/FinanceApi";
+import { getFinancedataApi } from "../API/getFinanceDataApi";
 
 export const store = configureStore({
   reducer: {
@@ -22,7 +22,7 @@ export const store = configureStore({
     [getallProductsApi.reducerPath]:getallProductsApi.reducer,
     [saleApi.reducerPath]:saleApi.reducer,
     [profileApi.reducerPath] : profileApi.reducer,
-    [financeApi.reducerPath]: financeApi.reducer,
+    [getFinancedataApi.reducerPath]: getFinancedataApi.reducer,
     [api.reducerPath]: api.reducer,
 
     authSlice: authSlice,
@@ -32,6 +32,6 @@ export const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
 
-    getDefaultMiddleware().concat(authApi.middleware, userApi.middleware,api.middleware,getallProductsApi.middleware, saleApi.middleware, profileApi.middleware,productApi.middleware,brandApi.middleware,financeApi.middleware),
+    getDefaultMiddleware().concat(authApi.middleware, userApi.middleware,api.middleware,getallProductsApi.middleware, saleApi.middleware, profileApi.middleware,productApi.middleware,brandApi.middleware,getFinancedataApi.middleware),
 
 });
