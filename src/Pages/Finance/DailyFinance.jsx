@@ -5,7 +5,7 @@ import { AiOutlineArrowRight } from "react-icons/ai";
 import DatePickers from "../../Components/Pickers/DatePickers";
 import Pagination from "../../Components/Pagination";
 import Cookies from "js-cookie";
-import { useGetDailyFinanceInfoQuery } from "../../Feature/API/FinanceApi";
+import { useGetDailyFinanceInfoQuery } from "../../Feature/API/getFinanceDataApi";
 
 const DailyFinance = () => {
   const formatDate = (date) => {

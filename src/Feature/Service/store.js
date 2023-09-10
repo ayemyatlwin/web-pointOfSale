@@ -11,7 +11,7 @@ import recieptSlice from "./recieptSlice";
 import { productApi } from "../API/productApi";
 import productSlice from "./productSlice";
 import { brandApi } from "../API/brandApi";
-import { financeApi } from "../API/financeApi";
+import { financeApi } from "../API/FinanceApi";
 
 export const store = configureStore({
   reducer: {
@@ -22,7 +22,7 @@ export const store = configureStore({
     [getallProductsApi.reducerPath]:getallProductsApi.reducer,
     [saleApi.reducerPath]:saleApi.reducer,
     [profileApi.reducerPath] : profileApi.reducer,
-    [financeApi.reducerPath] : financeApi.reducer,
+    [financeApi.reducerPath]: financeApi.reducer,
     [api.reducerPath]: api.reducer,
 
     authSlice: authSlice,
