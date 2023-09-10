@@ -5,8 +5,42 @@ import { PiCalculatorDuotone } from "react-icons/pi";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import RangeDatePickers from "../../Components/Pickers/RangeDatePickers";
 import Pagination from "../../Components/Pagination";
+import { useGetCustomFinanceInfoQuery } from "../../Feature/API/getFinanceDataApi";
+import Cookies from "js-cookie";
 
 const CustomFinance = () => {
+  const token = Cookies.get("token");
+  const formatDate = (date) => {
+    if (!date) return ""; // Return an empty string if the date is not set
+    const day = date.getDate();
+    const month = date.getMonth() + 1; // Month is zero-based
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+  const [currentPage, setCurrentPage] = useState(1);
+  const todayDate = new Date();
+  const [startDate, setStartDate] = useState(todayDate);
+  const [endDate, setEndDate] = useState(todayDate);
+
+  const formattedStartDate = formatDate(startDate);
+  const formattedEndDate = formatDate(endDate);
+
+  const getCustomdata = useGetCustomFinanceInfoQuery({
+    token,
+    currentPage,
+    startDate: formattedStartDate,
+    endDate: formattedEndDate,
+  });
+  console.log(getCustomdata);
+
+  const totals = getCustomdata?.currentData?.total;
+  const lastPage = getCustomdata?.currentData?.meta?.last_page;
+
+  const getAllCustomData = getCustomdata?.data?.data;
+  console.log(getAllCustomData);
+
+
+
   return (
     <>
       {/* path breadcrumbs */}
@@ -27,7 +61,12 @@ const CustomFinance = () => {
           <h2 className=" tracking-wide text-[1.5rem]">Today Sales Overview</h2>
           <div className="flex gap-3">
             <DropDownBtn />
-           <RangeDatePickers/>
+            <RangeDatePickers
+              startDate={startDate}
+              endDate={endDate}
+              setStartDate={setStartDate}
+              setEndDate={setEndDate}
+            />
           </div>
         </div>
       </div>
@@ -46,21 +85,38 @@ const CustomFinance = () => {
             </tr>
           </thead>
           {/* map data from from api */}
-          <tbody className="text-[#f5f5f5]">
-            <tr className="border-b border-[#3f4245]">
-              <td className="px-6 py-4">1</td>
-              <td className="px-6 py-4">09038</td>
-              <td className="px-6 py-4">11:30 PM</td>
-              <td className="px-6 py-4">20</td>
-              <td className="px-6 py-4">5000</td>
-              <td className="px-6 py-4">500</td>
-              <td className="px-6 py-4">5500</td>
-              <td className="px-6 py-4">
-                <button className="px-2 py-2 bg-[#3f4245] rounded-full"><AiOutlineArrowRight /></button>
-                {" "}
-              </td>
-            </tr>
-          </tbody>
+          {getAllCustomData && getAllCustomData.length === 0 ? (
+            <tbody className="text-[#f5f5f5]">
+              <tr className="border-b border-[#3f4245]">
+                <td className="py-4" colSpan="7">
+                  No data available
+                </td>
+              </tr>
+            </tbody>
+          ) : (
+            <tbody className="text-[#f5f5f5]">
+              {getAllCustomData?.map((customData, index) => {
+                return (
+                  <tr key={index} className="border-b border-[#3f4245]">
+                    <td className="px-6 py-4">{index + 1}</td>
+                    <td className="px-6 py-4">{customData?.voucher_number}</td>
+                    <td className="px-6 py-4">{customData?.time}</td>
+                    <td className="px-6 py-4">{customData?.item_count}</td>
+                    <td className="px-6 py-4">{customData?.total.toFixed(2)}</td>
+                    <td className="px-6 py-4">{customData?.tax.toFixed(2)}</td>
+                    <td className="px-6 py-4">
+                      {customData?.net_total.toFixed(2)}
+                    </td>
+                    <td className="px-6 py-4">
+                      <button className="px-2 py-2 bg-[#3f4245] rounded-full">
+                        <AiOutlineArrowRight />
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          )}
         </table>
       </main>
 
@@ -87,7 +143,7 @@ const CustomFinance = () => {
           </button>
         </div>
         <div className=" py-5 place-self-end">
-        <Pagination currentPage={1} />
+          <Pagination currentPage={1} />
         </div>
       </div>
     </>

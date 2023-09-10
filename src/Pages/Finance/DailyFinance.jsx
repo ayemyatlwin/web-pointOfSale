@@ -18,8 +18,8 @@ const DailyFinance = () => {
   const todayDate = new Date();
   const [selectedDate, setSelectedDate] = useState(todayDate);
   console.log(selectedDate);
-  const token = Cookies.get("token");
   const formattedDate = formatDate(selectedDate);
+  const token = Cookies.get("token");
 
   const [currentPage, setCurrentPage] = useState(1);
 
