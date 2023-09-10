@@ -4,14 +4,10 @@ import "react-datepicker/dist/react-datepicker.css";
 import { BiSearch } from "react-icons/bi";
 import { LuCalendarCheck } from "react-icons/lu";
 
-const DatePickers = ({setSelectedDate,selectedDate}) => {
-
-
-
+const DatePickers = ({ setSelectedDate, selectedDate }) => {
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
-
 
   const handleSearch = () => {
     // Add your search logic here using the selectedDate
@@ -22,9 +18,9 @@ const DatePickers = ({setSelectedDate,selectedDate}) => {
       <DatePicker
         selected={selectedDate}
         onChange={handleDateChange}
-        dateFormat="dd/MM/yyyy"
+        dateFormat="d/M/yyyy"
         className=" rounded-md outline-none text-center"
-        placeholderText="dd/MM/yyyy"
+        placeholderText="d/M/yyyy"
       />
       <span className="absolute  left-4 top-1/2 transform -translate-y-1/2">
         <LuCalendarCheck className="text-[#8AB4F8] h-5 w-5" />
