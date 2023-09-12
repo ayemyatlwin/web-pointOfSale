@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Breadcrumb from "../../Components/Breadcrumb";
 import DropDownBtn from "../../Components/DropDownBtn";
 import { AiOutlineArrowRight } from "react-icons/ai";
@@ -6,8 +6,11 @@ import MonthPickers from "../../Components/Pickers/MonthPickers";
 import Pagination from "../../Components/Pagination";
 import { useGetMonthlyFinanceInfoQuery } from "../../Feature/API/getFinanceDataApi";
 import Cookies from "js-cookie";
+import { Loader } from "@mantine/core";
+
 const MonthlyFinance = () => {
   const token = Cookies.get("token");
+  const [loading, setLoading] = useState(true); // Step 1: Create a loading state
 
   const [currentPage, setCurrentPage] = useState(1);
   const catchYear = (date) => {
@@ -46,9 +49,9 @@ const MonthlyFinance = () => {
   }
   const [selectedDate, setSelectedDate] = useState(thisMonth);
   const getYear = catchYear(selectedDate);
-  console.log(getYear); //use in API
+  //console.log(getYear); //use in API
   const getMonth = catchMonth(selectedDate);
-  console.log(getMonth); // use in API
+  //console.log(getMonth); // use in API
   const monthName = getMonthNameFromNumber(getMonth);
 
   const getMonthlyData = useGetMonthlyFinanceInfoQuery({
@@ -57,11 +60,20 @@ const MonthlyFinance = () => {
     month: getMonth,
     year: getYear,
   });
-  console.log(getMonthlyData);
+  //console.log(getMonthlyData);
 
   const getAllMonthlyData = getMonthlyData?.data?.data;
   const totals = getMonthlyData?.data?.total;
   const lastPage = getMonthlyData?.currentData?.meta?.last_page;
+
+  useEffect(() => {
+    // Step 2: Update loading state based on query status
+    if (getMonthlyData.isLoading) {
+      setLoading(true);
+    } else if (getMonthlyData.isSuccess || getMonthlyData.isError) {
+      setLoading(false);
+    }
+  }, [getMonthlyData]);
 
   return (
     <>
@@ -81,8 +93,9 @@ const MonthlyFinance = () => {
       <div className="py-5 pb-3 ">
         <div className=" flex justify-between">
           <h2 className=" tracking-wide text-[1.5rem]">
-            {selectedDate !== null ? `${monthName + ", " + getYear} Sales Overview`: `This Month sales Overview`}
-            
+            {selectedDate !== null
+              ? `${monthName + ", " + getYear} Sales Overview`
+              : `This Month sales Overview`}
           </h2>
           <div className="flex gap-3">
             <DropDownBtn />
@@ -96,58 +109,71 @@ const MonthlyFinance = () => {
         </div>
       </div>
 
-      <main className="border border-[#3f4245] rounded-sm mt-7">
-        <table className="w-full text-sm text-center text-[#f5f5f5]">
-          <thead className="text-xs text-[#f5f5f5] uppercase ">
-            <tr className="border-b border-[#3f4245]">
-              <th className="px-6 py-4">No.</th>
-              <th className="px-6 py-4">Date</th>
-              <th className="px-6 py-4">Vouchers</th>
-              <th className="px-6 py-4">Cash</th>
-              <th className="px-6 py-4">Tax</th>
-              <th className="px-6 py-4">Total</th>
-            </tr>
-          </thead>
-          {/* map data from from api */}
-          {getAllMonthlyData && getAllMonthlyData.length === 0 ? (
-            <tbody className="text-[#f5f5f5]">
+      <main
+        className={`${
+          loading && "border-0"
+        } border border-[#3f4245] rounded-sm mt-7`}
+      >
+        {loading ? (
+          <div className="flex flex-col items-center justify-center h-full ">
+            {" "}
+            <Loader className=" py-4" variant="dots" color="gray" />{" "}
+          </div>
+        ) : (
+          <table className="w-full text-sm text-center text-[#f5f5f5]">
+            <thead className="text-xs text-[#f5f5f5] uppercase ">
               <tr className="border-b border-[#3f4245]">
-                <td className="py-4" colSpan="7">
-                  No data available
-                </td>
+                <th className="px-6 py-4">No.</th>
+                <th className="px-6 py-4">Date</th>
+                <th className="px-6 py-4">Vouchers</th>
+                <th className="px-6 py-4">Cash</th>
+                <th className="px-6 py-4">Tax</th>
+                <th className="px-6 py-4">Total</th>
               </tr>
-            </tbody>
-          ) : (
-            <tbody className="text-[#f5f5f5]">
-              {getAllMonthlyData?.map((monthlyData, index) => {
-                return (
-                  <tr key={index} className="border-b border-[#3f4245]">
-                    <td className="px-6 py-4">{index + 1}</td>
-                    <td className="px-6 py-4">{monthlyData?.date}</td>
-                    <td className="px-6 py-4">{monthlyData?.vounchers}</td>
-                    <td className="px-6 py-4">
-                      {monthlyData?.cash.toFixed(2)}
-                    </td>
-                    <td className="px-6 py-4">{monthlyData?.tax.toFixed(2)}</td>
-                    <td className="px-6 py-4">
-                      {monthlyData?.total.toFixed(2)}
-                    </td>
-                    <td className="px-6 py-4"></td>
-                    <td className="px-6 py-4">
-                      <button className="px-2 py-2 bg-[#3f4245] rounded-full">
-                        <AiOutlineArrowRight />
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          )}
-        </table>
+            </thead>
+            {/* map data from from api */}
+            {getAllMonthlyData && getAllMonthlyData.length === 0 ? (
+              <tbody className="text-[#f5f5f5]">
+                <tr className="border-b border-[#3f4245]">
+                  <td className="py-4" colSpan="7">
+                    No data available
+                  </td>
+                </tr>
+              </tbody>
+            ) : (
+              <tbody className="text-[#f5f5f5]">
+                {getAllMonthlyData?.map((monthlyData, index) => {
+                  return (
+                    <tr key={index} className="border-b border-[#3f4245]">
+                      <td className="px-6 py-4">{index + 1}</td>
+                      <td className="px-6 py-4">{monthlyData?.date}</td>
+                      <td className="px-6 py-4">{monthlyData?.vounchers}</td>
+                      <td className="px-6 py-4">
+                        {monthlyData?.cash.toFixed(2)}
+                      </td>
+                      <td className="px-6 py-4">
+                        {monthlyData?.tax.toFixed(2)}
+                      </td>
+                      <td className="px-6 py-4">
+                        {monthlyData?.total.toFixed(2)}
+                      </td>
+                      <td className="px-6 py-4"></td>
+                      <td className="px-6 py-4">
+                        <button className="px-2 py-2 bg-[#3f4245] rounded-full">
+                          <AiOutlineArrowRight />
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            )}
+          </table>
+        )}
       </main>
 
       {/* total and tax */}
-      {getAllMonthlyData && getAllMonthlyData.length === 0 ? (
+      {loading || (getAllMonthlyData && getAllMonthlyData.length === 0) ? (
         ""
       ) : (
         <div className="flex justify-between ">
