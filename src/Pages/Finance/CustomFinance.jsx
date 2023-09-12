@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Breadcrumb from "../../Components/Breadcrumb";
 import DropDownBtn from "../../Components/DropDownBtn";
 import { PiCalculatorDuotone } from "react-icons/pi";
@@ -7,8 +7,11 @@ import RangeDatePickers from "../../Components/Pickers/RangeDatePickers";
 import Pagination from "../../Components/Pagination";
 import { useGetCustomFinanceInfoQuery } from "../../Feature/API/getFinanceDataApi";
 import Cookies from "js-cookie";
+import { Loader } from "@mantine/core";
+
 
 const CustomFinance = () => {
+  const [loading, setLoading] = useState(true); // Step 1: Create a loading state
   const token = Cookies.get("token");
   const formatDate = (date) => {
     if (!date) return ""; // Return an empty string if the date is not set
@@ -33,13 +36,20 @@ const CustomFinance = () => {
   });
   console.log(getCustomdata);
 
-  const totals = getCustomdata?.currentData?.total;
-  const lastPage = getCustomdata?.currentData?.meta?.last_page;
+  // const totals = getCustomdata?.currentData?.total;
+  // const lastPage = getCustomdata?.currentData?.meta?.last_page;
 
   const getAllCustomData = getCustomdata?.data?.data;
   console.log(getAllCustomData);
 
-
+  useEffect(() => {
+    // Step 2: Update loading state based on query status
+    if (getCustomdata.isLoading) {
+      setLoading(true);
+    } else if (getCustomdata.isSuccess || getCustomdata.isError) {
+      setLoading(false);
+    }
+  }, [getCustomdata]);
 
   return (
     <>
@@ -71,8 +81,18 @@ const CustomFinance = () => {
         </div>
       </div>
 
-      <main className="border border-[#3f4245] rounded-sm mt-7">
-        <table className="w-full text-sm text-center text-[#f5f5f5]">
+      <main className={`${
+          loading && "border-0"
+        } border border-[#3f4245] rounded-sm mt-7`}>
+        {loading ? (
+          <div className="flex flex-col items-center justify-center h-full ">
+          {" "}
+          <Loader className=" py-4" variant="dots" color="gray" />{" "}
+        </div>
+        ):
+        
+        (
+          <table className="w-full text-sm text-center text-[#f5f5f5]">
           <thead className="text-xs text-[#f5f5f5] uppercase ">
             <tr className="border-b border-[#3f4245]">
               <th className="px-6 py-4">No.</th>
@@ -118,10 +138,14 @@ const CustomFinance = () => {
             </tbody>
           )}
         </table>
+        )}
       </main>
 
-      {/* total and tax */}
-      <div className="flex justify-between ">
+       {/* total and tax */}
+       {/* {loading || (getAllDailyData && getAllDailyData.length === 0) ? (
+        ""
+      ) : (
+        <div className="flex justify-between ">
         <div className="flex gap-3 mb-2 mt-5 border border-[#3f4245] rounded-md">
           <button className="border-r border-[#3f4245] flex flex-col w-[7rem] py-2 px-2 ">
             <span className="text-xs self-end text-[#8AB4F8] ">
@@ -146,8 +170,37 @@ const CustomFinance = () => {
           <Pagination currentPage={1} />
         </div>
       </div>
+
+      )} */}
+        <div className="flex justify-between ">
+        <div className="flex gap-3 mb-2 mt-5 border border-[#3f4245] rounded-md">
+          <button className="border-r border-[#3f4245] flex flex-col w-[7rem] py-2 px-2 ">
+            <span className="text-xs self-end text-[#8AB4F8] ">
+              Total Vouchers
+            </span>
+            <span className="text-lg self-end">45675</span>
+          </button>
+          <button className="border-r border-[#3f4245]  flex flex-col w-[7rem] py-2 px-2 ">
+            <span className="text-xs self-end text-[#8AB4F8] ">Total Cash</span>
+            <span className="text-lg self-end">45675</span>
+          </button>
+          <button className="border-r border-[#3f4245] flex flex-col w-[7rem] py-2 px-2 ">
+            <span className="text-xs self-end text-[#8AB4F8] ">Total Tax</span>
+            <span className="text-lg self-end">45675</span>
+          </button>
+          <button className="  flex flex-col w-[7rem] py-2 px-2 ">
+            <span className="text-xs self-end text-[#8AB4F8] ">Total </span>
+            <span className="text-lg self-end">45675</span>
+          </button>
+        </div>
+        <div className=" py-5 place-self-end">
+          <Pagination currentPage={1} />
+        </div>
+      </div>
+      
     </>
   );
 };
 
 export default CustomFinance;
+
