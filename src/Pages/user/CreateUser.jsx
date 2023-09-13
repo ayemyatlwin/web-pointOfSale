@@ -11,6 +11,7 @@ import SelectPhotoModal from "../../Components/SelectPhotoModal";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ConfirmBox from "../../Components/ConfirmBox";
+import { toast } from "react-toastify";
 
 export default function CreateUser() {
   const token = Cookies.get("token");
@@ -58,15 +59,28 @@ export default function CreateUser() {
     setSelect(!select);
   };
   const userData = useSelector((state) => state.userSlice);
+  console.log(userData);
 
   const [createUser] = useCreateUserMutation();
   const handleCreateUser = async (e) => {
     e.preventDefault();
     const { data } = await createUser({ userData, token });
     console.log(data);
-    data?.message == "User register successful" &&
-      setAlert(true)
+    if(data?.error){
+      console.log('error',error);
+     }else{
+      console.log(data?.message );
+      nav('/user-overview');
+      toast.success("User added! !", {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 2000,
+
+        hideProgressBar: true,
+        theme: "dark",
+      });
+     }
   };
+ 
   return (
     <div className="relative">
       {/* path breadcrumbs */}
@@ -94,7 +108,7 @@ export default function CreateUser() {
           {/* Personal Info */}
           {state.stepOne && (
             <div className="w-[70%]">
-              <StepOne />
+              <StepOne   />
             </div>
           )}
           {/* Login Info  */}

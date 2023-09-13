@@ -4,18 +4,58 @@ import { MdOutlineEdit } from "react-icons/md";
 import Breadcrumb from "../../Components/Breadcrumb";
 import Pagination from "../../Components/Pagination";
 import Cookies from "js-cookie";
-import { useGetAllUsersQuery } from "../../Feature/API/userApi";
+import { useDeleteUserMutation, useGetAllUsersQuery } from "../../Feature/API/userApi";
 import { useNavigate } from "react-router-dom";
 import ManageOverview from "../../Components/ManageOverview";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 
 export default function UserList() {
   const token = Cookies.get("token");
   const nav = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const { data } = useGetAllUsersQuery({ token, currentPage });
+  const [delUser]=useDeleteUserMutation();
   const users = data?.users.data;
   console.log(data);
+const handleDeleteUser=async(id,token)=>{
+  Swal.fire({
+    title: `Are you sure you want to delete this product??`,
+    icon: "question",
+    iconColor: "#FF0000",
+    background: "#161618",
+    showCancelButton: true,
+    showCloseButton: true,
+    confirmButtonColor: "#FF0000",
+    cancelButtonColor: "#24262b",
+    confirmButtonText: `Delete`,
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      try {
+        // Call the deleteMedia mutation with the id of the picture to delete
+        const resulted = await delUser({ id, token });
+        console.log(resulted);
 
+        if (resulted.error) {
+          // Handle any errors here
+          console.error("Error deleting user:", resulted.error);
+        } else {
+          // Handle success, e.g., update your component state
+          toast.success("User deleted successfuly!", {
+            position: toast.POSITION.BOTTOM_CENTER,
+            autoClose: 2000,
+
+            hideProgressBar: true,
+            theme: "dark",
+          });
+        }
+      } catch (error) {
+        console.error("An error occurred:", error);
+      }
+    }
+  });
+
+}
  
 
   return (
@@ -56,7 +96,7 @@ export default function UserList() {
                 <td className="px-6 py-3">{i.role}</td>
                 <td className="px-6 py-3">{i.email}</td>
                 <td  className="flex gap-5 px-6 py-3">
-                  <BsDash className="text-3xl hover:bg-gray-50 hover:text-gray-500 rounded-full bg-gray-500 text-gray-50 p-1.5 cursor-pointer transition-all duration-200 ease-in" />
+                  <BsDash onClick={()=>{handleDeleteUser(i.id,token)}} className="text-3xl hover:bg-gray-50 hover:text-gray-500 rounded-full bg-gray-500 text-gray-50 p-1.5 cursor-pointer transition-all duration-200 ease-in" />
                   <MdOutlineEdit
                     onClick={() => nav(`/edit-user/${i.id}`)}
                     className="text-3xl hover:bg-gray-50 hover:text-gray-500 rounded-full bg-gray-500 text-gray-50 p-1.5 cursor-pointer transition-all duration-200 ease-in"
