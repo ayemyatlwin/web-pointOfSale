@@ -23,6 +23,7 @@ import { PiCalculatorDuotone, PiCoinsDuotone } from "react-icons/pi";
 import DropDownBtn from "../Components/DropDownBtn";
 import { Loader } from "@mantine/core";
 import Pagination from "../Components/Pagination";
+import { Link } from "react-router-dom";
 
 ChartJS.register(
   CategoryScale,
@@ -36,26 +37,57 @@ ChartJS.register(
 
 export default function Dashboard() {
   const options = {
+    scales: {
+      x: {
+        grid: {
+          color: "#3f4245", // Set the border color for the x-axis
+        },
+      },
+      y: {
+        grid: {
+          color: "#3f4245", // Set the border color for the x-axis
+        },
+        ticks: {
+          beginAtZero: true,
+          stepSize: 250, // Set the step size to 250
+          max: 1000, // Set the maximum value to 1000
+        },
+      },
+    },
     responsive: true,
     plugins: {
       legend: {
-        position: "top",
+        display: false, // Hide the legend (color selection option)
       },
       title: {
-        display: true,
+        display: false,
         text: "Chart.js Line Chart",
       },
+      layout: {
+        padding: {
+          left: 20,    // Adjust the left padding (in pixels)
+          right: 20,   // Adjust the right padding (in pixels)
+          top: 1,     // Adjust the top padding (in pixels)
+          bottom: 1,  // Adjust the bottom padding (in pixels)
+        },
+      },
+      
     },
   };
 
   const labels = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
+    "JAN",
+    "FEB",
+    "MAR",
+    "APR",
+    "MAY",
+    "JUN",
+    "JUL",
+    "AUG",
+    "SEP",
+    "OCT",
+    "NOV",
+    "DEC"
   ];
 
   const data = {
@@ -63,9 +95,11 @@ export default function Dashboard() {
     datasets: [
       {
         label: "Dataset 1",
-        // data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
-        borderColor: "rgb(255, 99, 132)",
+        data: [250, 500, 750, 1000, 800, 600, 400, 300, 700, 900, 550, 200], // Sample data
+        borderColor: "#8AB4F8",
+        borderWidth: 1,
         backgroundColor: "rgba(255, 99, 132, 0.5)",
+        pointBackgroundColor: "#f5f5f5",
       },
     ],
   };
@@ -89,7 +123,7 @@ export default function Dashboard() {
               className={`w-[60px] h-[60px]  rounded-full border p-1 flex justify-center items-center`}
             >
               <AiOutlineShoppingCart
-                className={`w-full h-full border text-blue-500 border-solid border-blue-500 bg-[#434446] rounded-full p-2`}
+                className={`w-full h-full border text-[#8AB4F8] border-solid border-[#8AB4F8] bg-[#434446] rounded-full p-2`}
                 alt=""
               />
             </div>
@@ -108,7 +142,7 @@ export default function Dashboard() {
               className={`w-[60px] h-[60px]  rounded-full border p-1 flex justify-center items-center`}
             >
               <GiIdCard
-                className={`w-full h-full border text-blue-500 border-solid border-blue-500 bg-[#434446] rounded-full p-2`}
+                className={`w-full h-full border text-[#8AB4F8] border-solid border-[#8AB4F8] bg-[#434446] rounded-full p-2`}
                 alt=""
               />
             </div>
@@ -121,15 +155,15 @@ export default function Dashboard() {
         {/* Quick action */}
         <div className="w-[60%] me-4 border border-[#3f4245] py-2 px-3 rounded-md">
           <div className="my-4 ">
-            <p className=" my-4 block text-2xl font-extrabold tracking-wide">
+            <h2 className="my-4 tracking-wide text-[1.2rem]">
               Quick Actions
-            </p>
+            </h2>
             <div className="  flex items-center justify-center">
               <div className="me-4 w-[40%] border border-[#3f4245] py-2 px-3 rounded-md">
                 <div className=" my-2 flex items-center justify-evenly ">
                   <div className=" me-4 border border-[#3f4245] py-2 px-3 rounded-md ">
                     <AiOutlinePlus
-                      className={`w-full h-full text-3xl text-blue-500   p-2`}
+                      className={`w-full h-full text-3xl text-[#8AB4F8]   p-2`}
                     />
                   </div>
                   <div>
@@ -145,7 +179,7 @@ export default function Dashboard() {
                   <div className=" my-2  flex items-center justify-evenly">
                     <div className=" me-4 border border-[#3f4245] py-2 px-3 rounded-md ">
                       <BsShop
-                        className={`w-full h-full text-3xl text-blue-500   p-2`}
+                        className={`w-full h-full text-3xl text-[#8AB4F8]   p-2`}
                       />
                     </div>
                     <div>
@@ -157,7 +191,7 @@ export default function Dashboard() {
                   </div>
                   <div className=" me-4  py-2 px-3 rounded-md ">
                     <AiOutlineArrowRight
-                      className={`w-full h-full border text-blue-500 border-solid border-blue-500 bg-[#434446] rounded-full p-2`}
+                      className={`w-full h-full border text-[#8AB4F8] border-solid border-[#8AB4F8] bg-[#434446] rounded-full p-2`}
                     />
                   </div>
                 </div>
@@ -167,38 +201,37 @@ export default function Dashboard() {
         </div>
       </div>
       {/* second row */}
-      <div className=" my-8 border me-4 border-[#3f4245] rounded-md">
-        <div className=" my-16 ms-10 flex items-center">
+      <div className=" my-5 border me-4 border-[#3f4245] rounded-md">
+        <div className=" ms-10 flex ">
           {/* chart section */}
           <div className=" w-[70%]">
-            <div className=" flex items-center justify-between">
-              <p className="text-3xl  tracking-wide">Monthly Sales</p>
-              <div>
-                <button className=" border border-[#3f4245] rounded-md px-3 py-2  hover:text-blue-500 hover:opacity-70 hover:backdrop-blur-sm ">
-                  Year
-                </button>
-                <button className=" border border-[#3f4245] rounded-md px-3 py-2  hover:text-blue-500 hover:opacity-70 hover:backdrop-blur-sm ">
-                  Month
-                </button>
-                <button className=" border border-[#3f4245] rounded-md px-3 py-2  hover:text-blue-500 hover:opacity-70 hover:backdrop-blur-sm ">
-                  {" "}
-                  Week
-                </button>
-              </div>
+            <div className=" flex  justify-between my-5">
+            <h2 className=" tracking-wide text-[1.5rem]">Monthly Sales</h2>
+              <div className="flex gap-3 border me-3 border-[#3f4245] rounded-md">
+          <button className="border-r border-[#3f4245]  w-[5rem] py-2  ">
+            <Link className=" text-center text-md text-[#f5f5f5] ">Year</Link>
+          </button>
+          <button className="border-r border-[#3f4245]   w-[5rem] py-2  ">
+            <Link className=" text-center text-md text-[#f5f5f5] ">Month</Link>
+          </button>
+          <button className="border-r border-[#3f4245]  w-[5rem] py-2 ">
+            <Link className=" text-center text-md text-[#f5f5f5] ">Week</Link>
+          </button>
+        </div>
             </div>
             <div>
-              <Line data={data} options={options} />
+              <Line data={data} options={options }  height={80} />
             </div>
           </div>
           {/* info section */}
-          <div className="w-[30%] mx-8">
+          <div className="w-[30%] mx-5">
             <div className=" w-[50%]">
-              <div className=" my-8">
-                <p className=" text-2xl  font-thin tracking-wide">982.85k</p>
+              <div className="">
+                <p className=" text-[1.2rem]  font-thin tracking-wide">982.85k</p>
                 <p className=" tracking-tight font-thin text-sm">Kyats</p>
               </div>
-              <div className=" my-4">
-                <div className=" flex items-center justify-between my-6">
+              <div className=" my-1">
+                <div className=" flex gap-3 items-center justify-between mb-2 ">
                   <div className="bg-[#434446] rounded-lg px-3 py-3">
                     <BsGraphUpArrow className=" text-[#07f51b] text-xl font-extrabold  " />
                   </div>
@@ -211,9 +244,9 @@ export default function Dashboard() {
                     </p>
                   </div>
                 </div>
-                <div className=" flex items-center justify-between  my-6">
+                <div className=" flex  gap-3  items-center justify-between mb-2 ">
                   <div className="bg-[#434446] rounded-lg px-3 py-3">
-                    <PiCoinsDuotone className=" text-blue-500 text-xl font-extrabold  " />
+                    <PiCoinsDuotone className=" text-[#8AB4F8] text-xl font-extrabold  " />
                   </div>
                   <div>
                     <p className=" text-lg font-thin  tracking-wide  ">
@@ -224,7 +257,7 @@ export default function Dashboard() {
                     </p>
                   </div>
                 </div>
-                <div className=" flex items-center justify-between  my-6">
+                <div className=" flex  gap-3  items-center justify-between mb-2">
                   <div className="bg-[#434446] rounded-lg px-3 py-3">
                     <GiPayMoney className="   text-amber-400 text-xl font-extrabold  " />
                   </div>
@@ -239,8 +272,8 @@ export default function Dashboard() {
                 </div>
               </div>
             </div>
-            <div className=" my-4">
-              <button className=" px-20  py-3 rounded-md bg-blue-500">
+            <div className=" mb-2">
+              <button className="py-1 text-[#161618] px-2 w-full text-md rounded-md bg-[#8AB4F8]">
                 SALE REPORT
               </button>
             </div>
