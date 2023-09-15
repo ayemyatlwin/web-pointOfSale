@@ -5,7 +5,6 @@ import {
   AiOutlinePlus,
   AiOutlineShoppingCart,
 } from "react-icons/ai";
-
 import { GiIdCard, GiPayMoney } from "react-icons/gi";
 import { BsGraphUpArrow, BsPlusLg, BsShop } from "react-icons/bs";
 import { Line } from "react-chartjs-2";
@@ -63,15 +62,6 @@ export default function Dashboard() {
         display: false,
         text: "Chart.js Line Chart",
       },
-      layout: {
-        padding: {
-          left: 20,    // Adjust the left padding (in pixels)
-          right: 20,   // Adjust the right padding (in pixels)
-          top: 1,     // Adjust the top padding (in pixels)
-          bottom: 1,  // Adjust the bottom padding (in pixels)
-        },
-      },
-      
     },
   };
 
@@ -87,7 +77,7 @@ export default function Dashboard() {
     "SEP",
     "OCT",
     "NOV",
-    "DEC"
+    "DEC",
   ];
 
   const data = {
@@ -118,7 +108,7 @@ export default function Dashboard() {
       <div className=" flex items-center justify-around">
         {/* total stock */}
         <div className="w-[20%] me-4 border border-[#3f4245] py-2 px-3 rounded-md">
-          <div className=" my-[58px] flex items-center justify-around">
+          <div className=" my-[40px] flex gap-3 justify-between  ">
             <div
               className={`w-[60px] h-[60px]  rounded-full border p-1 flex justify-center items-center`}
             >
@@ -127,8 +117,10 @@ export default function Dashboard() {
                 alt=""
               />
             </div>
-            <div>
-              <p className=" text-2xl font-extrabold tracking-wide">28,500k</p>
+            <div className=" self-end">
+              <p className=" text-[1.5rem] font-extrabold tracking-wide">
+                28,500k
+              </p>
               <p className=" tracking-tight font-thin text-sm">
                 Total Products
               </p>
@@ -137,7 +129,7 @@ export default function Dashboard() {
         </div>
         {/* total staff */}
         <div className="w-[20%] me-4 border border-[#3f4245] py-2 px-3 rounded-md">
-          <div className="my-[58px]  flex items-center justify-around">
+          <div className="my-[40px]  flex gap-3 justify-between ">
             <div
               className={`w-[60px] h-[60px]  rounded-full border p-1 flex justify-center items-center`}
             >
@@ -146,7 +138,7 @@ export default function Dashboard() {
                 alt=""
               />
             </div>
-            <div>
+            <div className=" self-end">
               <p className=" text-2xl font-extrabold tracking-wide">645</p>
               <p className=" tracking-tight font-thin text-sm">Total Staff</p>
             </div>
@@ -154,13 +146,11 @@ export default function Dashboard() {
         </div>
         {/* Quick action */}
         <div className="w-[60%] me-4 border border-[#3f4245] py-2 px-3 rounded-md">
-          <div className="my-4 ">
-            <h2 className="my-4 tracking-wide text-[1.2rem]">
-              Quick Actions
-            </h2>
-            <div className="  flex items-center justify-center">
+          <div className=" ">
+            <h2 className=" mb-2 tracking-wide text-[1.2rem]">Quick Actions</h2>
+            <div className="  flex items-center justify-center mb-3">
               <div className="me-4 w-[40%] border border-[#3f4245] py-2 px-3 rounded-md">
-                <div className=" my-2 flex items-center justify-evenly ">
+                <div className=" my-1 flex items-center justify-evenly ">
                   <div className=" me-4 border border-[#3f4245] py-2 px-3 rounded-md ">
                     <AiOutlinePlus
                       className={`w-full h-full text-3xl text-[#8AB4F8]   p-2`}
@@ -176,7 +166,7 @@ export default function Dashboard() {
               </div>
               <div className="me-4 w-[60%] border border-[#3f4245] py-2 px-3 rounded-md">
                 <div className="flex items-center justify-between ">
-                  <div className=" my-2  flex items-center justify-evenly">
+                  <div className=" my-1  flex items-center justify-evenly">
                     <div className=" me-4 border border-[#3f4245] py-2 px-3 rounded-md ">
                       <BsShop
                         className={`w-full h-full text-3xl text-[#8AB4F8]   p-2`}
@@ -206,74 +196,85 @@ export default function Dashboard() {
           {/* chart section */}
           <div className=" w-[70%]">
             <div className=" flex  justify-between my-5">
-            <h2 className=" tracking-wide text-[1.5rem]">Monthly Sales</h2>
+              <h2 className=" tracking-wide text-[1.5rem]">Monthly Sales</h2>
               <div className="flex gap-3 border me-3 border-[#3f4245] rounded-md">
-          <button className="border-r border-[#3f4245]  w-[5rem] py-2  ">
-            <Link className=" text-center text-md text-[#f5f5f5] ">Year</Link>
-          </button>
-          <button className="border-r border-[#3f4245]   w-[5rem] py-2  ">
-            <Link className=" text-center text-md text-[#f5f5f5] ">Month</Link>
-          </button>
-          <button className="border-r border-[#3f4245]  w-[5rem] py-2 ">
-            <Link className=" text-center text-md text-[#f5f5f5] ">Week</Link>
-          </button>
-        </div>
+                <button className="border-r border-[#3f4245]  w-[5rem] py-1  ">
+                  <Link className=" text-center text-md text-[#f5f5f5] ">
+                    Year
+                  </Link>
+                </button>
+                <button className="border-r border-[#3f4245]   w-[5rem] py-1  ">
+                  <Link className=" text-center text-md text-[#f5f5f5] ">
+                    Month
+                  </Link>
+                </button>
+                <button className="border-r border-[#3f4245]  w-[5rem] py-1 ">
+                  <Link className=" text-center text-md text-[#f5f5f5] ">
+                    Week
+                  </Link>
+                </button>
+              </div>
             </div>
             <div>
-              <Line data={data} options={options }  height={80} />
+              <Line data={data} options={options} height={80} />
             </div>
           </div>
           {/* info section */}
           <div className="w-[30%] mx-5">
             <div className=" w-[50%]">
-              <div className="">
-                <p className=" text-[1.2rem]  font-thin tracking-wide">982.85k</p>
+              <div className=" mt-3">
+                <p className=" text-[1.2rem]  font-thin tracking-wide">
+                  982.85k
+                </p>
                 <p className=" tracking-tight font-thin text-sm">Kyats</p>
               </div>
               <div className=" my-1">
                 <div className=" flex gap-3 items-center justify-between mb-2 ">
-                  <div className="bg-[#434446] rounded-lg px-3 py-3">
+                  <div className="bg-[#434446] rounded-lg px-3 py-2">
                     <BsGraphUpArrow className=" text-[#07f51b] text-xl font-extrabold  " />
                   </div>
-                  <div>
-                    <p className=" text-lg font-thin  tracking-wide  ">
+                  <div className=" flex flex-col">
+                    <span className="text-lg font-thin  tracking-wide">
+                      {" "}
                       48,568,20
-                    </p>
-                    <p className=" tracking-tight font-thin text-sm">
+                    </span>
+                    <span className="tracking-tight w-96 font-thin text-sm  text-[#7e7f80]">
+                      {" "}
                       Total Profit
-                    </p>
+                    </span>
                   </div>
                 </div>
                 <div className=" flex  gap-3  items-center justify-between mb-2 ">
-                  <div className="bg-[#434446] rounded-lg px-3 py-3">
+                  <div className="bg-[#434446] rounded-lg px-3 py-2">
                     <PiCoinsDuotone className=" text-[#8AB4F8] text-xl font-extrabold  " />
                   </div>
-                  <div>
-                    <p className=" text-lg font-thin  tracking-wide  ">
+                  <div className=" flex flex-col">
+                    <span className="text-lg font-thin  tracking-wide">
+                      {" "}
                       36,453.25
-                    </p>
-                    <p className=" tracking-tight font-thin text-sm">
+                    </span>
+                    <span className="tracking-tight w-96 font-thin text-sm  text-[#7e7f80]">
                       Total Income
-                    </p>
+                    </span>
                   </div>
                 </div>
                 <div className=" flex  gap-3  items-center justify-between mb-2">
-                  <div className="bg-[#434446] rounded-lg px-3 py-3">
+                  <div className="bg-[#434446] rounded-lg px-3 py-2">
                     <GiPayMoney className="   text-amber-400 text-xl font-extrabold  " />
                   </div>
-                  <div>
-                    <p className=" text-lg font-thin  tracking-wide  ">
+                  <div className=" flex flex-col">
+                    <span className="text-lg font-thin  tracking-wide">
                       2,453.45
-                    </p>
-                    <p className=" tracking-tight font-thin text-sm">
+                    </span>
+                    <span className="tracking-tight w-96 font-thin text-sm  text-[#7e7f80]">
                       Total Expense
-                    </p>
+                    </span>
                   </div>
                 </div>
               </div>
             </div>
-            <div className=" mb-2">
-              <button className="py-1 text-[#161618] px-2 w-full text-md rounded-md bg-[#8AB4F8]">
+            <div className=" mb-3">
+              <button className="py-1 text-[#161618] px-2 w-full font-semibold text-md rounded-md bg-[#8AB4F8]">
                 SALE REPORT
               </button>
             </div>
@@ -282,38 +283,40 @@ export default function Dashboard() {
       </div>
       {/* Third row */}
       <div>
-      <div className="py-5 pb-3 ">
-        <div className=" flex justify-between">
-          <h2 className=" tracking-wide text-[1.5rem]">Today Sales Overview</h2>
-          <div className="flex gap-3">
-            <DropDownBtn />
-            <button
-              // onClick={() => saleCloseHandler()}
-              className="text-white border border-[#7E7F80]  font-medium rounded-lg text-sm px-5 text-center inline-flex items-center "
-            >
-              <PiCalculatorDuotone className="text-[#8AB4F8] h-5 w-5 me-2" />
-              {/* {saleClose ? `Sale Close` : `Sale Open`} */}
-            </button>
+        <div className="py-5 pb-3 ">
+          <div className=" flex justify-between">
+            <h2 className=" tracking-wide text-[1.5rem]">
+              Today Sales Overview
+            </h2>
+            <div className="flex gap-3">
+              <DropDownBtn />
+              <button
+                // onClick={() => saleCloseHandler()}
+                className="text-white border border-[#7E7F80]  font-medium rounded-lg text-sm px-5 text-center inline-flex items-center "
+              >
+                <PiCalculatorDuotone className="text-[#8AB4F8] h-5 w-5 me-2" />
+                {/* {saleClose ? `Sale Close` : `Sale Open`} */}
+              </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <main className="border border-[#3f4245] rounded-sm mt-7">
-        <table className="w-full text-sm text-center text-[#f5f5f5]">
-          <thead className="text-xs text-[#f5f5f5] uppercase ">
-            <tr className="border-b border-[#3f4245]">
-              <th className="px-6 py-4">No.</th>
-              <th className="px-6 py-4">Sale Person</th>
-              <th className="px-6 py-4">Voucher No.</th>
-              <th className="px-6 py-4">Time</th>
-              <th className="px-6 py-4">Item Count</th>
-              <th className="px-6 py-4">Cash</th>
-              <th className="px-6 py-4">Tax</th>
-              <th className="px-6 py-4"> Total</th>
-            </tr>
-          </thead>
-          {/* map data from old recorded voucher list from api */}
-          {/* <tbody className="text-[#f5f5f5]">
+        <main className="border border-[#3f4245] rounded-sm mt-7">
+          <table className="w-full text-sm text-center text-[#f5f5f5]">
+            <thead className="text-xs text-[#f5f5f5] uppercase ">
+              <tr className="border-b border-[#3f4245]">
+                <th className="px-6 py-4">No.</th>
+                <th className="px-6 py-4">Sale Person</th>
+                <th className="px-6 py-4">Voucher No.</th>
+                <th className="px-6 py-4">Time</th>
+                <th className="px-6 py-4">Item Count</th>
+                <th className="px-6 py-4">Cash</th>
+                <th className="px-6 py-4">Tax</th>
+                <th className="px-6 py-4"> Total</th>
+              </tr>
+            </thead>
+            {/* map data from old recorded voucher list from api */}
+            {/* <tbody className="text-[#f5f5f5]">
             {oldData?.map((data, i) => {
               return (
                 <tr key={i} className="border-b border-[#3f4245]">
@@ -336,12 +339,12 @@ export default function Dashboard() {
               );
             })}
           </tbody> */}
-        </table>
-      </main>
+          </table>
+        </main>
 
-      {/* total and tax */}
-      <div className="flex justify-between ">
-        {/* {oldData ? (
+        {/* total and tax */}
+        <div className="flex justify-between ">
+          {/* {oldData ? (
           <div className="flex gap-3 mb-2 mt-5 border border-[#3f4245] rounded-md">
             <button className="border-r border-[#3f4245] flex flex-col w-[7rem] py-2 px-2 ">
               <span className="text-xs self-end text-[#8AB4F8] ">
@@ -375,14 +378,14 @@ export default function Dashboard() {
         ) : (
           <Loader variant="dots" color="gray" />
         )} */}
-        <div className=" py-5 place-self-end">
-          {/* <Pagination
+          <div className=" py-5 place-self-end">
+            {/* <Pagination
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
             last_page={recordedVoucher?.currentData?.meta?.last_page}
           /> */}
+          </div>
         </div>
-      </div>
       </div>
     </div>
   );
