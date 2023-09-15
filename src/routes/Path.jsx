@@ -35,6 +35,7 @@ import BrandOverview from "../Pages/brand/BrandOverview";
 import BrandAdding from "../Pages/brand/BrandAdding";
 import DetailedinformationofBrand from "../Pages/brand/DetailedinformationOfBrand";
 import BrandEditing from "../Pages/brand/BrandEditing";
+import ReportStock from "../Pages/Report/ReportStock";
 
 
 export default function Path() {
@@ -87,6 +88,7 @@ export default function Path() {
           <Route path="finance-monthly" element={<MonthlyFinance/>}/>
           <Route path="finance-yearly" element={<YearlyFinance/>}/>
           <Route path="finance-custom" element={<CustomFinance/>}/>
+          <Route path="report-stock" element={<ReportStock/>}/>
         </Route>
         <Route
           path="sale-cashier"
