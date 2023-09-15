@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Breadcrumb from "../../Components/Breadcrumb";
 import Pagination from "../../Components/Pagination";
 import {
@@ -21,6 +21,7 @@ const Recent = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const recordedVoucher = useRecordedVoucherQuery({ token, currentPage });
   //console.log(recordedVoucher);
+  const [loading, setLoading] = useState(true); // Step 1: Create a loading state
 
   const oldData = recordedVoucher?.data?.data;
   const totals = recordedVoucher?.data?.total;
@@ -56,18 +57,18 @@ const Recent = () => {
         let responseData;
         if (saleClose === "true" || virtualSaleClose === "true") {
           const data = await saleOpenApi(token);
+          console.log(data);
           responseData = data?.data?.message;
           console.log("Sale Opened--:", responseData);
-          if (responseData === "shop is open") {
-            dispatch(setSaleClose(false));
-          }
+
+          dispatch(setSaleClose(false));
         } else {
           const data = await saleCloseApi(token);
+          console.log(data);
           responseData = data?.data?.message;
           console.log("Sale Closed--:", responseData);
-          if (responseData === "shop is close") {
-            dispatch(setSaleClose(true));
-          }
+
+          dispatch(setSaleClose(true));
         }
       } else {
         console.log("Sale operation canceled");
@@ -76,7 +77,14 @@ const Recent = () => {
       console.error("An error occurred:", error);
     }
   };
-
+  useEffect(() => {
+    // Step 2: Update loading state based on query status
+    if (recordedVoucher.isLoading) {
+      setLoading(true);
+    } else if (recordedVoucher.isSuccess || recordedVoucher.isError) {
+      setLoading(false);
+    }
+  }, [recordedVoucher]);
   return (
     <>
       {/* path breadcrumbs */}
@@ -110,58 +118,66 @@ const Recent = () => {
         </div>
       </div>
 
-     
-
-      {oldData?.length === 0 ? (
-        <div className="text-center text-white py-4">
-          There is no sale yet.
-        </div>
-      ) : (
-        <main className="border border-[#3f4245] rounded-sm mt-7">
-        <table className="w-full text-sm text-center text-[#f5f5f5]">
-          <thead className="text-xs text-[#f5f5f5] uppercase ">
-            <tr className="border-b border-[#3f4245]">
-              <th className="px-6 py-4">No.</th>
-              <th className="px-6 py-4">Sale Person</th>
-              <th className="px-6 py-4">Voucher No.</th>
-              <th className="px-6 py-4">Time</th>
-              <th className="px-6 py-4">Item Count</th>
-              <th className="px-6 py-4">Cash</th>
-              <th className="px-6 py-4">Tax</th>
-              <th className="px-6 py-4"> Total</th>
-            </tr>
-          </thead>
-          {/* map data from old recorded voucher list from api */}
-          <tbody className="text-[#f5f5f5]">
-            {oldData?.map((data, i) => {
-              return (
-                <tr key={i} className="border-b border-[#3f4245]">
-                  <td className="px-6 py-4">{i + 1}</td>
-                  <td className="px-6 py-4">{data?.user}</td>
-                  <td className="px-6 py-4">{data?.voucher_number}</td>
-                  <td className="px-6 py-4">{data?.time}</td>
-                  <td className="px-6 py-4">
-                    {data?.item_count}
-                  </td>
-                  <td className="px-6 py-4">{data?.total}</td>
-                  <td className="px-6 py-4">{data?.tax}</td>
-                  <td className="px-6 py-4">{data?.net_total}</td>
-                  <td className="px-6 py-4">
-                    <button className="px-2 py-2 bg-[#3f4245] rounded-full">
-                      <AiOutlineArrowRight />
-                    </button>{" "}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </main>
-      )}
+      <>
+        {loading ? (
+          <div className="flex flex-col items-center justify-start h-full ">
+            {" "}
+            <Loader className=" py-4" variant="dots" color="gray" />{" "}
+          </div>
+        ) : (
+          <>
+            {oldData?.length === 0 ? (
+              <div className="text-center text-white py-4">
+                There is no sale yet.
+              </div>
+            ) : (
+              <main className="border border-[#3f4245] rounded-sm mt-7">
+                <table className="w-full text-sm text-center text-[#f5f5f5]">
+                  <thead className="text-xs text-[#f5f5f5] uppercase ">
+                    <tr className="border-b border-[#3f4245]">
+                      <th className="px-6 py-4">No.</th>
+                      <th className="px-6 py-4">Sale Person</th>
+                      <th className="px-6 py-4">Voucher No.</th>
+                      <th className="px-6 py-4">Time</th>
+                      <th className="px-6 py-4">Item Count</th>
+                      <th className="px-6 py-4">Cash</th>
+                      <th className="px-6 py-4">Tax</th>
+                      <th className="px-6 py-4"> Total</th>
+                    </tr>
+                  </thead>
+                  {/* map data from old recorded voucher list from api */}
+                  <tbody className="text-[#f5f5f5]">
+                    {oldData?.map((data, i) => {
+                      return (
+                        <tr key={i} className="border-b border-[#3f4245]">
+                          <td className="px-6 py-4">{i + 1}</td>
+                          <td className="px-6 py-4">{data?.user}</td>
+                          <td className="px-6 py-4">{data?.voucher_number}</td>
+                          <td className="px-6 py-4">{data?.time}</td>
+                          <td className="px-6 py-4">{data?.item_count}</td>
+                          <td className="px-6 py-4">{data?.total}</td>
+                          <td className="px-6 py-4">{data?.tax}</td>
+                          <td className="px-6 py-4">{data?.net_total}</td>
+                          <td className="px-6 py-4">
+                            <button className="px-2 py-2 bg-[#3f4245] rounded-full">
+                              <AiOutlineArrowRight />
+                            </button>{" "}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </main>
+            )}
+          </>
+        )}
+      </>
 
       {/* total and tax */}
-            { oldData?.length>0 ? (    <div className="flex justify-between ">
-      <div className="flex gap-3 mb-2 mt-5 border border-[#3f4245] rounded-md">
+      {oldData?.length > 0 ? (
+        <div className="flex justify-between ">
+          <div className="flex gap-3 mb-2 mt-5 border border-[#3f4245] rounded-md">
             <button className="border-r border-[#3f4245] flex flex-col w-[7rem] py-2 px-2 ">
               <span className="text-xs self-end text-[#8AB4F8] ">
                 Total Vouchers
@@ -191,14 +207,17 @@ const Recent = () => {
               </span>
             </button>
           </div>
-        <div className=" py-5 place-self-end">
-          <Pagination
-            setCurrentPage={setCurrentPage}
-            currentPage={currentPage}
-            last_page={recordedVoucher?.currentData?.meta?.last_page}
-          />
+          <div className=" py-5 place-self-end">
+            <Pagination
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+              last_page={recordedVoucher?.currentData?.meta?.last_page}
+            />
+          </div>
         </div>
-      </div>) :("")}
+      ) : (
+        ""
+      )}
     </>
   );
 };
