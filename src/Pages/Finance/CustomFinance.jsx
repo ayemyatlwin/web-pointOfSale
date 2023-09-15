@@ -20,7 +20,6 @@ const CustomFinance = () => {
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
   };
-  const [currentPage, setCurrentPage] = useState(1);
   const todayDate = new Date();
   const [startDate, setStartDate] = useState(todayDate);
   const [endDate, setEndDate] = useState(todayDate);
@@ -30,7 +29,6 @@ const CustomFinance = () => {
 
   const getCustomdata = useGetCustomFinanceInfoQuery({
     token,
-    currentPage,
     startDate: formattedStartDate,
     endDate: formattedEndDate,
   });
@@ -142,7 +140,7 @@ const CustomFinance = () => {
       </main>
 
        {/* total and tax */}
-       {/* {loading || (getAllDailyData && getAllDailyData.length === 0) ? (
+       {loading || (getAllCustomData && getAllCustomData.length === 0) ? (
         ""
       ) : (
         <div className="flex justify-between ">
@@ -151,7 +149,7 @@ const CustomFinance = () => {
             <span className="text-xs self-end text-[#8AB4F8] ">
               Total Vouchers
             </span>
-            <span className="text-lg self-end">45675</span>
+            <span className="text-lg self-end">{getAllCustomData?.length}</span>
           </button>
           <button className="border-r border-[#3f4245]  flex flex-col w-[7rem] py-2 px-2 ">
             <span className="text-xs self-end text-[#8AB4F8] ">Total Cash</span>
@@ -166,37 +164,15 @@ const CustomFinance = () => {
             <span className="text-lg self-end">45675</span>
           </button>
         </div>
-        <div className=" py-5 place-self-end">
+        {/* <div className=" py-5 place-self-end">
           <Pagination currentPage={1} />
-        </div>
+        </div> */}
       </div>
 
-      )} */}
-        <div className="flex justify-between ">
-        <div className="flex gap-3 mb-2 mt-5 border border-[#3f4245] rounded-md">
-          <button className="border-r border-[#3f4245] flex flex-col w-[7rem] py-2 px-2 ">
-            <span className="text-xs self-end text-[#8AB4F8] ">
-              Total Vouchers
-            </span>
-            <span className="text-lg self-end">45675</span>
-          </button>
-          <button className="border-r border-[#3f4245]  flex flex-col w-[7rem] py-2 px-2 ">
-            <span className="text-xs self-end text-[#8AB4F8] ">Total Cash</span>
-            <span className="text-lg self-end">45675</span>
-          </button>
-          <button className="border-r border-[#3f4245] flex flex-col w-[7rem] py-2 px-2 ">
-            <span className="text-xs self-end text-[#8AB4F8] ">Total Tax</span>
-            <span className="text-lg self-end">45675</span>
-          </button>
-          <button className="  flex flex-col w-[7rem] py-2 px-2 ">
-            <span className="text-xs self-end text-[#8AB4F8] ">Total </span>
-            <span className="text-lg self-end">45675</span>
-          </button>
-        </div>
-        <div className=" py-5 place-self-end">
-          <Pagination currentPage={1} />
-        </div>
-      </div>
+      )}
+
+      
+       
       
     </>
   );

@@ -33,8 +33,8 @@ export const getFinancedataApi = createApi({
       providesTags: ["getFinancedataApi"],
     }),
     getCustomFinanceInfo: builder.query({
-      query: ({ token, currentPage, startDate, endDate }) => ({
-        url: `custom?start=${startDate}&end=${endDate}&page=${currentPage}`,
+      query: ({ token, startDate, endDate }) => ({
+        url: `custom?start=${startDate}&end=${endDate}`,
         headers: {
           authorization: `Bearer ${token}`,
         },

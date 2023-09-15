@@ -26,7 +26,7 @@ const RangeDatePickers = ({startDate,setStartDate,endDate,setEndDate}) => {
         <DatePicker
           selected={startDate}
           onChange={handleStartDateChange}
-          dateFormat="MM/dd/yyyy"
+          dateFormat="d/M/yyyy"
           className=" rounded-md outline-none   text-center"
           placeholderText="Start Date"
           id="startDate"
@@ -41,7 +41,7 @@ const RangeDatePickers = ({startDate,setStartDate,endDate,setEndDate}) => {
         <DatePicker
           selected={endDate}
           onChange={handleEndDateChange}
-          dateFormat="MM/dd/yyyy"
+          dateFormat="d/M/yyyy"
           placeholderText="End Date"
           className=" rounded-md outline-none text-center"
           id="endDate"

@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import Breadcrumb from "../../Components/Breadcrumb";
 import Pagination from "../../Components/Pagination";
-import { useRecordedVoucherQuery } from "../../Feature/API/saleApi";
+import {
+  useRecordedVoucherQuery,
+  useSaleCloseMutation,
+  useSaleOpenMutation,
+} from "../../Feature/API/saleApi";
 import Cookies from "js-cookie";
 import DropDownBtn from "../../Components/DropDownBtn";
 import { PiCalculatorDuotone } from "react-icons/pi";
@@ -22,34 +26,55 @@ const Recent = () => {
   const totals = recordedVoucher?.data?.total;
   //console.log(totals);
 
-  // const totals = oldData?.map((eachData) => eachData?.net_total);
-  // console.log(totals);
-  // const totalTaxs = oldData?.map((eachData) => eachData?.tax);
-  // console.log(totalTaxs);
-  // const totalsCashs = oldData?.map((eachData) => eachData?.total);
-  // console.log(totalsCashs);
-  // const totalVouchers = oldData?.map((eachData) => eachData?.voucher_number);
-  // console.log(totalVouchers);
+  const [saleCloseApi] = useSaleCloseMutation();
+  const [saleOpenApi] = useSaleOpenMutation();
 
   const { saleClose } = useSelector((state) => state.recieptSlice);
   console.log(saleClose);
+  const virtualSaleClose = Cookies.get("sale");
+  console.log(virtualSaleClose);
 
-  const saleCloseHandler = () => {
-    Swal.fire({
-      title: `Are you sure to sale ${saleClose ? "Close" : "Open"} ?`,
-      icon: "question",
-      iconColor: "#fff",
-      background: "#161618",
-      showCancelButton: true,
-      showCloseButton: true,
-      confirmButtonColor: "#3f4245",
-      cancelButtonColor: "#24262b",
-      confirmButtonText: `${saleClose ? "Close" : "CACULATE"}`,
-    }).then(async (result) => {
+  const saleCloseHandler = async () => {
+    try {
+      const result = await Swal.fire({
+        title: `Are you sure you want to ${
+          saleClose === "true" || virtualSaleClose === "true" ? "Open" : "Close"
+        } the sale?`,
+        icon: "question",
+        iconColor: "#fff",
+        background: "#161618",
+        showCancelButton: true,
+        showCloseButton: true,
+        confirmButtonColor: "#3f4245",
+        cancelButtonColor: "#24262b",
+        confirmButtonText: `${
+          saleClose === "true" || virtualSaleClose === "true" ? "Open" : "Close"
+        }`,
+      });
+
       if (result.isConfirmed) {
-        dispatch(setSaleClose(!saleClose));
+        let responseData;
+        if (saleClose === "true" || virtualSaleClose === "true") {
+          const data = await saleOpenApi(token);
+          responseData = data?.data?.message;
+          console.log("Sale Opened--:", responseData);
+          if (responseData === "shop is open") {
+            dispatch(setSaleClose(false));
+          }
+        } else {
+          const data = await saleCloseApi(token);
+          responseData = data?.data?.message;
+          console.log("Sale Closed--:", responseData);
+          if (responseData === "shop is close") {
+            dispatch(setSaleClose(true));
+          }
+        }
+      } else {
+        console.log("Sale operation canceled");
       }
-    });
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
   };
 
   return (
@@ -77,13 +102,22 @@ const Recent = () => {
               className="text-white border border-[#7E7F80]  font-medium rounded-lg text-sm px-5 text-center inline-flex items-center "
             >
               <PiCalculatorDuotone className="text-[#8AB4F8] h-5 w-5 me-2" />
-              {saleClose ? `Sale Close` : `Sale Open`}
+              {saleClose === "true" || virtualSaleClose === "true"
+                ? `Sale Open`
+                : `Sale Close`}
             </button>
           </div>
         </div>
       </div>
 
-      <main className="border border-[#3f4245] rounded-sm mt-7">
+     
+
+      {oldData?.length === 0 ? (
+        <div className="text-center text-white py-4">
+          There is no sale yet.
+        </div>
+      ) : (
+        <main className="border border-[#3f4245] rounded-sm mt-7">
         <table className="w-full text-sm text-center text-[#f5f5f5]">
           <thead className="text-xs text-[#f5f5f5] uppercase ">
             <tr className="border-b border-[#3f4245]">
@@ -107,7 +141,7 @@ const Recent = () => {
                   <td className="px-6 py-4">{data?.voucher_number}</td>
                   <td className="px-6 py-4">{data?.time}</td>
                   <td className="px-6 py-4">
-                    {data?.voucher_records?.quantity}
+                    {data?.item_count}
                   </td>
                   <td className="px-6 py-4">{data?.total}</td>
                   <td className="px-6 py-4">{data?.tax}</td>
@@ -123,11 +157,11 @@ const Recent = () => {
           </tbody>
         </table>
       </main>
+      )}
 
       {/* total and tax */}
-      <div className="flex justify-between ">
-        {oldData ? (
-          <div className="flex gap-3 mb-2 mt-5 border border-[#3f4245] rounded-md">
+            { oldData?.length>0 ? (    <div className="flex justify-between ">
+      <div className="flex gap-3 mb-2 mt-5 border border-[#3f4245] rounded-md">
             <button className="border-r border-[#3f4245] flex flex-col w-[7rem] py-2 px-2 ">
               <span className="text-xs self-end text-[#8AB4F8] ">
                 Total Vouchers
@@ -157,9 +191,6 @@ const Recent = () => {
               </span>
             </button>
           </div>
-        ) : (
-          <Loader variant="dots" color="gray" />
-        )}
         <div className=" py-5 place-self-end">
           <Pagination
             setCurrentPage={setCurrentPage}
@@ -167,7 +198,7 @@ const Recent = () => {
             last_page={recordedVoucher?.currentData?.meta?.last_page}
           />
         </div>
-      </div>
+      </div>) :("")}
     </>
   );
 };
