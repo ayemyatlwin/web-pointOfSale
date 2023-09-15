@@ -1,4 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
+
+
+const getInitialSaleCloseState = () => {
+  const savedSaleClose = Cookies.get("sale");
+  return savedSaleClose === 'true' || savedSaleClose === 'false' ? savedSaleClose : 'true';
+};
 
 const initialState = {
   reciept: [],
@@ -7,7 +14,7 @@ const initialState = {
   initialChanged: null,
   tax: 0,
   listSelector: 1,
-  saleClose:false
+  saleClose: getInitialSaleCloseState(),
 }; 
 
 const totalAmount = (reciept) => {
@@ -92,7 +99,12 @@ export const recieptSlice = createSlice({
     },
     // sale close
     setSaleClose:(state,{payload})=>{
-      state.saleClose=payload;
+      state.saleClose = payload;
+      try {
+        Cookies.set("sale", JSON.stringify(payload));
+      } catch (error) {
+        console.error("Failed to set sale cookie:", error);
+      }
     }
   },
 });

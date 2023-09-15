@@ -21,7 +21,23 @@ export const saleApi=createApi({
             }),
             invalidatesTags:["sale"]
         }),
+        saleClose:builder.mutation({
+            query:(token)=>({
+                url:`/sale-close`,
+                method:"POST",
+                headers :{authorization: `Bearer ${token}`},
+            }),
+            invalidatesTags:["sale"]
+        }),
+        saleOpen:builder.mutation({
+            query:(token)=>({
+                url:`/sale-open`,
+                method:"POST",
+                headers:{authorization: `Bearer ${token}`},
+            }),
+            invalidatesTags:["sale"]
+        })
     }),
 
 });
-export const {useRecordedVoucherQuery,useCheckoutMutation}=saleApi;
+export const {useRecordedVoucherQuery,useCheckoutMutation,useSaleOpenMutation,useSaleCloseMutation}=saleApi;

@@ -29,7 +29,7 @@ const YearlyFinance = () => {
     currentPage,
     year: getYear,
   });
-  //console.log(getYearlyData);
+  console.log(getYearlyData);
   const getAllYearlyData = getYearlyData?.data?.data;
   //console.log(getAllYearlyData);
   const totals = getYearlyData?.data?.total;

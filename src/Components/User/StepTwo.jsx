@@ -6,6 +6,7 @@ import {
   addEmail,
   addPassword,
   addRole,
+  // addRole,
 } from "../../Feature/Service/userSlice";
 
 export default function StepTwo({

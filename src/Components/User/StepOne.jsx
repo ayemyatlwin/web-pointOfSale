@@ -11,6 +11,7 @@ import {
 import { useGetSingleUserQuery } from "../../Feature/API/userApi";
 
 export default function StepOne({ userEdit, token, id }) {
+  
   const { data } = useGetSingleUserQuery({ token, id });
   console.log(data);
   console.log(userEdit);
