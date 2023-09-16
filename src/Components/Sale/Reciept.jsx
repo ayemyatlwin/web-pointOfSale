@@ -13,9 +13,11 @@ import { toast } from "react-toastify";
 
 const Reciept = () => {
   const dispatch = useDispatch();
-  const { reciept, listSelector} = useSelector(
+  const { reciept, listSelector,totalPrice,tax} = useSelector(
     (state) => state.recieptSlice
   );
+  console.log(reciept);
+ 
 
   // to POST voucher data
   const [checkout] = useCheckoutMutation();
@@ -30,8 +32,7 @@ const Reciept = () => {
       };
     }), 
   };
-  //console.log(newVoucherData);
-  // const newVoucherDataWithTime={...newVoucherData,timeStamp:new Date().toTimeString()}
+ 
 
   const navigate = useNavigate();
   // after voucher done click on the payment button to send data to Api
@@ -93,7 +94,7 @@ const Reciept = () => {
                       >
                         {item?.name.slice(0, 7)}
                       </p>
-                      <span className="text-[0.8rem] font-thin">
+                      <span className="text-[0.8rem] text-gray-400 font-thin">
                         <span className="mr-2">
                           {item?.quantity == "" ? "0" : item?.quantity}
                           pcs
@@ -110,6 +111,13 @@ const Reciept = () => {
             })}
           </div>
         </div>
+       {reciept.length !==0 &&  <div className=" flex flex-col px-2 py-1 ">
+          <span className="self-end">Cash - {totalPrice.toFixed(2)}</span>
+          <span className="self-end text-xs text-gray-400">Tax - {tax.toFixed(2)}</span>
+          <div className=" border-[#3f4245] border-b"></div>
+          <span className="self-end py-1">Total - {(totalPrice + tax).toFixed(2)}</span>
+        </div>}
+
         {/* calculator Ui for qty handling */}
         <div className="h-[50%]  ">
             <Calculator paymentHandler={paymentHandler} />
