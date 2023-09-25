@@ -7,8 +7,11 @@ import VertiChart from "../../Components/Report/VertiChart";
 import DonutChart from "../../Components/Report/DonutChart";
 import { TbClipboardText } from "react-icons/tb";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
+import { useGetTodaySaleReportQuery } from "../../Feature/API/reportSaleApi";
 
 const ReportSale = () => {
+  const {data}=useGetTodaySaleReportQuery();
+  console.log(data);
   return (
     <>
       {/* header breadcrumbs with year month week btns */}
