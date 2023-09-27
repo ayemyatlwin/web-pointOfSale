@@ -2,13 +2,28 @@ import React from "react";
 import Breadcrumb from "../../Components/Breadcrumb";
 import { Link } from "react-router-dom";
 import { AiOutlineArrowRight } from "react-icons/ai";
-import { CiMenuKebab } from "react-icons/ci";
 import VertiChart from "../../Components/Report/VertiChart";
 import DonutChart from "../../Components/Report/DonutChart";
-import { TbClipboardText } from "react-icons/tb";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
+import { useGetWeeklySaleReportQuery } from "../../Feature/API/reportSaleApi";
+import Cookies from "js-cookie";
+import TodaySaleOverview from "../../Components/Report/TodaySaleOverview";
 
 const ReportSale = () => {
+  const token=Cookies.get("token");
+  
+  const weeklyData=useGetWeeklySaleReportQuery(token);
+  console.log(weeklyData);
+  const averageValue=weeklyData?.data?.average;
+  const minimumValue=weeklyData?.data?.min;
+  const maximumValue=weeklyData?.data?.max;
+  console.log(averageValue+ "av");
+  console.log(minimumValue);
+  console.log(maximumValue);
+
+  //for table ui in Report/Sale
+  const productSaleData=weeklyData?.data?.product_sales;
+  // console.log(productSaleData);
   return (
     <>
       {/* header breadcrumbs with year month week btns */}
@@ -34,73 +49,8 @@ const ReportSale = () => {
       </div>
       {/* above section */}
       <div className="flex flex-row gap-5">
-        {/* today Sale */}
-        <div className="w-[35%] border border-[#3f4245] py-2 px-3 rounded-md">
-          <div>
-            <div className="flex justify-between">
-              <h1 className="text-xl">Today Sales</h1>
-              <span className="text-xs">
-                <CiMenuKebab />{" "}
-              </span>
-            </div>
-            <div className="flex flex-col pt-1">
-              <h1 className="text-2xl">928,500</h1>{" "}
-              <span className="text-xs pb-1">kyats </span>
-            </div>
-            <div className="flex flex-col">
-              <div className="flex flex-row justify-between pt-1 pb-2 border-t ">
-                <div className="flex gap-3">
-                  <span>
-                    <TbClipboardText className="mt-1 text-[#8AB4F8]" />
-                  </span>
-                  <span>03098</span>
-                </div>
-                <div className="flex gap-3 ">
-                  <span>45k</span>
-                  <span>455%</span>
-                  <span>
-                    <MdKeyboardArrowUp className="mt-1 text-[#56ca00]" />
-                  </span>
-                </div>
-              </div>
-              <div className="flex flex-row justify-between border-t pt-1 pb-2">
-                <div className="flex gap-3">
-                  <span>
-                    <TbClipboardText className="mt-1 text-[#8AB4F8]" />
-                  </span>
-                  <span>09037</span>
-                </div>
-                <div className="flex gap-3 ">
-                  <span>45k</span>
-                  <span>455%</span>
-                  <span>
-                    <MdKeyboardArrowUp className="mt-1 text-[#56ca00] " />
-                  </span>
-                </div>
-              </div>{" "}
-              <div className="flex flex-row justify-between pt-1 pb-2 border-t">
-                <div className="flex gap-3">
-                  <span>
-                    <TbClipboardText className="mt-1 text-[#8AB4F8]" />
-                  </span>
-                  <span>03096</span>
-                </div>
-                <div className="flex gap-3 ">
-                  <span>45k</span>
-                  <span>455%</span>
-                  <span>
-                    <MdKeyboardArrowUp className="mt-1 text-[#56ca00] " />
-                  </span>
-                </div>
-              </div>
-              <div className=" self-end mt-1">
-                <button className="px-2 py-1.5 border rounded-md border-[#3f4345]  ">
-                  Recent Sales
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* today Sale Overview / in Component folder/ */}
+        <TodaySaleOverview/>
         {/* chart and rating */}
         <div className="w-[65%] border border-[#3f4245] py-2 px-3 rounded-md">
           <div className="flex flex-col">
@@ -195,12 +145,14 @@ const ReportSale = () => {
                 </tr>
               </thead>
               {/* map data from from api */}
-              <tbody className="text-[#f5f5f5]">
+              {productSaleData?.map((data,i)=>{
+                return(
+                  <tbody key={i} className="text-[#f5f5f5]">
                 <tr className="border-b border-[#3f4245]">
-                  <td className="px-1 py-1">1</td>
-                  <td className="px-1 py-1">Watermelon</td>
-                  <td className="px-1 py-1 uppercase">Melon</td>
-                  <td className="px-1 py-1 ">100,000</td>
+                  <td className="px-1 py-1">{i+1}</td>
+                  <td className="px-1 py-1">{data?.product_name.slice(0,5)}</td>
+                  <td className="px-1 py-1 uppercase">{data?.brand.slice(0,4)}</td>
+                  <td className="px-1 py-1 ">{data?.sale_price}</td>
 
                   <td className=" py-1">
                     <button className="px-2 py-2 bg-[#3f4245] rounded-full">
@@ -209,6 +161,8 @@ const ReportSale = () => {
                   </td>
                 </tr>
               </tbody>
+                )
+              })}
             </table>
           </div>
         </div>

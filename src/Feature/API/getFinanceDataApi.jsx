@@ -49,4 +49,5 @@ export const {
   useGetMonthlyFinanceInfoQuery,
   useGetYearlyFinanceInfoQuery,
   useGetCustomFinanceInfoQuery,
+
 } = getFinancedataApi;
