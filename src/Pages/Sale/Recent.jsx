@@ -97,6 +97,7 @@ const Recent = () => {
           firstRoute={"Sale"}
           secondRoute={"Recent"}
         />
+        
       </div>
       {/* path breadcrumbs */}
 
