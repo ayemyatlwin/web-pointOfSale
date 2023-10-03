@@ -26,6 +26,7 @@ const Recent = () => {
   const oldData = recordedVoucher?.data?.data;
   const totals = recordedVoucher?.data?.total;
   //console.log(totals);
+  console.log(oldData)
 
   const [saleCloseApi] = useSaleCloseMutation();
   const [saleOpenApi] = useSaleOpenMutation();
@@ -152,7 +153,7 @@ const Recent = () => {
                       return (
                         <tr key={i} className="border-b border-[#3f4245]">
                           <td className="px-6 py-4">{i + 1}</td>
-                          <td className="px-6 py-4">{data?.user}</td>
+                          <td className="px-6 py-4">{data?.sale_person}</td>
                           <td className="px-6 py-4">{data?.voucher_number}</td>
                           <td className="px-6 py-4">{data?.time}</td>
                           <td className="px-6 py-4">{data?.item_count}</td>

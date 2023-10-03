@@ -5,6 +5,7 @@ import { FaPhoneVolume } from "react-icons/fa";
 import { BiSolidUser } from "react-icons/bi";
 import Breadcrumb from "../../Components/Breadcrumb";
 import Personal from "../../Components/Profile/Personal";
+import Password from "../../Components/Profile/Password"
 import LoginInfo from "../../Components/Profile/LoginInfo";
 import { useGetProfileQuery } from "../../Feature/API/profileApi";
 import Cookies from "js-cookie";
@@ -125,6 +126,11 @@ export default function MyAccount() {
             {state.login && (
               <div>
                 <LoginInfo data={data}/>
+              </div>
+            )}
+            {state.password &&(
+              <div className="">
+                <Password/>
               </div>
             )}
           </div>

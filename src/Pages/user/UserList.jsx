@@ -56,6 +56,8 @@ const handleDeleteUser=async(id,token)=>{
   });
 
 }
+console.log(data);
+const lastPage=data?.users?.last_page;
  
 
   return (
@@ -120,7 +122,7 @@ const handleDeleteUser=async(id,token)=>{
         <Pagination
           setCurrentPage={setCurrentPage}
           currentPage={currentPage}
-          last_page={data?.users.to}
+              last_page={lastPage}
         />
         </div>
       </div>

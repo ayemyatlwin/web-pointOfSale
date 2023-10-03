@@ -85,6 +85,8 @@ const InventoryOverview = () => {
       }
     });
   };
+  console.log(data);
+  const lastPage=data?.meta?.last_page;
 
   const rows = productDetailedInfo?.map((element, i) => (
     <tr key={element.product_id} className="border-b border-[#3f4245]">
@@ -247,7 +249,7 @@ const InventoryOverview = () => {
             <Pagination
               setCurrentPage={setCurrentPage}
               currentPage={currentPage}
-              last_page={data?.meta.to}
+              last_page={lastPage}
             />
           </div>
         </div>
