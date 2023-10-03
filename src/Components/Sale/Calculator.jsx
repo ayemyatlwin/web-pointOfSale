@@ -1,5 +1,5 @@
 import React from "react";
-import { decreaseQty, qtyUpdate } from "../../Feature/Service/recieptSlice";
+import { decreaseQty,removeItemFromList, qtyUpdate,clearList } from "../../Feature/Service/recieptSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const Calculator = ({ paymentHandler }) => {
@@ -30,7 +30,7 @@ const Calculator = ({ paymentHandler }) => {
             value="3"
           />
 
-          <input id="one-fourth-btns" type="button" value="QTY" />
+          <input className=" bg-[#3f4245]" id="one-fourth-btns" type="button" value="QTY +" />
         </div>
         <div className="flex justify-center border btnUi border-[#3f4245]">
           <input
@@ -51,7 +51,7 @@ const Calculator = ({ paymentHandler }) => {
             type="button"
             value="6"
           />
-          <input id="one-fourth-btns" type="button" value="DIS" />
+          <input onClick={()=>dispatch(clearList())}  id="one-fourth-btns" type="button" value="CLEAR" />
         </div>
         <div className="flex justify-center btnUi  border border-[#3f4245]">
           <input
@@ -72,7 +72,7 @@ const Calculator = ({ paymentHandler }) => {
             type="button"
             value="9"
           />
-          <input id="one-fourth-btns" type="button" value="PRICE" />
+          <input onClick={()=>dispatch(removeItemFromList(listSelector))} id="one-fourth-btns" type="button" value="REMOVE" />
         </div>
         <div className="flex justify-center border btnUi border-[#3f4245]">
           <input id="one-fourth-btns" type="button" value="+/-" />
@@ -87,7 +87,8 @@ const Calculator = ({ paymentHandler }) => {
             onClick={() => dispatch(decreaseQty(listSelector))}
             id="one-fourth-btns"
             type="button"
-            value="DEL"
+            name=" decrease quantity"
+            value="QTY -"
           />
         </div>
         <div

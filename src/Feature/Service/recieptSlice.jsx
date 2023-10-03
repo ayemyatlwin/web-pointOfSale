@@ -59,14 +59,26 @@ export const recieptSlice = createSlice({
             0,
             item.quantity.length - 1
           ));
-        } else if (item.quantity == "") {
+        } else if (item.quantity=="") {
           return (state.reciept = state.reciept.filter(
             (item) => item.product_id != payload
-          ));
+          )
+          );
         } else {
           return state;
         }
-      });
+      }
+      
+      );
+    },
+    removeItemFromList:(state,{payload})=>{
+      state.reciept.map((item)=>{
+        if(item.product_id === payload){
+          return(
+            state.reciept= state.reciept.filter((item)=> item.product_id !=payload)
+          )
+        }
+      })
     },
     // for voucher list output which is already sent to API
     voucherUpdate: (state, { payload }) => {
@@ -112,6 +124,7 @@ export const {
   addtoReciept,
   qtyUpdate,
   decreaseQty,
+  removeItemFromList,
   voucherUpdate,
   clearList,
   setListSelector,

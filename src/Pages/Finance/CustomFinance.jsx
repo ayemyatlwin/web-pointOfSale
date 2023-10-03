@@ -23,19 +23,21 @@ const CustomFinance = () => {
   const todayDate = new Date();
   const [startDate, setStartDate] = useState(todayDate);
   const [endDate, setEndDate] = useState(todayDate);
+  const [currentPage, setCurrentPage] = useState(1);
+
 
   const formattedStartDate = formatDate(startDate);
   const formattedEndDate = formatDate(endDate);
 
   const getCustomdata = useGetCustomFinanceInfoQuery({
-    token,
+    token,currentPage,
     startDate: formattedStartDate,
     endDate: formattedEndDate,
   });
   console.log(getCustomdata);
 
   // const totals = getCustomdata?.currentData?.total;
-  // const lastPage = getCustomdata?.currentData?.meta?.last_page;
+  const lastPage = getCustomdata?.currentData?.meta?.last_page;
 
   const getAllCustomData = getCustomdata?.data?.data;
   console.log(getAllCustomData);
@@ -47,7 +49,7 @@ const CustomFinance = () => {
     } else if (getCustomdata.isSuccess || getCustomdata.isError) {
       setLoading(false);
     }
-  }, [getCustomdata]);
+  }, [getCustomdata,currentPage]);
 
   return (
     <>
@@ -164,9 +166,9 @@ const CustomFinance = () => {
             <span className="text-lg self-end">45675</span>
           </button>
         </div>
-        {/* <div className=" py-5 place-self-end">
-          <Pagination currentPage={1} />
-        </div> */}
+        <div className=" py-5 place-self-end">
+          <Pagination currentPage={currentPage} last_page={lastPage} setCurrentPage={setCurrentPage} />
+        </div>
       </div>
 
       )}

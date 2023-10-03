@@ -92,7 +92,7 @@ const Reciept = () => {
                           listSelector == item?.product_id && "text-[#f5f5f5]"
                         } font-semibold leading-loose tracking-wider text-[1rem] `}
                       >
-                        {item?.name.slice(0, 7)}
+                        {item?.name.slice(0,5)}
                       </p>
                       <span className="text-[0.8rem] text-gray-400 font-thin">
                         <span className="mr-2">

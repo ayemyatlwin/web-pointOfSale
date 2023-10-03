@@ -41,11 +41,11 @@ const RecieptData = () => {
                         key={item?.product_id}
                         className="mt-5   px-4 pt-2 mx-auto overflow-visible"
                       >
-                        <div className="flex justify-between   border-b mb-1 pb-2 border-[#3f4245]">
+                        <div className="flex  gap-20 justify-between border-b mb-1 pb-2 border-[#3f4245]">
                           <div className="flex flex-col">
                             <span className="font-medium leading-loose tracking-wider text-[1rem]">
                               {/* {item?.name.slice(0, 7)} */}
-                              {item?.name}
+                              {item?.name.slice(0,10)}
                             </span>
                             <span className="text-[0.8rem] font-medium">
                               <span className="mr-2 font-medium">

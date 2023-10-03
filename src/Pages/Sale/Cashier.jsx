@@ -26,7 +26,26 @@ const Cashier = () => {
           {/* receipt section 1 (bought product list) */}
 
           <div className="w-[70%]  h-full px-2 pt-3  ">
-            <Breadcrumbs aria-label="breadcrumb" style={{ color: "#f5f5f5" }}>
+           
+            <div className=" flex justify-between pb-3 px-1 border-b border-[#3f4245] ">
+              {/* <div className="flex gap-5 mt-2">
+                <a className="text-[#f5f5f5] underline hover:text-blue-500 active:text-blue-700">
+                  All
+                </a>
+                <a className="text-[#f5f5f5] hover:text-blue-500 active:text-blue-700">
+                  Drinks
+                </a>
+                <a className="text-[#f5f5f5] hover:text-blue-500 active:text-blue-700">
+                  Cakes
+                </a>
+                <a className="text-[#f5f5f5] hover:text-blue-500 active:text-blue-700">
+                  Deserts
+                </a>
+                <a className="text-[#f5f5f5] hover:text-blue-500 active:text-blue-700">
+                  Sets
+                </a>
+              </div> */}
+               <Breadcrumbs aria-label="breadcrumb" style={{ color: "#f5f5f5" }}>
               <Link
                 sx={{ fontSize: "1rem" }}
                 href="#"
@@ -44,24 +63,6 @@ const Cashier = () => {
                 Cashier
               </Link>
             </Breadcrumbs>
-            <div className=" flex justify-between pb-3 px-1 border-b border-[#3f4245] ">
-              <div className="flex gap-5 mt-2">
-                <a className="text-[#f5f5f5] underline hover:text-blue-500 active:text-blue-700">
-                  All
-                </a>
-                <a className="text-[#f5f5f5] hover:text-blue-500 active:text-blue-700">
-                  Drinks
-                </a>
-                <a className="text-[#f5f5f5] hover:text-blue-500 active:text-blue-700">
-                  Cakes
-                </a>
-                <a className="text-[#f5f5f5] hover:text-blue-500 active:text-blue-700">
-                  Deserts
-                </a>
-                <a className="text-[#f5f5f5] hover:text-blue-500 active:text-blue-700">
-                  Sets
-                </a>
-              </div>
               <input
                 id="exampleSearch2"
                 placeholder="search"
