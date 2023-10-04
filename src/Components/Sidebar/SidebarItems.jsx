@@ -73,9 +73,9 @@ const SidebarItems = () => {
         <Accordion.Item value="overview">
           <Accordion.Control
             chevron=" "
-            className="px-5 active:bg-[#3F4245]  text-[#f5f5f5] text-[1rem]  pt-1 pb-2"
+            className={location.pathname === "/" ? " bg-[#3f4245] px-5  text-[#f5f5f5] text-[1rem]  pt-1 pb-2" : "px-5 active:bg-[#3F4245]  text-[#f5f5f5] text-[1rem]  pt-1 pb-2"}
           >
-            <NavLink to={"/"}>
+            <NavLink className="block"  to={"/"}>
               <span className="inline-flex gap-3 my-0 py-0">
                 <i>
                   <BiHome className="mt-1" />
@@ -97,8 +97,6 @@ const SidebarItems = () => {
           </Accordion.Control>
           <Accordion.Panel className="">
             <NavLink
-              activeClassName="active-link"
-              exact={true}
               to={"sale-cashier"}
               className={
                 "pt-1 pb-2 border-s-2 block active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] cursor-pointer text-[#f5f5f5]  px-2"
@@ -112,8 +110,6 @@ const SidebarItems = () => {
           </Accordion.Panel>
           <Accordion.Panel>
             <NavLink
-              activeClassName="active-link"
-              exact={true}
               to={"sale-recent"}
               className={`pt-1 pb-2 border-s-2 block active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] cursor-pointer text-[#f5f5f5]  px-2 ${
                 location.pathname === "/sale-recent" ? `active-link` : ``
@@ -135,7 +131,6 @@ const SidebarItems = () => {
           </Accordion.Control>
           <Accordion.Panel>
             <NavLink
-              activeClassName="active-link"
               to={"inventory-overview"}
               className={`pt-1 pb-2 border-s-2 block active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] cursor-pointer text-[#f5f5f5]  px-2 ${
                 location.pathname === "/inventory-overview" ? `active-link` : ``
@@ -146,8 +141,6 @@ const SidebarItems = () => {
           </Accordion.Panel>
           <Accordion.Panel>
             <NavLink
-              activeClassName="active-link"
-              exact={true}
               to={"adding-product"}
               className={`pt-1 pb-2 border-s-2 block active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] cursor-pointer text-[#f5f5f5]  px-2 ${
                 location.pathname === "/adding-product" ? `active-link` : ``
@@ -294,9 +287,9 @@ const SidebarItems = () => {
         <Accordion.Item value="media">
           <Accordion.Control
             chevron=" "
-            className="px-5 active:bg-[#3F4245]  text-[#f5f5f5] text-[1rem]  pt-1 pb-2"
+            className={location.pathname === "media-gallery" ? " bg-[#3f4245] px-5  text-[#f5f5f5] text-[1rem]  pt-1 pb-2" : "px-5 active:bg-[#3F4245]  text-[#f5f5f5] text-[1rem]  pt-1 pb-2"}
           >
-            <NavLink to={"media-gallery"}>
+            <NavLink className="block" to={"media-gallery"}>
               <span className="inline-flex gap-3 my-0 py-0">
                 <i>
                   <TfiGallery className="mt-1" />
@@ -345,7 +338,7 @@ const SidebarItems = () => {
             chevron=" "
             className="px-5 active:bg-[#3F4245]  text-[#f5f5f5] text-[1rem]  pt-1 pb-2"
           >
-            <NavLink onClick={logoutHandler} to={"/login"}>
+            <NavLink className="block" onClick={logoutHandler} to={"/login"}>
               <span className="inline-flex gap-3 my-0 py-0">
                 <i>
                   <HiOutlineLogout className="mt-1" />

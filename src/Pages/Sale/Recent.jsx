@@ -7,13 +7,13 @@ import {
   useSaleOpenMutation,
 } from "../../Feature/API/saleApi";
 import Cookies from "js-cookie";
-import DropDownBtn from "../../Components/DropDownBtn";
 import { PiCalculatorDuotone } from "react-icons/pi";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { Loader } from "@mantine/core";
 import { setSaleClose } from "../../Feature/Service/recieptSlice";
+import ExportBtn from "../../Components/ExportBtn";
 
 const Recent = () => {
   const token = Cookies.get("token");
@@ -106,7 +106,7 @@ const Recent = () => {
         <div className=" flex justify-between">
           <h2 className=" tracking-wide text-[1.5rem]">Today Sales Overview</h2>
           <div className="flex gap-3">
-            <DropDownBtn />
+            <ExportBtn excelData={oldData} fileName={"Excel Export"} />
             <button
               onClick={() => saleCloseHandler()}
               className="text-white border border-[#7E7F80]  font-medium rounded-lg text-sm px-5 text-center inline-flex items-center "
