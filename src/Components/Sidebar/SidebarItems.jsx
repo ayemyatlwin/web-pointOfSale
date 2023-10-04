@@ -10,7 +10,7 @@ import {
 } from "react-icons/pi";
 import { TfiGallery } from "react-icons/tfi";
 import { HiOutlineLogout } from "react-icons/hi";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "../../Feature/API/authApi";
 import { useDispatch } from "react-redux";
 import { removeUser } from "../../Feature/Service/authSlice";
@@ -31,6 +31,8 @@ const SidebarItems = () => {
     dispatch(removeUser());
     console.log(data);
   };
+  const location = useLocation();
+
   return (
     <>
       {/* accordion control on sidebar */}
@@ -95,18 +97,27 @@ const SidebarItems = () => {
           </Accordion.Control>
           <Accordion.Panel className="">
             <NavLink
+              activeClassName="active-link"
+              exact={true}
               to={"sale-cashier"}
-              className={`pt-1 pb-2 border-s-2 block active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] cursor-pointer text-[#f5f5f5]  px-2`}
+              className={
+                "pt-1 pb-2 border-s-2 block active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] cursor-pointer text-[#f5f5f5]  px-2"
+              }
+              // className={`pt-1 pb-2 border-s-2 block border-[#3f4245] hover:bg-[#202124] cursor-pointer text-[#f5f5f5] px-2 ${
+              //   location.pathname === "/" ? "active-link" : ""
+              // }`}
             >
               Cashier
             </NavLink>
           </Accordion.Panel>
           <Accordion.Panel>
             <NavLink
+              activeClassName="active-link"
+              exact={true}
               to={"sale-recent"}
-              className={
-                "pt-1 pb-2 border-s-2 block active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] cursor-pointer text-[#f5f5f5]  px-2"
-              }
+              className={`pt-1 pb-2 border-s-2 block active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] cursor-pointer text-[#f5f5f5]  px-2 ${
+                location.pathname === "/sale-recent" ? `active-link` : ``
+              }`}
             >
               Recent
             </NavLink>
@@ -124,31 +135,43 @@ const SidebarItems = () => {
           </Accordion.Control>
           <Accordion.Panel>
             <NavLink
+              activeClassName="active-link"
               to={"inventory-overview"}
-              className={`pt-1 pb-2 border-s-2 active:text-[#8AB4F8] block hover:bg-[#202124] border-[#3f4245]  cursor-pointer text-[#f5f5f5]  px-2`}
+              className={`pt-1 pb-2 border-s-2 block active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] cursor-pointer text-[#f5f5f5]  px-2 ${
+                location.pathname === "/inventory-overview" ? `active-link` : ``
+              }`}
             >
               Products
             </NavLink>
           </Accordion.Panel>
           <Accordion.Panel>
             <NavLink
+              activeClassName="active-link"
+              exact={true}
               to={"adding-product"}
-              className={`pt-1 pb-2 border-s-2 active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] block cursor-pointer text-[#f5f5f5]  px-2`}
+              className={`pt-1 pb-2 border-s-2 block active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] cursor-pointer text-[#f5f5f5]  px-2 ${
+                location.pathname === "/adding-product" ? `active-link` : ``
+              }`}
             >
               Add Products
             </NavLink>
           </Accordion.Panel>
           <Accordion.Panel>
             <NavLink
-             to={"stock-control"}
-              className={`pt-1 pb-2 border-s-2 active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] block cursor-pointer text-[#f5f5f5]  px-2`}
+              to={"stock-control"}
+              className={`pt-1 pb-2 border-s-2 block active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] cursor-pointer text-[#f5f5f5]  px-2 ${
+                location.pathname === "/stock-control" ? `active-link` : ``
+              }`}
             >
               Stock Control
             </NavLink>
           </Accordion.Panel>
           <Accordion.Panel>
-            <NavLink to={'brand-overview'}
-              className={`pt-1 pb-2 border-s-2 active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] block cursor-pointer text-[#f5f5f5]  px-2`}
+            <NavLink
+              to={"brand-overview"}
+              className={`pt-1 pb-2 border-s-2 block active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] cursor-pointer text-[#f5f5f5]  px-2 ${
+                location.pathname === "/brand-overview" ? `active-link` : ``
+              }`}
             >
               Manage Brands
             </NavLink>
@@ -165,17 +188,21 @@ const SidebarItems = () => {
             </span>
           </Accordion.Control>
           <Accordion.Panel className="">
-            <NavLink to={'report-stock'}
-              className={`pt-1 pb-2 border-s-2 active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] block cursor-pointer text-[#f5f5f5]  px-2`}
+            <NavLink
+              to={"report-stock"}
+              className={`pt-1 pb-2 border-s-2 block active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] cursor-pointer text-[#f5f5f5]  px-2 ${
+                location.pathname === "/report-stock" ? `active-link` : ``
+              }`}
             >
               Stock
             </NavLink>
           </Accordion.Panel>
           <Accordion.Panel>
-            <NavLink to={"report-sale"}
-              className={
-                "pt-1 pb-2 border-s-2 active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] block cursor-pointer text-[#f5f5f5]  px-2"
-              }
+            <NavLink
+              to={"report-sale"}
+              className={`pt-1 pb-2 border-s-2 block active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] cursor-pointer text-[#f5f5f5]  px-2 ${
+                location.pathname === "/report-sale" ? `active-link` : ``
+              }`}
             >
               Sale
             </NavLink>
@@ -192,29 +219,41 @@ const SidebarItems = () => {
             </span>
           </Accordion.Control>
           <Accordion.Panel>
-            <NavLink to={"finance-daily"}
-              className={`pt-1 pb-2 border-s-2 active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] block cursor-pointer text-[#f5f5f5]  px-2`}
+            <NavLink
+              to={"finance-daily"}
+              className={`pt-1 pb-2 border-s-2 block active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] cursor-pointer text-[#f5f5f5]  px-2 ${
+                location.pathname === "/finance-daily" ? `active-link` : ``
+              }`}
             >
               Daily
             </NavLink>
           </Accordion.Panel>
           <Accordion.Panel>
-            <NavLink to={"finance-monthly"}
-              className={`pt-1 pb-2 border-s-2 active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] block cursor-pointer text-[#f5f5f5]  px-2`}
+            <NavLink
+              to={"finance-monthly"}
+              className={`pt-1 pb-2 border-s-2 block active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] cursor-pointer text-[#f5f5f5]  px-2 ${
+                location.pathname === "/finance-monthly" ? `active-link` : ``
+              }`}
             >
               Monthly
             </NavLink>
           </Accordion.Panel>
           <Accordion.Panel>
-            <NavLink to={"finance-yearly"}
-              className={`pt-1 pb-2 border-s-2 active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] block cursor-pointer text-[#f5f5f5]  px-2`}
+            <NavLink
+              to={"finance-yearly"}
+              className={`pt-1 pb-2 border-s-2 block active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] cursor-pointer text-[#f5f5f5]  px-2 ${
+                location.pathname === "/finance-yearly" ? `active-link` : ``
+              }`}
             >
               Yearly
             </NavLink>
           </Accordion.Panel>
           <Accordion.Panel>
-            <NavLink to={"finance-custom"}
-              className={`pt-1 pb-2 border-s-2 active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] block cursor-pointer text-[#f5f5f5]  px-2`}
+            <NavLink
+              to={"finance-custom"}
+              className={`pt-1 pb-2 border-s-2 block active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] cursor-pointer text-[#f5f5f5]  px-2 ${
+                location.pathname === "/finance-custom" ? `active-link` : ``
+              }`}
             >
               Custom
             </NavLink>
@@ -233,7 +272,9 @@ const SidebarItems = () => {
           <Accordion.Panel>
             <NavLink
               to={"user-overview"}
-              className={`pt-1 pb-2 border-s-2 active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] block cursor-pointer text-[#f5f5f5]  px-2`}
+              className={`pt-1 pb-2 border-s-2 block active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] cursor-pointer text-[#f5f5f5]  px-2 ${
+                location.pathname === "/user-overview" ? `active-link` : ``
+              }`}
             >
               Overview
             </NavLink>
@@ -241,7 +282,9 @@ const SidebarItems = () => {
           <Accordion.Panel className="">
             <NavLink
               to={"/create-user"}
-              className={`pt-1 pb-2 border-s-2 active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] block cursor-pointer text-[#f5f5f5]  px-2`}
+              className={`pt-1 pb-2 border-s-2 block active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] cursor-pointer text-[#f5f5f5]  px-2 ${
+                location.pathname === "/create-user" ? `active-link` : ``
+              }`}
             >
               Create User
             </NavLink>
@@ -278,9 +321,9 @@ const SidebarItems = () => {
           <Accordion.Panel className="px-2 py-0  text-[1rem]">
             <NavLink
               to={"/my-account"}
-              className={
-                "pt-1 pb-2 border-s-2 active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] block cursor-pointer text-[#f5f5f5]  px-2"
-              }
+              className={`pt-1 pb-2 border-s-2 block active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] cursor-pointer text-[#f5f5f5]  px-2 ${
+                location.pathname === "/my-account" ? `active-link` : ``
+              }`}
             >
               My Account
             </NavLink>
@@ -288,9 +331,9 @@ const SidebarItems = () => {
           <Accordion.Panel className="px-2 py-0  text-[1rem]">
             <NavLink
               to={"/edit-profile"}
-              className={
-                "pt-1 pb-2 border-s-2 border-[#3f4245] active:text-[#8AB4F8] hover:bg-[#202124] block cursor-pointer text-[#f5f5f5]  px-2"
-              }
+              className={`pt-1 pb-2 border-s-2 block active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] cursor-pointer text-[#f5f5f5]  px-2 ${
+                location.pathname === "/edit-profile" ? `active-link` : ``
+              }`}
             >
               Edit
             </NavLink>
