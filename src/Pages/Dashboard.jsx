@@ -19,10 +19,10 @@ import {
   Legend,
 } from "chart.js";
 import { PiCalculatorDuotone, PiCoinsDuotone } from "react-icons/pi";
-import DropDownBtn from "../Components/DropDownBtn";
 import { Loader } from "@mantine/core";
 import Pagination from "../Components/Pagination";
 import { Link } from "react-router-dom";
+import ExportBtn from "../Components/ExportBtn";
 
 ChartJS.register(
   CategoryScale,
@@ -289,7 +289,7 @@ export default function Dashboard() {
               Today Sales Overview
             </h2>
             <div className="flex gap-3">
-              <DropDownBtn />
+              <ExportBtn />
               <button
                 // onClick={() => saleCloseHandler()}
                 className="text-white border border-[#7E7F80]  font-medium rounded-lg text-sm px-5 text-center inline-flex items-center "

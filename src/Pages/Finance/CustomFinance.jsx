@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Breadcrumb from "../../Components/Breadcrumb";
-import DropDownBtn from "../../Components/DropDownBtn";
+import ExportBtn from "../../Components/ExportBtn";
 import { PiCalculatorDuotone } from "react-icons/pi";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import RangeDatePickers from "../../Components/Pickers/RangeDatePickers";
@@ -70,7 +70,7 @@ const CustomFinance = () => {
         <div className=" flex justify-between">
           <h2 className=" tracking-wide text-[1.5rem]">Today Sales Overview</h2>
           <div className="flex gap-3">
-            <DropDownBtn />
+            <ExportBtn />
             <RangeDatePickers
               startDate={startDate}
               endDate={endDate}
