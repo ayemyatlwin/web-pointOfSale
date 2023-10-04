@@ -172,11 +172,13 @@ console.log(monthLabels);
             <div className="  flex items-center justify-center mb-3">
               <div className="me-4 w-[40%] border border-[#3f4245] py-2 px-3 rounded-md">
                 <div className=" my-1 flex items-center justify-evenly ">
-                  <div className=" me-4 border border-[#3f4245] py-2 px-3 rounded-md ">
+               <Link to={'adding-product'}>
+               <div className="hover:opacity-60 me-4 border border-[#3f4245] py-2 px-3 rounded-md ">
                     <AiOutlinePlus
                       className={`w-full h-full text-3xl text-[#8AB4F8]   p-2`}
                     />
                   </div>
+               </Link>
                   <div>
                     <p className=" text-lg font-extrabold ">Add Product</p>
                     <p className=" tracking-tight font-thin text-sm">
@@ -200,11 +202,13 @@ console.log(monthLabels);
                       </p>
                     </div>
                   </div>
-                  <div className=" me-4  py-2 px-3 rounded-md ">
+                 <Link to={'sale-recent'}>
+                 <div className=" hover:opacity-60 me-4  py-2 px-3 rounded-md ">
                     <AiOutlineArrowRight
                       className={`w-full h-full border text-[#8AB4F8] border-solid border-[#8AB4F8] bg-[#434446] rounded-full p-2`}
                     />
                   </div>
+                 </Link>
                 </div>
               </div>
             </div>
