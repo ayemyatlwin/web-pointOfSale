@@ -8,6 +8,7 @@ import {
 import { GiIdCard, GiPayMoney } from "react-icons/gi";
 import { BsGraphUpArrow, BsPlusLg, BsShop } from "react-icons/bs";
 import { Line } from "react-chartjs-2";
+import Recent from './Sale/Recent';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -41,7 +42,29 @@ export default function Dashboard() {
   const token = Cookies.get("token");
 const dbData=useGetDashboardDataQuery({token});
 console.log(dbData);
+const monthLabels = [];
 
+// Loop through the sale_records and extract month information
+if(dbData?.data?.sale_records){
+  for (const record of dbData?.data?.sale_records) {
+    // Parse the timestamp and extract the month (0-indexed)
+    const timestamp = new Date(record.created_at);
+    const monthIndex = timestamp.getMonth();
+  
+    // Create a mapping of month indices to month names
+    const monthNames = [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ];
+  
+    // Get the month name from the mapping
+    const monthName = monthNames[monthIndex];
+  
+    // Add the month name to the labels array
+    monthLabels.push(monthName);
+  };
+}
+console.log(monthLabels);
 
 // const years = dbData?.data?.sale_records.filter((e) => e.created_at.split("-")[0]);
  
@@ -75,10 +98,7 @@ console.log(dbData);
     },
   };
 
-  const labels = [
-
-    
-  ];
+  const labels = monthLabels;
 
   const data = {
     labels,
@@ -285,64 +305,10 @@ console.log(dbData);
       {/* Third row */}
       <div>
         <div className="py-5 pb-3 ">
-          <div className=" flex justify-between">
-            <h2 className=" tracking-wide text-[1.5rem]">
-              Today Sales Overview
-            </h2>
-            <div className="flex gap-3">
-              <DropDownBtn />
-              <button
-                // onClick={() => saleCloseHandler()}
-                className="text-white border border-[#7E7F80]  font-medium rounded-lg text-sm px-5 text-center inline-flex items-center "
-              >
-                <PiCalculatorDuotone className="text-[#8AB4F8] h-5 w-5 me-2" />
-                {/* {saleClose ? `Sale Close` : `Sale Open`} */}
-              </button>
-            </div>
-          </div>
+         <Recent/>
         </div>
 
-        <main className="border border-[#3f4245] rounded-sm mt-7">
-          <table className="w-full text-sm text-center text-[#f5f5f5]">
-            <thead className="text-xs text-[#f5f5f5] uppercase ">
-              <tr className="border-b border-[#3f4245]">
-                <th className="px-6 py-4">No.</th>
-                <th className="px-6 py-4">Sale Person</th>
-                <th className="px-6 py-4">Voucher No.</th>
-                <th className="px-6 py-4">Time</th>
-                <th className="px-6 py-4">Item Count</th>
-                <th className="px-6 py-4">Cash</th>
-                <th className="px-6 py-4">Tax</th>
-                <th className="px-6 py-4"> Total</th>
-              </tr>
-            </thead>
-            {/* map data from old recorded voucher list from api */}
-            {/* <tbody className="text-[#f5f5f5]">
-            {oldData?.map((data, i) => {
-              return (
-                <tr key={i} className="border-b border-[#3f4245]">
-                  <td className="px-6 py-4">{i + 1}</td>
-                  <td className="px-6 py-4">{data?.user}</td>
-                  <td className="px-6 py-4">{data?.voucher_number}</td>
-                  <td className="px-6 py-4">{data?.time}</td>
-                  <td className="px-6 py-4">
-                    {data?.voucher_records?.quantity}
-                  </td>
-                  <td className="px-6 py-4">{data?.total}</td>
-                  <td className="px-6 py-4">{data?.tax}</td>
-                  <td className="px-6 py-4">{data?.net_total}</td>
-                  <td className="px-6 py-4">
-                    <button className="px-2 py-2 bg-[#3f4245] rounded-full">
-                      <AiOutlineArrowRight />
-                    </button>{" "}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody> */}
-          </table>
-        </main>
-
+    
         {/* total and tax */}
         <div className="flex justify-between ">
           {/* {oldData ? (
