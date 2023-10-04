@@ -24,6 +24,9 @@ import { Loader } from "@mantine/core";
 import Pagination from "../Components/Pagination";
 import { Link } from "react-router-dom";
 
+import Cookies from "js-cookie";
+import { useGetDashboardDataQuery } from "../Feature/API/dbApi";
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -35,6 +38,13 @@ ChartJS.register(
 );
 
 export default function Dashboard() {
+  const token = Cookies.get("token");
+const dbData=useGetDashboardDataQuery({token});
+console.log(dbData);
+
+
+// const years = dbData?.data?.sale_records.filter((e) => e.created_at.split("-")[0]);
+ 
   const options = {
     scales: {
       x: {
@@ -66,18 +76,8 @@ export default function Dashboard() {
   };
 
   const labels = [
-    "JAN",
-    "FEB",
-    "MAR",
-    "APR",
-    "MAY",
-    "JUN",
-    "JUL",
-    "AUG",
-    "SEP",
-    "OCT",
-    "NOV",
-    "DEC",
+
+    
   ];
 
   const data = {
@@ -85,7 +85,7 @@ export default function Dashboard() {
     datasets: [
       {
         label: "Dataset 1",
-        data: [250, 500, 750, 1000, 800, 600, 400, 300, 700, 900, 550, 200], // Sample data
+        data: dbData?.data?.sale_records.map((e)=>e.total_net_total), // Sample data
         borderColor: "#8AB4F8",
         borderWidth: 1,
         backgroundColor: "rgba(255, 99, 132, 0.5)",
@@ -93,6 +93,7 @@ export default function Dashboard() {
       },
     ],
   };
+  
   return (
     <div className=" ">
       {/* //breadcrumb */}
@@ -119,10 +120,10 @@ export default function Dashboard() {
             </div>
             <div className=" self-end">
               <p className=" text-[1.5rem] font-extrabold tracking-wide">
-                28,500k
+              {dbData?.data?.total_stocks}
               </p>
               <p className=" tracking-tight font-thin text-sm">
-                Total Products
+                Total Stocks
               </p>
             </div>
           </div>
@@ -139,7 +140,7 @@ export default function Dashboard() {
               />
             </div>
             <div className=" self-end">
-              <p className=" text-2xl font-extrabold tracking-wide">645</p>
+              <p className=" text-2xl font-extrabold tracking-wide"> {dbData?.data?.total_staff}</p>
               <p className=" tracking-tight font-thin text-sm">Total Staff</p>
             </div>
           </div>
@@ -157,9 +158,9 @@ export default function Dashboard() {
                     />
                   </div>
                   <div>
-                    <p className=" text-lg font-extrabold ">28,500k</p>
+                    <p className=" text-lg font-extrabold ">Add Product</p>
                     <p className=" tracking-tight font-thin text-sm">
-                      Total Products
+                     Stock Update
                     </p>
                   </div>
                 </div>
@@ -173,9 +174,9 @@ export default function Dashboard() {
                       />
                     </div>
                     <div>
-                      <p className=" text-lg font-extrabold ">28,500k</p>
+                      <p className=" text-lg font-extrabold ">Go to Shop</p>
                       <p className=" tracking-tight font-thin text-sm">
-                        Total Products
+                       Complete the sale
                       </p>
                     </div>
                   </div>
@@ -236,7 +237,7 @@ export default function Dashboard() {
                   <div className=" flex flex-col">
                     <span className="text-lg font-thin  tracking-wide">
                       {" "}
-                      48,568,20
+                  {dbData?.data?.stats?.total_profit.toLocaleString()}
                     </span>
                     <span className="tracking-tight w-96 font-thin text-sm  text-[#7e7f80]">
                       {" "}
@@ -251,7 +252,7 @@ export default function Dashboard() {
                   <div className=" flex flex-col">
                     <span className="text-lg font-thin  tracking-wide">
                       {" "}
-                      36,453.25
+                      {dbData?.data?.stats?.total_income.toLocaleString()}
                     </span>
                     <span className="tracking-tight w-96 font-thin text-sm  text-[#7e7f80]">
                       Total Income
@@ -264,7 +265,7 @@ export default function Dashboard() {
                   </div>
                   <div className=" flex flex-col">
                     <span className="text-lg font-thin  tracking-wide">
-                      2,453.45
+                    {dbData?.data?.stats?.total_expense.toLocaleString()}
                     </span>
                     <span className="tracking-tight w-96 font-thin text-sm  text-[#7e7f80]">
                       Total Expense
