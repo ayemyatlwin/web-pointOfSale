@@ -155,14 +155,14 @@ const InventoryOverview = () => {
         <Input
           styles={() => ({
             input: {
-              color: "#F8F9FA",
+              color: '#F8F9FA',
             },
           })}
           icon={<FiSearch />}
           variant="unstyled"
           placeholder="Search"
           radius="xs"
-          className=" border border-[#3f4245] w-[400px] rounded-lg text-gray-400"
+          className=" border border-gray-400 w-[400px] rounded-xl text-gray-400"
         />
         <div className=" flex  items-center gap-5  justify-around ">
           <span className=" flex mt-1  ">Sort: </span>
