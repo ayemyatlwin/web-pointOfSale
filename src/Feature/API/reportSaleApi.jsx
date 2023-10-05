@@ -15,7 +15,7 @@ export const reportSaleApi = createApi({
     }),
     getWeeklySaleReport: builder.query({
       query:(token)=>({
-        url:`/sale-overview/yearly`,
+        url:`/sale-overview/weekly`,
         headers: { authorization: `Bearer ${token}` },
       }),
       providesTags:["sale"]
