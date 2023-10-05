@@ -13,9 +13,12 @@ import productSlice from "./productSlice";
 import { brandApi } from "../API/brandApi";
 import { getFinancedataApi } from "../API/getFinanceDataApi";
 import { reportSaleApi } from "../API/reportSaleApi";
+import { dbApi } from "../API/dbApi";
+
 
 export const store = configureStore({
   reducer: {
+   [dbApi.reducerPath]:dbApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
     [productApi.reducerPath]: productApi.reducer,
@@ -34,6 +37,6 @@ export const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
 
-    getDefaultMiddleware().concat(authApi.middleware, userApi.middleware,api.middleware,getallProductsApi.middleware, saleApi.middleware, profileApi.middleware,productApi.middleware,brandApi.middleware,getFinancedataApi.middleware,reportSaleApi.middleware),
+    getDefaultMiddleware().concat(dbApi.middleware, authApi.middleware, userApi.middleware,api.middleware,getallProductsApi.middleware, saleApi.middleware, profileApi.middleware,productApi.middleware,brandApi.middleware,getFinancedataApi.middleware,reportSaleApi.middleware),
 
 });
