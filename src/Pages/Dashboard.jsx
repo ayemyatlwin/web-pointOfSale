@@ -8,6 +8,7 @@ import {
 import { GiIdCard, GiPayMoney } from "react-icons/gi";
 import { BsGraphUpArrow, BsPlusLg, BsShop } from "react-icons/bs";
 import { Line } from "react-chartjs-2";
+import Recent from './Sale/Recent';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -22,7 +23,9 @@ import { PiCalculatorDuotone, PiCoinsDuotone } from "react-icons/pi";
 import { Loader } from "@mantine/core";
 import Pagination from "../Components/Pagination";
 import { Link } from "react-router-dom";
-import ExportBtn from "../Components/ExportBtn";
+
+import Cookies from "js-cookie";
+import { useGetDashboardDataQuery } from "../Feature/API/dbApi";
 
 ChartJS.register(
   CategoryScale,
@@ -35,6 +38,35 @@ ChartJS.register(
 );
 
 export default function Dashboard() {
+  const token = Cookies.get("token");
+const dbData=useGetDashboardDataQuery({token});
+console.log(dbData);
+const monthLabels = [];
+
+// Loop through the sale_records and extract month information
+if(dbData?.data?.sale_records){
+  for (const record of dbData?.data?.sale_records) {
+    // Parse the timestamp and extract the month (0-indexed)
+    const timestamp = new Date(record.created_at);
+    const monthIndex = timestamp.getMonth();
+  
+    // Create a mapping of month indices to month names
+    const monthNames = [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ];
+  
+    // Get the month name from the mapping
+    const monthName = monthNames[monthIndex];
+  
+    // Add the month name to the labels array
+    monthLabels.push(monthName);
+  };
+}
+console.log(monthLabels);
+
+// const years = dbData?.data?.sale_records.filter((e) => e.created_at.split("-")[0]);
+ 
   const options = {
     scales: {
       x: {
@@ -65,27 +97,14 @@ export default function Dashboard() {
     },
   };
 
-  const labels = [
-    "JAN",
-    "FEB",
-    "MAR",
-    "APR",
-    "MAY",
-    "JUN",
-    "JUL",
-    "AUG",
-    "SEP",
-    "OCT",
-    "NOV",
-    "DEC",
-  ];
+  const labels = monthLabels;
 
   const data = {
     labels,
     datasets: [
       {
         label: "Dataset 1",
-        data: [250, 500, 750, 1000, 800, 600, 400, 300, 700, 900, 550, 200], // Sample data
+        data: dbData?.data?.sale_records.map((e)=>e.total_net_total), // Sample data
         borderColor: "#8AB4F8",
         borderWidth: 1,
         backgroundColor: "rgba(255, 99, 132, 0.5)",
@@ -93,6 +112,7 @@ export default function Dashboard() {
       },
     ],
   };
+  
   return (
     <div className=" ">
       {/* //breadcrumb */}
@@ -119,10 +139,10 @@ export default function Dashboard() {
             </div>
             <div className=" self-end">
               <p className=" text-[1.5rem] font-extrabold tracking-wide">
-                28,500k
+              {dbData?.data?.total_stocks}
               </p>
               <p className=" tracking-tight font-thin text-sm">
-                Total Products
+                Total Stocks
               </p>
             </div>
           </div>
@@ -139,7 +159,7 @@ export default function Dashboard() {
               />
             </div>
             <div className=" self-end">
-              <p className=" text-2xl font-extrabold tracking-wide">645</p>
+              <p className=" text-2xl font-extrabold tracking-wide"> {dbData?.data?.total_staff}</p>
               <p className=" tracking-tight font-thin text-sm">Total Staff</p>
             </div>
           </div>
@@ -151,15 +171,17 @@ export default function Dashboard() {
             <div className="  flex items-center justify-center mb-3">
               <div className="me-4 w-[40%] border border-[#3f4245] py-2 px-3 rounded-md">
                 <div className=" my-1 flex items-center justify-evenly ">
-                  <div className=" me-4 border border-[#3f4245] py-2 px-3 rounded-md ">
+               <Link to={'adding-product'}>
+               <div className="hover:opacity-60 me-4 border border-[#3f4245] py-2 px-3 rounded-md ">
                     <AiOutlinePlus
                       className={`w-full h-full text-3xl text-[#8AB4F8]   p-2`}
                     />
                   </div>
+               </Link>
                   <div>
-                    <p className=" text-lg font-extrabold ">28,500k</p>
+                    <p className=" text-lg font-extrabold ">Add Product</p>
                     <p className=" tracking-tight font-thin text-sm">
-                      Total Products
+                     Stock Update
                     </p>
                   </div>
                 </div>
@@ -173,17 +195,19 @@ export default function Dashboard() {
                       />
                     </div>
                     <div>
-                      <p className=" text-lg font-extrabold ">28,500k</p>
+                      <p className=" text-lg font-extrabold ">Go to Shop</p>
                       <p className=" tracking-tight font-thin text-sm">
-                        Total Products
+                       Complete the sale
                       </p>
                     </div>
                   </div>
-                  <div className=" me-4  py-2 px-3 rounded-md ">
+                 <Link to={'sale-recent'}>
+                 <div className=" hover:opacity-60 me-4  py-2 px-3 rounded-md ">
                     <AiOutlineArrowRight
                       className={`w-full h-full border text-[#8AB4F8] border-solid border-[#8AB4F8] bg-[#434446] rounded-full p-2`}
                     />
                   </div>
+                 </Link>
                 </div>
               </div>
             </div>
@@ -236,7 +260,7 @@ export default function Dashboard() {
                   <div className=" flex flex-col">
                     <span className="text-lg font-thin  tracking-wide">
                       {" "}
-                      48,568,20
+                  {dbData?.data?.stats?.total_profit.toLocaleString()}
                     </span>
                     <span className="tracking-tight w-96 font-thin text-sm  text-[#7e7f80]">
                       {" "}
@@ -251,7 +275,7 @@ export default function Dashboard() {
                   <div className=" flex flex-col">
                     <span className="text-lg font-thin  tracking-wide">
                       {" "}
-                      36,453.25
+                      {dbData?.data?.stats?.total_income.toLocaleString()}
                     </span>
                     <span className="tracking-tight w-96 font-thin text-sm  text-[#7e7f80]">
                       Total Income
@@ -264,7 +288,7 @@ export default function Dashboard() {
                   </div>
                   <div className=" flex flex-col">
                     <span className="text-lg font-thin  tracking-wide">
-                      2,453.45
+                    {dbData?.data?.stats?.total_expense.toLocaleString()}
                     </span>
                     <span className="tracking-tight w-96 font-thin text-sm  text-[#7e7f80]">
                       Total Expense
@@ -284,64 +308,10 @@ export default function Dashboard() {
       {/* Third row */}
       <div>
         <div className="py-5 pb-3 ">
-          <div className=" flex justify-between">
-            <h2 className=" tracking-wide text-[1.5rem]">
-              Today Sales Overview
-            </h2>
-            <div className="flex gap-3">
-              <ExportBtn />
-              <button
-                // onClick={() => saleCloseHandler()}
-                className="text-white border border-[#7E7F80]  font-medium rounded-lg text-sm px-5 text-center inline-flex items-center "
-              >
-                <PiCalculatorDuotone className="text-[#8AB4F8] h-5 w-5 me-2" />
-                {/* {saleClose ? `Sale Close` : `Sale Open`} */}
-              </button>
-            </div>
-          </div>
+         <Recent/>
         </div>
 
-        <main className="border border-[#3f4245] rounded-sm mt-7">
-          <table className="w-full text-sm text-center text-[#f5f5f5]">
-            <thead className="text-xs text-[#f5f5f5] uppercase ">
-              <tr className="border-b border-[#3f4245]">
-                <th className="px-6 py-4">No.</th>
-                <th className="px-6 py-4">Sale Person</th>
-                <th className="px-6 py-4">Voucher No.</th>
-                <th className="px-6 py-4">Time</th>
-                <th className="px-6 py-4">Item Count</th>
-                <th className="px-6 py-4">Cash</th>
-                <th className="px-6 py-4">Tax</th>
-                <th className="px-6 py-4"> Total</th>
-              </tr>
-            </thead>
-            {/* map data from old recorded voucher list from api */}
-            {/* <tbody className="text-[#f5f5f5]">
-            {oldData?.map((data, i) => {
-              return (
-                <tr key={i} className="border-b border-[#3f4245]">
-                  <td className="px-6 py-4">{i + 1}</td>
-                  <td className="px-6 py-4">{data?.user}</td>
-                  <td className="px-6 py-4">{data?.voucher_number}</td>
-                  <td className="px-6 py-4">{data?.time}</td>
-                  <td className="px-6 py-4">
-                    {data?.voucher_records?.quantity}
-                  </td>
-                  <td className="px-6 py-4">{data?.total}</td>
-                  <td className="px-6 py-4">{data?.tax}</td>
-                  <td className="px-6 py-4">{data?.net_total}</td>
-                  <td className="px-6 py-4">
-                    <button className="px-2 py-2 bg-[#3f4245] rounded-full">
-                      <AiOutlineArrowRight />
-                    </button>{" "}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody> */}
-          </table>
-        </main>
-
+    
         {/* total and tax */}
         <div className="flex justify-between ">
           {/* {oldData ? (
