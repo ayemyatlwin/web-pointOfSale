@@ -5,6 +5,7 @@ export const reportSaleApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: `https://b.mmsdev.site/api/v1` }),
   tagTypes: ["sale"],
   endpoints: (builder) => ({
+    //report sale
     getTodaySaleReport: builder.query({
       query: (token) => ({
         url: `today-sale-overview`,
@@ -18,7 +19,15 @@ export const reportSaleApi = createApi({
         headers: { authorization: `Bearer ${token}` },
       }),
       providesTags:["sale"]
+    }),
+    //report stock
+    getStockOverview:builder.query({
+      query:(token)=>({
+        url:`/stock-overview`,
+        headers: { authorization: `Bearer ${token}` },
+      }),
+      providesTags:["sale"]
     })
   }),
 });
-export const { useGetTodaySaleReportQuery,useGetWeeklySaleReportQuery } = reportSaleApi;
+export const { useGetTodaySaleReportQuery,useGetWeeklySaleReportQuery,useGetStockOverviewQuery } = reportSaleApi;

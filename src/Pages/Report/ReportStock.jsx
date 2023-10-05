@@ -10,9 +10,13 @@ import { Chart as ChartJS, registerables } from "chart.js";
 import { BsFillGridFill } from "react-icons/bs";
 
 import { FiSearch } from "react-icons/fi";
+import { useNavigate } from "react-router";
+import { useGetStockOverviewQuery } from "../../Feature/API/reportSaleApi";
+import Cookies from "js-cookie";
 ChartJS.register(...registerables);
 
 const ReportStock = () => {
+  const token=Cookies.get("token");
   // const rows = productDetailedInfo?.map((element, i) => (
  
   //   <tr key={element.product_id} className="border-b border-[#3f4245]">
@@ -39,12 +43,24 @@ const ReportStock = () => {
   //   </tr>
   // ));
   //bar chart config
+
+  console.log(token);
+  const stockData=useGetStockOverviewQuery(token);
+
+  console.log(stockData);
+const instockProduct=stockData?.data?.overview?.instock/100 *stockData?.data?.total_products;
+const lowStockProduct=stockData?.data?.overview?.low_stock/100 *stockData?.data?.total_products;
+const outOfStockProduct=stockData?.data?.overview?.out_of_stock/100 *stockData?.data?.total_products;
+const bLabels=stockData?.data?.best_seller_brands?.map((e)=>e?.brand_name.slice(0,4));
+const bData=stockData?.data?.best_seller_brands?.map((e)=>e?.total_quantity)
+console.log(bLabels);
+  const nav=useNavigate();
   const data = {
-    labels: ["Melo", "City", "Pro", "Dutch"],
+    labels: bLabels,
     datasets: [
       {
-        data: [50, 100, 70, 140],
-        backgroundColor: ["#8AB4B8", "#36A2EB", "#0e5a82", "#e8eaed"],
+        data: bData,
+        backgroundColor: ["#8AB4B8", "#36A2EB", "#0e5a82", "#e8eaed",'#363985'],
         borderColor: "rgba(0, 0, 0, 0)", // Set the border color to transparent
         borderWidth: 0,
       },
@@ -86,6 +102,13 @@ const ReportStock = () => {
       },
     },
   };
+  const colorCodes = ["#8AB4B8", "#36A2EB", "#0e5a82", "#e8eaed", '#363985'];
+
+const updatedBrands = stockData?.data?.best_seller_brands?.map((brand, index) => ({
+  ...brand,
+  colorCode: colorCodes[index % colorCodes.length] // Use modulus operator to cycle through colorCodes
+}));
+console.log(updatedBrands);
   const [hovered, setHovered] = useState(-1);
   const reset = () => setHovered(-1);
   return (
@@ -99,7 +122,9 @@ const ReportStock = () => {
           secondRoute={"Stocks"}
         />
         <div className="  ">
-          <button className=" hover:border-blue-300 hover:text-white mx-8 px-6 py-2   font-bold  border  border-white rounded-sm text-blue-300 ">
+          <button   onClick={() => {
+              nav("/sale-recent");
+            }} className=" hover:border-blue-300 hover:text-white mx-8 px-6 py-2   font-bold  border  border-white rounded-sm text-blue-300 ">
             Go to shop
           </button>
 
@@ -133,7 +158,7 @@ const ReportStock = () => {
                   </div>
                   <div>
                     <p className=" text-2xl font-extrabold tracking-wide">
-                      28,500k
+                  {stockData?.data?.total_products}
                     </p>
                     <p className=" tracking-tight font-thin text-sm">
                       Total Products
@@ -154,7 +179,7 @@ const ReportStock = () => {
                   </div>
                   <div>
                     <p className=" text-2xl font-extrabold tracking-wide">
-                      498,945kk
+                    {stockData?.data?.total_brands}
                     </p>
                     <p className=" tracking-tight font-thin text-sm">
                       Total Brands
@@ -175,19 +200,19 @@ const ReportStock = () => {
                     radius="sm"
                     sections={[
                       {
-                        value: 55,
+                        value: stockData?.data?.overview?.instock,
                         color: "#07f51b",
                         onMouseEnter: () => setHovered(0),
                         onMouseLeave: reset,
                       },
                       {
-                        value: 30,
+                        value: stockData?.data?.overview?.low_stock,
                         color: "#26e2f0",
                         onMouseEnter: () => setHovered(1),
                         onMouseLeave: reset,
                       },
                       {
-                        value: 15,
+                        value: stockData?.data?.overview?.out_of_stock,
                         color: "#e3293f",
                         onMouseEnter: () => setHovered(2),
                         onMouseLeave: reset,
@@ -197,22 +222,23 @@ const ReportStock = () => {
                 </div>
                 <div>
                   <p className=" text-2xl font-extrabold tracking-wide">
-                    89,798
+                  {stockData?.data?.total_products}
                   </p>
                   <p className=" tracking-tight font-thin text-sm">Products</p>
                 </div>
               </div>
 
               <div className="my-4">
+            
                 <div className=" flex items-center justify-between  border-b-2 border-[#3f4245]">
                   <div className=" flex items-center justify-around">
                     <AiTwotonePlusCircle className=" text-[#07f51b] mx-2" />
                     <p>Instock</p>
                   </div>
                   <div className=" flex items-center justify-around">
-                    <p className=" mx-2">100</p>
+                    <p className="  mx-2">{Math.round(instockProduct)}</p>
                     <div className=" flex items-center justify-around">
-                      <p className="mx-2">70%</p>
+                      <p className="mx-2">{Math.round(stockData?.data?.overview?.instock)}%</p>
                       <MdKeyboardArrowUp className=" text-3xl font-bold text-[#07f51b]" />
                     </div>
                   </div>
@@ -223,9 +249,9 @@ const ReportStock = () => {
                     <p>Low Stock</p>
                   </div>
                   <div className=" flex items-center justify-around">
-                    <p className=" mx-2">100</p>
+                    <p className=" mx-2">{Math.round(lowStockProduct)}</p>
                     <div className=" flex items-center justify-around">
-                      <p className="mx-2">70%</p>
+                      <p className="mx-2">{Math.round(stockData?.data?.overview?.low_stock)}%</p>
                       <MdKeyboardArrowUp className=" text-3xl font-bold text-[#07f51b]" />
                     </div>
                   </div>
@@ -236,9 +262,9 @@ const ReportStock = () => {
                     <p>Out of Stock</p>
                   </div>
                   <div className=" flex items-center justify-around">
-                    <p className=" mx-2">100</p>
+                    <p className=" mx-2">{Math.round(outOfStockProduct)}</p>
                     <div className=" flex items-center justify-around">
-                      <p className="mx-2">70%</p>
+                      <p className="mx-2">{Math.round(stockData?.data?.overview?.out_of_stock)}%</p>
                       <MdKeyboardArrowUp className=" text-3xl font-bold text-[#07f51b]" />
                     </div>
                   </div>
@@ -267,58 +293,27 @@ const ReportStock = () => {
                   <Doughnut data={data} options={options} />
                 </div>
                 <div className="my-4">
-                  <div className="  my-4 flex items-center justify-between  border-b-2 border-[#3f4245]">
-                    <div className=" flex items-center justify-around">
-                      <AiTwotonePlusCircle className=" text-[#07f51b] mx-2" />
-                      <p>Instock</p>
-                    </div>
-                    <div className=" flex items-center justify-around">
-                      <p className=" mx-2">100</p>
-                      <div className=" flex items-center justify-around">
-                        <p className="mx-2">70%</p>
-                        <MdKeyboardArrowUp className=" text-3xl font-bold text-[#07f51b]" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className=" my-4 flex items-center justify-between  border-b-2 border-[#3f4245]">
-                    <div className=" flex items-center justify-around">
-                      <AiTwotonePlusCircle className=" text-[#07f51b] mx-2" />
-                      <p>Instock</p>
-                    </div>
-                    <div className=" flex items-center justify-around">
-                      <p className=" mx-2">100</p>
-                      <div className=" flex items-center justify-around">
-                        <p className="mx-2">70%</p>
-                        <MdKeyboardArrowUp className=" text-3xl font-bold text-[#07f51b]" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className=" my-4 flex items-center justify-between  border-b-2 border-[#3f4245]">
-                    <div className=" flex items-center justify-around">
-                      <AiTwotonePlusCircle className=" text-[#26e2f0] mx-2" />
-                      <p>Low Stock</p>
-                    </div>
-                    <div className=" flex items-center justify-around">
-                      <p className=" mx-2">100</p>
-                      <div className=" flex items-center justify-around">
-                        <p className="mx-2">70%</p>
-                        <MdKeyboardArrowUp className=" text-3xl font-bold text-[#07f51b]" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className=" my-4 flex items-center justify-between  ">
-                    <div className=" flex items-center justify-around">
-                      <AiTwotonePlusCircle className=" text-[#e3293f] mx-2" />
-                      <p>Out of Stock</p>
-                    </div>
-                    <div className=" flex items-center justify-around">
-                      <p className=" mx-2">100</p>
-                      <div className=" flex items-center justify-around">
-                        <p className="mx-2">70%</p>
-                        <MdKeyboardArrowUp className=" text-3xl font-bold text-[#07f51b]" />
-                      </div>
-                    </div>
-                  </div>
+                  {updatedBrands?.map((e)=>(
+ <div className="  my-4 flex items-center justify-between  border-b-2 border-[#3f4245]">
+ <div className=" flex items-center justify-around">
+   <AiTwotonePlusCircle style={{color:e?.colorCode}} className={`  mx-2` }/>
+   <p>{e?.brand_name?.slice(0,4)}</p>
+
+   
+ </div>
+ <div className=" flex items-center justify-around">
+   <p className=" mx-2">{e?.total_quantity}</p>
+   <div className=" flex items-center justify-around">
+     <p className="mx-2">70%</p>
+     <MdKeyboardArrowUp className=" text-3xl font-bold text-[#07f51b]" />
+   </div>
+ </div>
+</div>
+                  ))}
+                 
+                
+                
+                 
                 </div>
                 <div></div>
               </div>
