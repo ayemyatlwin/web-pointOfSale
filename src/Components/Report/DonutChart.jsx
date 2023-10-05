@@ -72,11 +72,11 @@ const DonutChart = () => {
 
   // Conditionally render the chart if brandName is available
   return (
-    <div className="py-3 mx-auto " style={{ width: "280px", height: "280px" }}>
+    <div className="py-3 mx-auto" style={{ width: brandName && brandName.length > 0 ? "280px" : "auto", height: brandName && brandName.length > 0 ? "280px" : "auto" }}>
       {brandName && brandName.length > 0 ? (
         <Doughnut data={data} options={options} />
       ) : (
-        <div>No data available</div>
+        <div className=" text-center">No data available</div>
       )}
     </div>
   );

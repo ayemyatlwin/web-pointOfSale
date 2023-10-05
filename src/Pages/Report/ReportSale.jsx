@@ -10,7 +10,6 @@ import Cookies from "js-cookie";
 import TodaySaleOverview from "../../Components/Report/TodaySaleOverview";
 
 const ReportSale = () => {
-  // 2022-09-29T23:37:31.000000Z
 
   const formatDate = (isoDateString) => {
     const date = new Date(isoDateString);
@@ -20,18 +19,7 @@ const ReportSale = () => {
     return `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year}`;
   };
 
-  // function formatMoney(value) {
-  //   const num = parseFloat(value);
   
-  //   if (num < 1000) {
-  //     // If the value is less than 1000, just round it to two decimal places and display it as is.
-  //     return num.toFixed(2);
-  //   } else {
-  //     // If the value is greater than or equal to 1000, divide it by 1000 and add the 'K' suffix.
-  //     const formattedValue = (num / 1000).toFixed(1);
-  //     return `${formattedValue}K`;
-  //   }
-  // }
   function formatMoney(number) {
     if (number < 1000) {
       return number;
@@ -50,6 +38,8 @@ const ReportSale = () => {
   
   const weeklyData=useGetWeeklySaleReportQuery(token);
   console.log(weeklyData);
+  const sale_records= weeklyData?.data?.sale_records;
+  // console.log(sale_records);
   const averageValue=weeklyData?.data?.average;
   const minimumValue=weeklyData?.data?.min;
   const maximumValue=weeklyData?.data?.max;
@@ -95,7 +85,7 @@ const ReportSale = () => {
           </div>
           <div className="flex gap-2">
             <div className="w-[55%]">
-              <VertiChart />
+              <VertiChart  />
             </div>
             <div className="w-[45%]">
               <div className="flex flex-col">
