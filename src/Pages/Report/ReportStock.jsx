@@ -46,15 +46,21 @@ const ReportStock = () => {
 
   console.log(token);
   const stockData=useGetStockOverviewQuery(token);
-  console.log(stockData);
 
+  console.log(stockData);
+const instockProduct=stockData?.data?.overview?.instock/100 *stockData?.data?.total_products;
+const lowStockProduct=stockData?.data?.overview?.low_stock/100 *stockData?.data?.total_products;
+const outOfStockProduct=stockData?.data?.overview?.out_of_stock/100 *stockData?.data?.total_products;
+const bLabels=stockData?.data?.best_seller_brands?.map((e)=>e?.brand_name.slice(0,4));
+const bData=stockData?.data?.best_seller_brands?.map((e)=>e?.total_quantity)
+console.log(bLabels);
   const nav=useNavigate();
   const data = {
-    labels: ["Melo", "City", "Pro", "Dutch"],
+    labels: bLabels,
     datasets: [
       {
-        data: [50, 100, 70, 140],
-        backgroundColor: ["#8AB4B8", "#36A2EB", "#0e5a82", "#e8eaed"],
+        data: bData,
+        backgroundColor: ["#8AB4B8", "#36A2EB", "#0e5a82", "#e8eaed",'#363985'],
         borderColor: "rgba(0, 0, 0, 0)", // Set the border color to transparent
         borderWidth: 0,
       },
@@ -96,6 +102,13 @@ const ReportStock = () => {
       },
     },
   };
+  const colorCodes = ["#8AB4B8", "#36A2EB", "#0e5a82", "#e8eaed", '#363985'];
+
+const updatedBrands = stockData?.data?.best_seller_brands?.map((brand, index) => ({
+  ...brand,
+  colorCode: colorCodes[index % colorCodes.length] // Use modulus operator to cycle through colorCodes
+}));
+console.log(updatedBrands);
   const [hovered, setHovered] = useState(-1);
   const reset = () => setHovered(-1);
   return (
@@ -216,15 +229,16 @@ const ReportStock = () => {
               </div>
 
               <div className="my-4">
+            
                 <div className=" flex items-center justify-between  border-b-2 border-[#3f4245]">
                   <div className=" flex items-center justify-around">
                     <AiTwotonePlusCircle className=" text-[#07f51b] mx-2" />
                     <p>Instock</p>
                   </div>
                   <div className=" flex items-center justify-around">
-                    <p className=" mx-2">{stockData?.data?.overview?.instock/100 *stockData?.data?.total_products}</p>
+                    <p className="  mx-2">{Math.round(instockProduct)}</p>
                     <div className=" flex items-center justify-around">
-                      <p className="mx-2">{stockData?.data?.overview?.instock}%</p>
+                      <p className="mx-2">{Math.round(stockData?.data?.overview?.instock)}%</p>
                       <MdKeyboardArrowUp className=" text-3xl font-bold text-[#07f51b]" />
                     </div>
                   </div>
@@ -235,9 +249,9 @@ const ReportStock = () => {
                     <p>Low Stock</p>
                   </div>
                   <div className=" flex items-center justify-around">
-                    <p className=" mx-2">{stockData?.data?.overview?.low_stock/100 *stockData?.data?.total_products}</p>
+                    <p className=" mx-2">{Math.round(lowStockProduct)}</p>
                     <div className=" flex items-center justify-around">
-                      <p className="mx-2">{stockData?.data?.overview?.low_stock}%</p>
+                      <p className="mx-2">{Math.round(stockData?.data?.overview?.low_stock)}%</p>
                       <MdKeyboardArrowUp className=" text-3xl font-bold text-[#07f51b]" />
                     </div>
                   </div>
@@ -248,9 +262,9 @@ const ReportStock = () => {
                     <p>Out of Stock</p>
                   </div>
                   <div className=" flex items-center justify-around">
-                    <p className=" mx-2">{stockData?.data?.overview?.out_of_stock/100 *stockData?.data?.total_products}</p>
+                    <p className=" mx-2">{Math.round(outOfStockProduct)}</p>
                     <div className=" flex items-center justify-around">
-                      <p className="mx-2">{stockData?.data?.overview?.out_of_stock}%</p>
+                      <p className="mx-2">{Math.round(stockData?.data?.overview?.out_of_stock)}%</p>
                       <MdKeyboardArrowUp className=" text-3xl font-bold text-[#07f51b]" />
                     </div>
                   </div>
@@ -279,58 +293,27 @@ const ReportStock = () => {
                   <Doughnut data={data} options={options} />
                 </div>
                 <div className="my-4">
-                  <div className="  my-4 flex items-center justify-between  border-b-2 border-[#3f4245]">
-                    <div className=" flex items-center justify-around">
-                      <AiTwotonePlusCircle className=" text-[#07f51b] mx-2" />
-                      <p>Instock</p>
-                    </div>
-                    <div className=" flex items-center justify-around">
-                      <p className=" mx-2">100</p>
-                      <div className=" flex items-center justify-around">
-                        <p className="mx-2">70%</p>
-                        <MdKeyboardArrowUp className=" text-3xl font-bold text-[#07f51b]" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className=" my-4 flex items-center justify-between  border-b-2 border-[#3f4245]">
-                    <div className=" flex items-center justify-around">
-                      <AiTwotonePlusCircle className=" text-[#07f51b] mx-2" />
-                      <p>Instock</p>
-                    </div>
-                    <div className=" flex items-center justify-around">
-                      <p className=" mx-2">100</p>
-                      <div className=" flex items-center justify-around">
-                        <p className="mx-2">70%</p>
-                        <MdKeyboardArrowUp className=" text-3xl font-bold text-[#07f51b]" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className=" my-4 flex items-center justify-between  border-b-2 border-[#3f4245]">
-                    <div className=" flex items-center justify-around">
-                      <AiTwotonePlusCircle className=" text-[#26e2f0] mx-2" />
-                      <p>Low Stock</p>
-                    </div>
-                    <div className=" flex items-center justify-around">
-                      <p className=" mx-2">100</p>
-                      <div className=" flex items-center justify-around">
-                        <p className="mx-2">70%</p>
-                        <MdKeyboardArrowUp className=" text-3xl font-bold text-[#07f51b]" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className=" my-4 flex items-center justify-between  ">
-                    <div className=" flex items-center justify-around">
-                      <AiTwotonePlusCircle className=" text-[#e3293f] mx-2" />
-                      <p>Out of Stock</p>
-                    </div>
-                    <div className=" flex items-center justify-around">
-                      <p className=" mx-2">100</p>
-                      <div className=" flex items-center justify-around">
-                        <p className="mx-2">70%</p>
-                        <MdKeyboardArrowUp className=" text-3xl font-bold text-[#07f51b]" />
-                      </div>
-                    </div>
-                  </div>
+                  {updatedBrands?.map((e)=>(
+ <div className="  my-4 flex items-center justify-between  border-b-2 border-[#3f4245]">
+ <div className=" flex items-center justify-around">
+   <AiTwotonePlusCircle style={{color:e?.colorCode}} className={`  mx-2` }/>
+   <p>{e?.brand_name?.slice(0,4)}</p>
+
+   
+ </div>
+ <div className=" flex items-center justify-around">
+   <p className=" mx-2">{e?.total_quantity}</p>
+   <div className=" flex items-center justify-around">
+     <p className="mx-2">70%</p>
+     <MdKeyboardArrowUp className=" text-3xl font-bold text-[#07f51b]" />
+   </div>
+ </div>
+</div>
+                  ))}
+                 
+                
+                
+                 
                 </div>
                 <div></div>
               </div>
