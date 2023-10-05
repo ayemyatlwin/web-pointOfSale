@@ -36,7 +36,6 @@ export default function Breadcrumb({
                 },
               }}
               href="#"
-              underline="hover"
               color="#f5f5f5"
             >
               {firstRoute}
