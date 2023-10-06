@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import { BiChevronDown } from 'react-icons/bi';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addProductBrand_id, addProductMore_information, addProductName, addProductUnit } from '../../Feature/Service/productSlice';
 import { useGetBrandInfoQuery } from '../../Feature/API/brandApi';
 import Cookies from 'js-cookie';
 
 
 const FirstStep = ({toggleSelect, display, setDisplay, select}) => {
+  const [bName,setBName]=useState('');
+ 
   const token = Cookies.get("token");
   const [currentPage, setCurrentPage] = useState(1);
   const {data}=useGetBrandInfoQuery({ token, currentPage });
@@ -37,7 +39,7 @@ const brandInfo=data?.data;
               className="w-[70%] border  outline-none py-2.5 relative rounded cursor-pointer"
             >
               <div className="px-5  flex items-center justify-between">
-                <p className="">Choose brand...</p>
+                <p className="">{bName || 'Choose brand...'}</p>
                 <BiChevronDown
                   className={`text-xl ${
                     select && "rotate-180"
@@ -55,7 +57,10 @@ const brandInfo=data?.data;
               brandInfo?.map((i)=>(
                 <div
                 key={i?.brand_id}
-                onClick={()=>dispatch(addProductBrand_id({brand_id:i?.brand_id}))}
+                onClick={()=>{dispatch(addProductBrand_id({brand_id:i?.brand_id}));
+                setBName(i?.name)
+              }
+              }
                 className="w-full outline-none py-3 bg-[#202124] px-5 rounded-t border-b cursor-pointer"
               >
               {i?.name}
