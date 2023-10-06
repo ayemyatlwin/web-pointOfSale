@@ -14,6 +14,7 @@ import { brandApi } from "../API/brandApi";
 import { getFinancedataApi } from "../API/getFinanceDataApi";
 import { reportSaleApi } from "../API/reportSaleApi";
 import { dbApi } from "../API/dbApi";
+import reportSaleSlice from "./reportSaleSlice";
 
 
 export const store = configureStore({
@@ -34,6 +35,7 @@ export const store = configureStore({
     userSlice: userSlice,
     productSlice: productSlice,
     recieptSlice:recieptSlice,
+    reportSaleSlice:reportSaleSlice
   },
   middleware: (getDefaultMiddleware) =>
 

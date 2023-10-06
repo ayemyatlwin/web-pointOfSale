@@ -25,7 +25,7 @@ const TodaySaleOverview = () => {
     const token=Cookies.get("token");
     //for today Sale UI in Report/Sale
     const {data}=useGetTodaySaleReportQuery(token);
-    // console.log(data);
+    console.log(data);
     const totalAmount=data?.total_amount;
     const tdySaleVouchers=data?.vouchers;
   return (

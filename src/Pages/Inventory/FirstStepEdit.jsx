@@ -7,7 +7,7 @@ import Cookies from 'js-cookie';
 import { useGetBrandInfoQuery } from '../../Feature/API/brandApi';
 
 const FirstStepEdit = ({toggleSelect, display, setDisplay, select,setEditProduct,editProduct}) => {
-
+const [brName,setBrName]=useState('');
 const dispatch=useDispatch();
 const token = Cookies.get("token");
 const [currentPage, setCurrentPage] = useState(1);
@@ -48,7 +48,7 @@ dispatch(addProductBrand_id({brand_id:editProduct?.brand_id}))
               className="w-[70%] border outline-none py-2.5 relative rounded cursor-pointer"
             >
               <div className="px-5 flex items-center justify-between">
-                <p className="">Choose brand...</p>
+                <p className="">{brName || 'Choose brand...'}</p>
                 <BiChevronDown
                   className={`text-xl ${
                     select && "rotate-180"
@@ -64,10 +64,12 @@ dispatch(addProductBrand_id({brand_id:editProduct?.brand_id}))
                 brandInfo?.map((i)=>(
                   <div
                   key={i?.brand_id}
-                  onClick={(e) => setEditProduct((prevState) => ({
+                  onClick={(e)=> { setEditProduct((prevState) => ({
                     ...prevState,
                     brand_id: i?.brand_id,
-                  }))}
+                  }));
+                  setBrName(i?.name)
+                }}
                   className="w-full outline-none py-3 bg-[#202124] px-5 rounded-t border-b cursor-pointer"
                 >
                 {i?.name}
