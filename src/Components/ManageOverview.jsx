@@ -3,6 +3,18 @@ import React from "react";
 import { FiSearch } from "react-icons/fi";
 
 const ManageOverview = ({ tableType }) => {
+  const selectStyles = {
+    control: {
+      color: "#F8F9FA", // Set the text color for the selected option
+    },
+    singleValue: {
+      color: "#F8F9FA", // Set the text color for the selected value
+    },
+    option: {
+      color: "white", // Set the text color for the options (labels)
+    },
+  };
+
   return (
     // Table name and sort filter Component
     <div className="">
@@ -23,8 +35,7 @@ const ManageOverview = ({ tableType }) => {
         <div className=" flex  items-center gap-5  justify-around ">
           <span className=" flex mt-1  ">Sort: </span>
           <Select
-            placeholder="Pick one"
-            defaultValue="Last"
+            placeholder="by name"
             radius="xs"
             variant="unstyled"
             className="  "
@@ -34,32 +45,31 @@ const ManageOverview = ({ tableType }) => {
               timingFunction: "ease",
             }}
             data={[
-              { value: "react", label: "Last" },
-              { value: "ng", label: "First" },
+              { value: "react", label: "A to Z" },
+              { value: "ng", label: "Z to A" },
 
-              ,
             ]}
           />
         </div>
         <div className=" flex  items-center gap-5  justify-around ">
-          <span className=" flex mt-1  ">Sort: </span>
+          <span className=" flex mt-1  ">Order: </span>
           <Select
-            placeholder="Pick one"
+            placeholder=" by Asc-Des"
             defaultValue="Last"
             radius="xs"
             variant="unstyled"
-            className="  "
+            className="" 
             transitionProps={{
               transition: "pop-top-left",
               duration: 80,
               timingFunction: "ease",
             }}
             data={[
-              { value: "react", label: "Last" },
-              { value: "ng", label: "First" },
+              { value: "react", label: "Ascending" },
+              { value: "ng", label: "Descending" },
 
-              ,
             ]}
+            
           />
         </div>
       </div>

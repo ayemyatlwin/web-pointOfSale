@@ -8,55 +8,60 @@ ChartJS.register(...registerables);
 
 const VertiChart = () => {
   const token = Cookies.get("token");
-  const dispatch = useDispatch();
   const { dataType } = useSelector((state) => state.reportSaleSlice);
-
   const weeklyData = useGetWeeklySaleReportQuery({ token, type: dataType });
   console.log(weeklyData);
 
-  
-
   const sale_records = weeklyData?.data?.sale_records;
-  console.log(sale_records);
+  // console.log(sale_records);
 
-  const formatDate = (isoDateString) => {
-    const date = new Date(isoDateString);
-    const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    const day = dayNames[date.getDay()];
-    return day;
+  const MonthFormat = () => {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; 
+      let daysInMonth;
+    if ([1, 3, 5, 7, 8, 10, 12].includes(month)) {
+      daysInMonth = 31; // January, March, May, July, August, October, December
+    } else if (month === 2) {
+      // February: Check for leap year
+      if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) {
+        daysInMonth = 29; // Leap year
+      } else {
+        daysInMonth = 28; // Non-leap year
+      }
+    } else {
+      daysInMonth = 30; // All other months
+    }
+      if (date.getDate() >= 1 && date.getDate() <= daysInMonth) {
+      const daysArray = Array.from({ length: daysInMonth }, (_, index) => "D" + (index + 1));
+      return daysArray;
+    } else {
+      return ["Invalid Date"]; 
+    }
   };
-
-  const formatNumeralDate = (isoDateString) => {
-    const date = new Date(isoDateString);
-    const numeralDay = date.getDate();
-    return numeralDay;
-  };
-
-  const formatMonth = (isoDateString) => {
-    const date = new Date(isoDateString);
-    const monthNames = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
-    const month = monthNames[date.getMonth()];
-    return month;
-  };
+  
 
   const getLabelsByDataType = () => {
     switch (dataType) {
       case "weekly":
-        return sale_records?.map((day) => formatDate(day?.created_at));
+        return ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
       case "monthly":
-        return sale_records?.map((date) => formatNumeralDate(date?.created_at));
+        return MonthFormat();;
       case "yearly":
-        return sale_records?.map((month) => formatMonth(month?.created_at));
+        return [
+          "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+          "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        ];
       default:
         return [];
     }
   };
 
   const dayLabels = getLabelsByDataType();
-  console.log(dayLabels);
+  // console.log(dayLabels);
 
   const dataVertValue = sale_records?.map((data) => data?.total_net_total);
-  console.log(dataVertValue);
+  // console.log(dataVertValue);
 
   
   const maxIndex = dataVertValue ? dataVertValue.indexOf(Math.max(...dataVertValue)) : -1;
