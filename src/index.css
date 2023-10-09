@@ -53,6 +53,8 @@ h4 {
   }
 }
 
+
+
 .tableUi #note{
   @apply w-1/3 text-center hover:bg-[#3f4245] transition-all  py-3 border-r border-[#3f4245]
 }
