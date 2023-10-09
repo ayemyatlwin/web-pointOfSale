@@ -25,7 +25,7 @@ import Pagination from "../Components/Pagination";
 import { Link } from "react-router-dom";
 
 import Cookies from "js-cookie";
-import { useGetDashboardDataQuery } from "../Feature/API/dbApi";
+import { useGetDashboardDataMonthlyQuery, useGetDashboardDataQuery } from "../Feature/API/dbApi";
 
 ChartJS.register(
   CategoryScale,
@@ -40,8 +40,10 @@ ChartJS.register(
 export default function Dashboard() {
   const token = Cookies.get("token");
 const dbData=useGetDashboardDataQuery({token});
-console.log(dbData);
+const dbDataMonthly=useGetDashboardDataMonthlyQuery({token});
+console.log(dbDataMonthly);
 const monthLabels = [];
+const dayLabels=[];
 
 // Loop through the sale_records and extract month information
 if(dbData?.data?.sale_records){
@@ -64,6 +66,24 @@ if(dbData?.data?.sale_records){
   };
 }
 console.log(monthLabels);
+if(dbDataMonthly?.data?.sale_records){
+  for (const record of dbDataMonthly?.data?.sale_records) {
+    // Parse the timestamp and extract the month (0-indexed)
+    const timestamp = new Date(record.created_at);
+    const dayOfEachmonth = timestamp.getDay();
+  
+    // Create a mapping of month indices to month names
+
+  
+    // Get the month name from the mapping
+
+  
+    // Add the month name to the labels array
+    dayLabels.push(dayOfEachmonth);
+
+  };
+  console.log(dayLabels);
+}
 
 // const years = dbData?.data?.sale_records.filter((e) => e.created_at.split("-")[0]);
  
@@ -105,6 +125,19 @@ console.log(monthLabels);
       {
         label: "Dataset 1",
         data: dbData?.data?.sale_records.map((e)=>e.total_net_total), // Sample data
+        borderColor: "#8AB4F8",
+        borderWidth: 1,
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        pointBackgroundColor: "#f5f5f5",
+      },
+    ],
+  };
+  const dataMonthly = {
+    labels,
+    datasets: [
+      {
+        label: "Dataset 1",
+        data: dbDataMonthly?.data?.sale_records.map((e)=>e.total_net_total), // Sample data
         borderColor: "#8AB4F8",
         borderWidth: 1,
         backgroundColor: "rgba(255, 99, 132, 0.5)",

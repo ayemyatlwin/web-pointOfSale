@@ -16,6 +16,7 @@ import Cookies from "js-cookie";
 ChartJS.register(...registerables);
 
 const ReportStock = () => {
+
   const token=Cookies.get("token");
   // const rows = productDetailedInfo?.map((element, i) => (
  
@@ -318,7 +319,7 @@ console.log(updatedBrands);
                 <div></div>
               </div>
               <div className=" ms-[400px]">
-                <button className=" hover:opacity-60 rounded-lg px-3 py-2 border-2 border-[#3f4245]">
+                <button  className=" hover:opacity-60 rounded-lg px-3 py-2 border-2 border-[#3f4245]">
                   RECENT SALES
                 </button>
               </div>
@@ -333,70 +334,68 @@ console.log(updatedBrands);
    
       </div>
       <div>
-      <h2 className=" mt-12 tracking-wide text-[1.5rem]">Today Sales Overview</h2>
-        <div className=" my-0 flex items-center justify-between">
-          <Input
-            styles={() => ({
-              input: {
-                color: '#F8F9FA',
-              },
-            })}
-            icon={<FiSearch />}
-            variant="unstyled"
-            placeholder="Search"
+      <h2 className=" my-5 tracking-wide text-[1.5rem]">Today Sales Overview</h2>
+      <div className="flex items-center justify-between">
+        <Input
+          styles={() => ({
+            input: {
+              color: '#F8F9FA',
+            },
+          })}
+          icon={<FiSearch />}
+          variant="unstyled"
+          placeholder="Search"
+          radius="xs"
+          className=" border border-gray-400 w-[400px] rounded-xl text-gray-400"
+        />
+        <div className=" flex  items-center gap-5  justify-around ">
+          <span className=" flex mt-1  ">Sort: </span>
+          <Select
+            placeholder="Pick one"
+            defaultValue="Last"
             radius="xs"
-            className=" border border-gray-400 w-[400px] rounded-xl text-gray-400"
+            variant="unstyled"
+            className="  "
+            transitionProps={{
+              transition: "pop-top-left",
+              duration: 80,
+              timingFunction: "ease",
+            }}
+            data={[
+              { value: "react", label: "Last" },
+              { value: "ng", label: "First" },
+
+              ,
+            ]}
           />
-          <div className=" flex  items-center justify-around ">
-            <p className=" ">Sort:</p>
-            <Select
-              label="Your favorite framework/library"
-              placeholder="Pick one"
-              defaultValue="Last"
-              radius="xs"
-              variant="unstyled"
-              className="  w-[100px] h-[170px]  my-auto mx-6"
-              transitionProps={{
-                transition: "pop-top-left",
-                duration: 80,
-                timingFunction: "ease",
-              }}
-              data={[
-                { value: "react", label: "Last" },
-                { value: "ng", label: "First" },
+        </div>
+        <div className=" flex  items-center gap-5  justify-around ">
+          <span className=" flex mt-1  ">Sort: </span>
+          <Select
+            placeholder="Pick one"
+            defaultValue="Last"
+            radius="xs"
+            variant="unstyled"
+            className="  "
+            transitionProps={{
+              transition: "pop-top-left",
+              duration: 80,
+              timingFunction: "ease",
+            }}
+            data={[
+              { value: "react", label: "Last" },
+              { value: "ng", label: "First" },
 
-                ,
-              ]}
-            />
-          </div>
-          <div className=" flex  items-center justify-evenly ">
-            <p className=" ">Sort:</p>
-            <Select
-              label="Your favorite framework/library"
-              placeholder="Pick one"
-              defaultValue="Last"
-              radius="xs"
-              variant="unstyled"
-              className="  w-[100px] h-[170px]  my-auto mx-6"
-              transitionProps={{
-                transition: "pop-top-left",
-                duration: 80,
-                timingFunction: "ease",
-              }}
-              data={[
-                { value: "react", label: "All File" },
-                { value: "ng", label: "Some File" },
-
-                ,
-              ]}
-            />
-          </div>
-          
+              ,
+            ]}
+          />
+        </div>
+        
         </div>
         <div
           className={`block overflow-y-auto`}
         >
-          <main className="border border-[#3f4245] rounded-sm ">
+       <main className="border border-[#3f4245] rounded-sm mt-7 ">
             <table className="w-full text-sm text-center text-[#f5f5f5]">
               <thead className="text-xs text-[#f5f5f5] uppercase ">
                 <tr className="border-b border-[#3f4245]">
@@ -404,7 +403,9 @@ console.log(updatedBrands);
                   <th className="px-6 py-4">Name</th>
                   <th className="px-6 py-4">Brand</th>
                   <th className="px-6 py-4">Unit</th>
-                  <th className="px-6 py-4">Stock</th>
+                  <th className="px-6 py-4">Sale Price</th>
+                  <th className="px-6 py-4">Total Stock</th>
+                  <th className="px-6 py-4"> Stock Level</th>
                   <th className="px-6 py-4">Actions</th>
                 </tr>
               </thead>
@@ -412,7 +413,6 @@ console.log(updatedBrands);
               {/* <tbody className="text-[#f5f5f5]">{rows}</tbody> */}
             </table>
           </main>
-
           <div className=" my-8">
             {/* <Pagination
               setCurrentPage={setCurrentPage}
