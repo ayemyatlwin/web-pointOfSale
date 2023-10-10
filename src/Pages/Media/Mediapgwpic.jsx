@@ -127,7 +127,7 @@ const Mediapgwpic = (props) => {
         <td className="px-6 py-4">{element.account}</td>
         <td className="px-6 py-4">{date_time[0]}</td>
         <td className="px-6 py-4">{date_time[1]}</td>
-        <td className="px-6 py-4">{element.file_size}</td>
+        <td className="px-6 py-4">{element.file_size} MB</td>
         <td className="px-6 py-4">
           {" "}
           <div className="  flex">
