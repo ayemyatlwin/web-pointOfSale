@@ -183,197 +183,209 @@ const ReportStock = () => {
       </div>
       <div className=" my-6">
         {/* graphs section */}
-        <div className=" mb-10 flex justify-center items-center">
-          {/* left side graph */}
-          <div className="w-[50%]">
-            {/* upper section graph */}
-            <div className=" mb-4 flex justify-around items-center">
-              {/* total product */}
-              <div className="w-[50%] me-4 border border-[#3f4245] py-2 px-3 rounded-md">
-                <div className=" my-6 flex items-center justify-around">
-                  <div
-                    className={`w-[60px] h-[60px]  rounded-full border p-1 flex justify-center items-center`}
-                  >
-                    <AiOutlineShoppingCart
-                      className={`w-full h-full border text-blue-500 border-solid border-blue-500 bg-[#434446] rounded-full p-2`}
-                      alt=""
-                    />
-                  </div>
-                  <div>
-                    <p className=" text-2xl font-extrabold tracking-wide">
-                      {stockData?.data?.total_products}
-                    </p>
-                    <p className=" tracking-tight font-thin text-sm">
-                      Total Products
-                    </p>
-                  </div>
-                </div>
-              </div>
-              {/* total brands */}
-              <div className="w-[50%] border border-[#3f4245] py-2 px-3 rounded-md">
-                <div className=" my-6 flex items-center justify-around">
-                  <div
-                    className={`w-[60px] h-[60px]  rounded-full border p-1 flex justify-center items-center`}
-                  >
-                    <PiCoinsDuotone
-                      className={`w-full h-full border text-blue-500 border-solid border-blue-500 bg-[#434446] rounded-full p-2`}
-                      alt=""
-                    />
-                  </div>
-                  <div>
-                    <p className=" text-2xl font-extrabold tracking-wide">
-                      {stockData?.data?.total_brands}
-                    </p>
-                    <p className=" tracking-tight font-thin text-sm">
-                      Total Brands
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* lower section(bar section) */}
-            <div className="  border border-[#3f4245]">
-              <div className=" my-4 flex items-center justify-around">
-                <div>
-                  <Progress
-                    className=" w-[300px]"
-                    animate
-                    onMouseLeave={() => setHovered(-1)}
-                    size="md"
-                    radius="sm"
-                    sections={[
-                      {
-                        value: stockData?.data?.overview?.instock,
-                        color: "#07f51b",
-                        onMouseEnter: () => setHovered(0),
-                        onMouseLeave: reset,
-                      },
-                      {
-                        value: stockData?.data?.overview?.low_stock,
-                        color: "#26e2f0",
-                        onMouseEnter: () => setHovered(1),
-                        onMouseLeave: reset,
-                      },
-                      {
-                        value: stockData?.data?.overview?.out_of_stock,
-                        color: "#e3293f",
-                        onMouseEnter: () => setHovered(2),
-                        onMouseLeave: reset,
-                      },
-                    ]}
-                  />
-                </div>
-                <div>
-                  <p className=" text-2xl font-extrabold tracking-wide">
-                    {stockData?.data?.total_products}
-                  </p>
-                  <p className=" tracking-tight font-thin text-sm">Products</p>
-                </div>
-              </div>
-
-              <div className="my-4">
-                <div className=" flex items-center justify-between  border-b-2 border-[#3f4245]">
-                  <div className=" flex items-center justify-around">
-                    <AiTwotonePlusCircle className=" text-[#07f51b] mx-2" />
-                    <p>Instock</p>
-                  </div>
-                  <div className=" flex items-center justify-around">
-                    <p className="  mx-2">{Math.round(instockProduct)}</p>
-                    <div className=" flex items-center justify-around">
-                      <p className="mx-2">
-                        {Math.round(stockData?.data?.overview?.instock)}%
-                      </p>
-                      <MdKeyboardArrowUp className=" text-3xl font-bold text-[#07f51b]" />
-                    </div>
-                  </div>
-                </div>
-                <div className=" flex items-center justify-between  border-b-2 border-[#3f4245]">
-                  <div className=" flex items-center justify-around">
-                    <AiTwotonePlusCircle className=" text-[#26e2f0] mx-2" />
-                    <p>Low Stock</p>
-                  </div>
-                  <div className=" flex items-center justify-around">
-                    <p className=" mx-2">{Math.round(lowStockProduct)}</p>
-                    <div className=" flex items-center justify-around">
-                      <p className="mx-2">
-                        {Math.round(stockData?.data?.overview?.low_stock)}%
-                      </p>
-                      <MdKeyboardArrowUp className=" text-3xl font-bold text-[#07f51b]" />
-                    </div>
-                  </div>
-                </div>
-                <div className=" flex items-center justify-between  ">
-                  <div className=" flex items-center justify-around">
-                    <AiTwotonePlusCircle className=" text-[#e3293f] mx-2" />
-                    <p>Out of Stock</p>
-                  </div>
-                  <div className=" flex items-center justify-around">
-                    <p className=" mx-2">{Math.round(outOfStockProduct)}</p>
-                    <div className=" flex items-center justify-around">
-                      <p className="mx-2">
-                        {Math.round(stockData?.data?.overview?.out_of_stock)}%
-                      </p>
-                      <MdKeyboardArrowUp className=" text-3xl font-bold text-[#07f51b]" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* right side graph */}
-          <div className="p-4 mx-4 border border-[#3f4245]">
-            <div className=" flex-col items-center justify-center ">
-              <div className=" block ">
-                <h1 className=" block text-2xl font-extrabold tracking-wide">
-                  Best Seller Brand
-                </h1>
-              </div>
-              <div className="">
-                <h1 className=" text-right text-2xl font-extrabold tracking-wide">
-                  620,000k
-                </h1>
-                <h1 className=" text-right tracking-tight font-thin text-sm">
-                  Kyats
-                </h1>
-              </div>
-              <div className=" flex items-center justify-center">
-                <div className="w-[50%] h-[200px]">
-                  <Doughnut data={data} options={options} />
-                </div>
-                <div className="my-4">
-                  {updatedBrands?.map((e) => (
-                    <div className="  my-4 flex items-center justify-between  border-b-2 border-[#3f4245]">
-                      <div className=" flex items-center justify-around">
-                        <AiTwotonePlusCircle
-                          style={{ color: e?.colorCode }}
-                          className={`  mx-2`}
+        {stockData?.data ? (
+          <>
+            <div className=" mb-10 flex justify-center items-center">
+              {/* left side graph */}
+              <div className="w-[50%]">
+                {/* upper section graph */}
+                <div className=" mb-4 flex justify-around items-center">
+                  {/* total product */}
+                  <div className="w-[50%] me-4 border border-[#3f4245] py-2 px-3 rounded-md">
+                    <div className=" my-6 flex items-center justify-around">
+                      <div
+                        className={`w-[60px] h-[60px]  rounded-full border p-1 flex justify-center items-center`}
+                      >
+                        <AiOutlineShoppingCart
+                          className={`w-full h-full border text-blue-500 border-solid border-blue-500 bg-[#434446] rounded-full p-2`}
+                          alt=""
                         />
-                        <p>{e?.brand_name?.slice(0, 4)}</p>
+                      </div>
+                      <div>
+                        <p className=" text-2xl font-extrabold tracking-wide">
+                          {stockData?.data?.total_products}
+                        </p>
+                        <p className=" tracking-tight font-thin text-sm">
+                          Total Products
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  {/* total brands */}
+                  <div className="w-[50%] border border-[#3f4245] py-2 px-3 rounded-md">
+                    <div className=" my-6 flex items-center justify-around">
+                      <div
+                        className={`w-[60px] h-[60px]  rounded-full border p-1 flex justify-center items-center`}
+                      >
+                        <PiCoinsDuotone
+                          className={`w-full h-full border text-blue-500 border-solid border-blue-500 bg-[#434446] rounded-full p-2`}
+                          alt=""
+                        />
+                      </div>
+                      <div>
+                        <p className=" text-2xl font-extrabold tracking-wide">
+                          {stockData?.data?.total_brands}
+                        </p>
+                        <p className=" tracking-tight font-thin text-sm">
+                          Total Brands
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {/* lower section(bar section) */}
+                <div className="  border border-[#3f4245]">
+                  <div className=" my-4 flex items-center justify-around">
+                    <div>
+                      <Progress
+                        className=" w-[300px]"
+                        animate
+                        onMouseLeave={() => setHovered(-1)}
+                        size="md"
+                        radius="sm"
+                        sections={[
+                          {
+                            value: stockData?.data?.overview?.instock,
+                            color: "#07f51b",
+                            onMouseEnter: () => setHovered(0),
+                            onMouseLeave: reset,
+                          },
+                          {
+                            value: stockData?.data?.overview?.low_stock,
+                            color: "#26e2f0",
+                            onMouseEnter: () => setHovered(1),
+                            onMouseLeave: reset,
+                          },
+                          {
+                            value: stockData?.data?.overview?.out_of_stock,
+                            color: "#e3293f",
+                            onMouseEnter: () => setHovered(2),
+                            onMouseLeave: reset,
+                          },
+                        ]}
+                      />
+                    </div>
+                    <div>
+                      <p className=" text-2xl font-extrabold tracking-wide">
+                        {stockData?.data?.total_products}
+                      </p>
+                      <p className=" tracking-tight font-thin text-sm">
+                        Products
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="my-4">
+                    <div className=" flex items-center justify-between  border-b-2 border-[#3f4245]">
+                      <div className=" flex items-center justify-around">
+                        <AiTwotonePlusCircle className=" text-[#07f51b] mx-2" />
+                        <p>Instock</p>
                       </div>
                       <div className=" flex items-center justify-around">
-                        <p className=" mx-2">{e?.total_quantity}</p>
+                        <p className="  mx-2">{Math.round(instockProduct)}</p>
                         <div className=" flex items-center justify-around">
-                          <p className="mx-2">70%</p>
+                          <p className="mx-2">
+                            {Math.round(stockData?.data?.overview?.instock)}%
+                          </p>
                           <MdKeyboardArrowUp className=" text-3xl font-bold text-[#07f51b]" />
                         </div>
                       </div>
                     </div>
-                  ))}
+                    <div className=" flex items-center justify-between  border-b-2 border-[#3f4245]">
+                      <div className=" flex items-center justify-around">
+                        <AiTwotonePlusCircle className=" text-[#26e2f0] mx-2" />
+                        <p>Low Stock</p>
+                      </div>
+                      <div className=" flex items-center justify-around">
+                        <p className=" mx-2">{Math.round(lowStockProduct)}</p>
+                        <div className=" flex items-center justify-around">
+                          <p className="mx-2">
+                            {Math.round(stockData?.data?.overview?.low_stock)}%
+                          </p>
+                          <MdKeyboardArrowUp className=" text-3xl font-bold text-[#07f51b]" />
+                        </div>
+                      </div>
+                    </div>
+                    <div className=" flex items-center justify-between  ">
+                      <div className=" flex items-center justify-around">
+                        <AiTwotonePlusCircle className=" text-[#e3293f] mx-2" />
+                        <p>Out of Stock</p>
+                      </div>
+                      <div className=" flex items-center justify-around">
+                        <p className=" mx-2">{Math.round(outOfStockProduct)}</p>
+                        <div className=" flex items-center justify-around">
+                          <p className="mx-2">
+                            {Math.round(
+                              stockData?.data?.overview?.out_of_stock
+                            )}
+                            %
+                          </p>
+                          <MdKeyboardArrowUp className=" text-3xl font-bold text-[#07f51b]" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* right side graph */}
+              <div className="p-4 mx-4 border border-[#3f4245]">
+                <div className=" flex-col items-center justify-center ">
+                  <div className=" block ">
+                    <h1 className=" block text-2xl font-extrabold tracking-wide">
+                      Best Seller Brand
+                    </h1>
+                  </div>
+                  <div className="">
+                    <h1 className=" text-right text-2xl font-extrabold tracking-wide">
+                      620,000k
+                    </h1>
+                    <h1 className=" text-right tracking-tight font-thin text-sm">
+                      Kyats
+                    </h1>
+                  </div>
+                  <div className=" flex items-center justify-center">
+                    <div className="w-[50%] h-[200px]">
+                      <Doughnut data={data} options={options} />
+                    </div>
+                    <div className="my-4">
+                      {updatedBrands?.map((e) => (
+                        <div className="  my-4 flex items-center justify-between  border-b-2 border-[#3f4245]">
+                          <div className=" flex items-center justify-around">
+                            <AiTwotonePlusCircle
+                              style={{ color: e?.colorCode }}
+                              className={`  mx-2`}
+                            />
+                            <p>{e?.brand_name?.slice(0, 4)}</p>
+                          </div>
+                          <div className=" flex items-center justify-around">
+                            <p className=" mx-2">{e?.total_quantity}</p>
+                            <div className=" flex items-center justify-around">
+                              <p className="mx-2">70%</p>
+                              <MdKeyboardArrowUp className=" text-3xl font-bold text-[#07f51b]" />
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div></div>
+                  </div>
+                  <div className=" ms-[400px]">
+                    <button className=" hover:opacity-60 rounded-lg px-3 py-2 border-2 border-[#3f4245]">
+                      RECENT SALES
+                    </button>
+                  </div>
                 </div>
                 <div></div>
               </div>
-              <div className=" ms-[400px]">
-                <button className=" hover:opacity-60 rounded-lg px-3 py-2 border-2 border-[#3f4245]">
-                  RECENT SALES
-                </button>
-              </div>
             </div>
-            <div></div>
-          </div>
-        </div>
+          </>
+        ) : (
+          <h1 className=" text-center my-20 text-2xl">
+            No data available currently
+          </h1>
+        )}
         {/* table section */}
         <div>
-          <div className=" flex justify-between items-center"></div>
           <div>
             <h2 className=" my-5 tracking-wide text-[1.5rem]">
               Today Sales Overview
@@ -435,23 +447,31 @@ const ReportStock = () => {
               </div>
             </div>
             <div className={`block overflow-y-auto`}>
-              <main className="border border-[#3f4245] rounded-sm mt-7 ">
-                <table className="w-full text-sm text-center text-[#f5f5f5]">
-                  <thead className="text-xs text-[#f5f5f5] uppercase ">
-                    <tr className="border-b border-[#3f4245]">
-                      <th className="px-6 py-4">No.</th>
-                      <th className="px-6 py-4">Name</th>
-                      <th className="px-6 py-4">Brand</th>
-                      <th className="px-6 py-4">Unit</th>
-                      <th className="px-6 py-4">Sale Price</th>
-                      <th className="px-6 py-4">Total Stock</th>
-                      <th className="px-6 py-4"> Stock Level</th>
-                    </tr>
-                  </thead>
-                  {/* map data from old recorded voucher list from api */}
-                  <tbody className="text-[#f5f5f5]">{rows}</tbody>
-                </table>
-              </main>
+              {stockOverviewData?.data ? (
+                <>
+                  <main className="border border-[#3f4245] rounded-sm mt-7 ">
+                    <table className="w-full text-sm text-center text-[#f5f5f5]">
+                      <thead className="text-xs text-[#f5f5f5] uppercase ">
+                        <tr className="border-b border-[#3f4245]">
+                          <th className="px-6 py-4">No.</th>
+                          <th className="px-6 py-4">Name</th>
+                          <th className="px-6 py-4">Brand</th>
+                          <th className="px-6 py-4">Unit</th>
+                          <th className="px-6 py-4">Sale Price</th>
+                          <th className="px-6 py-4">Total Stock</th>
+                          <th className="px-6 py-4"> Stock Level</th>
+                        </tr>
+                      </thead>
+                      {/* map data from old recorded voucher list from api */}
+                      <tbody className="text-[#f5f5f5]">{rows}</tbody>
+                    </table>
+                  </main>
+                </>
+              ) : (
+                <h1 className=" text-center my-20 text-2xl">
+                  No data available currently
+                </h1>
+              )}
               <div className=" my-8">
                 <Pagination
                   setCurrentPage={setCurrentPage}
