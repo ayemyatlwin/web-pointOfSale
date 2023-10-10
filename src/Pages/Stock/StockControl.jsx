@@ -38,13 +38,14 @@ import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 
 const StockControl = () => {
+  const [search,setSearch]=useState('');
   const [opened, { open, close }] = useDisclosure(false);
   const nav = useNavigate();
   const token = Cookies.get("token");
   const [currentPage, setCurrentPage] = useState(1);
-  const { data } = useGetProductInfoQuery({ token, currentPage });
+  const { data } = useGetProductInfoQuery({ token, currentPage ,search});
   const productDetailedInfo = data?.data;
-  console.log(productDetailedInfo);
+  console.log(data);
 const[quantity,setQuantity]=useState('');
 const[more_information,setMore_Information]=useState('');
   const theme = useMantineTheme();
@@ -65,6 +66,7 @@ console.log(more_information);
       <td className="px-6 py-4 capitalize text-start">{element.unit}</td>
       <td className="px-6 py-4  text-end">{element.sale_price}</td>
       <td className="px-6 py-4 text-end">{element.total_stock}</td>
+
  
 
       <td className="flex gap-5 px-6 py-3 justify-end text-white">
@@ -86,9 +88,11 @@ console.log(more_information);
    
       </div>
       <div>
-      <h2 className=" my-5 tracking-wide text-[1.5rem]">Today Sales Overview</h2>
+      <h2 className=" my-5 tracking-wide text-[1.5rem]">Stock Overview</h2>
       <div className="flex items-center justify-between">
         <Input
+        onChange={(e)=>setSearch(e.target.value)}
+        value={search}
           styles={() => ({
             input: {
               color: '#F8F9FA',
@@ -162,7 +166,7 @@ console.log(more_information);
         <div
           className={`${!displayState ? "block" : "hidden"} overflow-y-auto`}
         >
-          <main className="border border-[#3f4245] rounded-sm mt-7 ">
+          <main className="border border-[#3f4245] rounded-sm  mt-7 ">
             <table className="w-full text-sm text-center text-[#f5f5f5]">
               <thead className="text-xs text-[#f5f5f5] uppercase ">
                 <tr className="border-b border-[#3f4245]">
@@ -184,7 +188,7 @@ console.log(more_information);
             <Pagination
               setCurrentPage={setCurrentPage}
               currentPage={currentPage}
-              last_page={data?.meta.to}
+              last_page={data?.meta.last_page}
             />
           </div>
         </div>

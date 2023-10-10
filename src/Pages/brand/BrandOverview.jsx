@@ -29,11 +29,11 @@ import { useDeleteBrandMutation, useGetBrandInfoQuery } from "../../Feature/API/
 import { MdOutlineEdit } from "react-icons/md";
 
 const BrandOverview = () => {
-
+  const [search,setSearch]=useState('');
   const nav = useNavigate();
   const token = Cookies.get("token");
   const [currentPage, setCurrentPage] = useState(1);
-  const {data}=useGetBrandInfoQuery({ token, currentPage })
+  const {data}=useGetBrandInfoQuery({ token, currentPage ,search})
   const [opened, { open, close }] = useDisclosure(false);
   const theme = useMantineTheme();
   const [displayState, setDisplayState] = useState(false);
@@ -129,9 +129,11 @@ console.log(brandDetailedInfo);
         </div>
       </div>
       <div>
-      <h2 className=" my-5 tracking-wide text-[1.5rem]">Today Sales Overview</h2>
+      <h2 className=" my-5 tracking-wide text-[1.5rem]">Brand Overview</h2>
       <div className="flex items-center justify-between">
         <Input
+           onChange={(e)=>setSearch(e.target.value)}
+           value={search}
           styles={() => ({
             input: {
               color: '#F8F9FA',
@@ -228,7 +230,7 @@ console.log(brandDetailedInfo);
            
               setCurrentPage={setCurrentPage}
               currentPage={currentPage}
-              last_page={data?.meta.to}
+              last_page={data?.meta.last_page}
             />
           </div>
         </div>

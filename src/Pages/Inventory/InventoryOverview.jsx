@@ -38,13 +38,15 @@ const InventoryOverview = () => {
   const nav = useNavigate();
   const token = Cookies.get("token");
   const [currentPage, setCurrentPage] = useState(1);
-  const { data } = useGetProductInfoQuery({ token, currentPage });
+  const [search,setSearch]=useState('');
+  const { data } = useGetProductInfoQuery({ token, currentPage,search });
   const productDetailedInfo = data?.data;
   console.log(productDetailedInfo);
   const [opened, { open, close }] = useDisclosure(false);
   const theme = useMantineTheme();
   const [displayState, setDisplayState] = useState(false);
   const [displayState2, setDisplayState2] = useState(false);
+  console.log(search);
   const handleDelete = async (id, token) => {
     Swal.fire({
       title: `Are you sure you want to delete this product??`,
@@ -138,6 +140,8 @@ const InventoryOverview = () => {
       <h2 className=" my-5 tracking-wide text-[1.5rem]">Products Overview</h2>
         <div className="flex items-center justify-between">
         <Input
+        onChange={(e)=>setSearch(e.target.value)}
+        value={search}
           styles={() => ({
             input: {
               color: '#F8F9FA',
