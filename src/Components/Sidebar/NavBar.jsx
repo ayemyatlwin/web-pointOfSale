@@ -15,20 +15,20 @@ const NavBar = () => {
         </Link>
         <div className="flex gap-3 ">
           <span className="text-[#f5f5f5]">
-            <i>
+            {/* <i>
               <BiSolidBellRing className="w-7 h-5" />
-            </i>
+            </i> */}
           </span>
           <span className="text-[#f5f5f5]">
-            <i>
+            {/* <i>
               <MdOutlineNightlight className="w-7 h-5" />
-            </i>
+            </i> */}
           </span>
-          <span className="text-[#f5f5f5]">
+          <Link to={"my-account"} className="text-[#f5f5f5]">
             <i>
               <HiOutlineUserCircle className="w-7 h-5" />
             </i>
-          </span>
+          </Link>
         </div>
       </div>
     </nav>
