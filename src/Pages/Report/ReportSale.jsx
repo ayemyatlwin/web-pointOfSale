@@ -76,7 +76,7 @@ const ReportSale = () => {
        {weeklyData?.isLoading ? (<> </>) : (
          <div className="flex mb-2 mt-5 border border-[#3f4245] rounded-md">
          <button
-           className={`border-r  border-[#3f4245] w-[5rem] py-2 ${
+           className={`border-r rounded-l-md border-[#3f4245] w-[5rem] py-2 ${
              dataType === "yearly" ? "bg-gray-500" : ""
            }`}
            onClick={() => handleDataTypeChange("yearly")}
@@ -84,7 +84,7 @@ const ReportSale = () => {
            <span className="text-center text-md text-[#f5f5f5]">Yearly</span>
          </button>
          <button
-           className={`border-r border-[#3f4245] w-[5rem] py-2 ${
+           className={`border-r  border-[#3f4245] w-[5rem] py-2 ${
              dataType === "monthly" ? "bg-gray-500" : ""
            }`}
            onClick={() => handleDataTypeChange("monthly")}
@@ -92,7 +92,7 @@ const ReportSale = () => {
            <span className="text-center text-md text-[#f5f5f5]">Monthly</span>
          </button>
          <button
-           className={`border-r border-[#3f4245] w-[5rem] py-2 ${
+           className={`border-r rounded-r-md border-[#3f4245] w-[5rem] py-2 ${
              dataType === "weekly" ? "bg-gray-500" : ""
            }`}
            onClick={() => handleDataTypeChange("weekly")}
@@ -242,9 +242,11 @@ const ReportSale = () => {
                   );
                 })}
                 </tbody>) : (
-                  <tr> 
+                  <tbody>
+                    <tr> 
                     <td className="py-3 mx-auto" colSpan={4}> {weeklyData?.data?.message}</td>
                   </tr>
+                  </tbody>
                 )}
               </table>
             </div>

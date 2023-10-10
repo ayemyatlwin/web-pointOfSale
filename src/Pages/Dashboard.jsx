@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Breadcrumb from "../Components/Breadcrumb";
 import {
   AiOutlineArrowRight,
@@ -25,7 +25,7 @@ import Pagination from "../Components/Pagination";
 import { Link } from "react-router-dom";
 
 import Cookies from "js-cookie";
-import { useGetDashboardDataMonthlyQuery, useGetDashboardDataQuery } from "../Feature/API/dbApi";
+import {  useGetDashboardDataQuery } from "../Feature/API/dbApi";
 
 ChartJS.register(
   CategoryScale,
@@ -38,55 +38,60 @@ ChartJS.register(
 );
 
 export default function Dashboard() {
-  const token = Cookies.get("token");
-const dbData=useGetDashboardDataQuery({token});
-const dbDataMonthly=useGetDashboardDataMonthlyQuery({token});
-console.log(dbDataMonthly);
-const monthLabels = [];
-const dayLabels=[];
+const [dataType,setDataType]=useState("weekly")
+const token = Cookies.get("token");
+const dbData=useGetDashboardDataQuery({token,dataType});
+console.log(dbData);
 
-// Loop through the sale_records and extract month information
-if(dbData?.data?.sale_records){
-  for (const record of dbData?.data?.sale_records) {
-    // Parse the timestamp and extract the month (0-indexed)
-    const timestamp = new Date(record.created_at);
-    const monthIndex = timestamp.getMonth();
-  
-    // Create a mapping of month indices to month names
-    const monthNames = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-    ];
-  
-    // Get the month name from the mapping
-    const monthName = monthNames[monthIndex];
-  
-    // Add the month name to the labels array
-    monthLabels.push(monthName);
-  };
-}
-console.log(monthLabels);
-if(dbDataMonthly?.data?.sale_records){
-  for (const record of dbDataMonthly?.data?.sale_records) {
-    // Parse the timestamp and extract the month (0-indexed)
-    const timestamp = new Date(record.created_at);
-    const dayOfEachmonth = timestamp.getDay();
-  
-    // Create a mapping of month indices to month names
-
-  
-    // Get the month name from the mapping
-
-  
-    // Add the month name to the labels array
-    dayLabels.push(dayOfEachmonth);
-
-  };
-  console.log(dayLabels);
+const handleTypeChange=(type)=>{
+  setDataType(type)
 }
 
-// const years = dbData?.data?.sale_records.filter((e) => e.created_at.split("-")[0]);
- 
+
+const MonthFormat = () => {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1; 
+    let daysInMonth;
+  if ([1, 3, 5, 7, 8, 10, 12].includes(month)) {
+    daysInMonth = 31; // January, March, May, July, August, October, December
+  } else if (month === 2) {
+    // February: Check for leap year
+    if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) {
+      daysInMonth = 29; // Leap year
+    } else {
+      daysInMonth = 28; // Non-leap year
+    }
+  } else {
+    daysInMonth = 30; // All other months
+  }
+    if (date.getDate() >= 1 && date.getDate() <= daysInMonth) {
+    const daysArray = Array.from({ length: daysInMonth }, (_, index) => "D" + (index + 1));
+    return daysArray;
+  } else {
+    return ["Invalid Date"]; 
+  }
+};
+
+const getLabelsByDataType = () => {
+  switch (dataType) {
+    case "weekly":
+      return ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    case "monthly":
+      return MonthFormat();;
+    case "yearly":
+      return [
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+      ];
+    default:
+      return [];
+  }
+};
+
+const dayLabels = getLabelsByDataType();
+// console.log(dayLabels);
+
   const options = {
     scales: {
       x: {
@@ -117,10 +122,8 @@ if(dbDataMonthly?.data?.sale_records){
     },
   };
 
-  const labels = monthLabels;
-
   const data = {
-    labels,
+    labels : dayLabels,
     datasets: [
       {
         label: "Dataset 1",
@@ -132,19 +135,7 @@ if(dbDataMonthly?.data?.sale_records){
       },
     ],
   };
-  const dataMonthly = {
-    labels,
-    datasets: [
-      {
-        label: "Dataset 1",
-        data: dbDataMonthly?.data?.sale_records.map((e)=>e.total_net_total), // Sample data
-        borderColor: "#8AB4F8",
-        borderWidth: 1,
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-        pointBackgroundColor: "#f5f5f5",
-      },
-    ],
-  };
+ 
   
   return (
     <div className=" ">
@@ -252,33 +243,44 @@ if(dbDataMonthly?.data?.sale_records){
         <div className=" ms-10 flex ">
           {/* chart section */}
           <div className=" w-[70%]">
-            <div className=" flex  justify-between my-5">
-              <h2 className=" tracking-wide text-[1.5rem]">Monthly Sales</h2>
-              <div className="flex gap-3 border me-3 border-[#3f4245] rounded-md">
-                <button className="border-r border-[#3f4245]  w-[5rem] py-1  ">
-                  <Link className=" text-center text-md text-[#f5f5f5] ">
-                    Year
-                  </Link>
-                </button>
-                <button className="border-r border-[#3f4245]   w-[5rem] py-1  ">
-                  <Link className=" text-center text-md text-[#f5f5f5] ">
-                    Month
-                  </Link>
-                </button>
-                <button className="border-r border-[#3f4245]  w-[5rem] py-1 ">
-                  <Link className=" text-center text-md text-[#f5f5f5] ">
-                    Week
-                  </Link>
-                </button>
-              </div>
+            <div className=" flex  justify-between my-2">
+              <h2 className=" tracking-wide text-[1.5rem] capitalize">{dataType} Sales</h2>
+              <div className="flex border border-[#3f4245] rounded-md">
+         <button
+           className={`border-r rounded-l-md  border-[#3f4245] w-[5rem] py-2 ${
+             dataType === "yearly" ? "bg-gray-500" : ""
+           }`}
+           onClick={() => handleTypeChange("yearly")}
+         >
+           <span className="text-center text-md text-[#f5f5f5]">Yearly</span>
+         </button>
+         <button
+           className={`border-r  border-[#3f4245] w-[5rem] py-2 ${
+             dataType === "monthly" ? "bg-gray-500" : ""
+           }`}
+           onClick={() => handleTypeChange("monthly")}
+         >
+           <span className="text-center text-md text-[#f5f5f5]">Monthly</span>
+         </button>
+         <button
+           className={`border-r rounded-r-md border-[#3f4245] w-[5rem] py-2 ${
+             dataType === "weekly" ? "bg-gray-500" : ""
+           }`}
+           onClick={() => handleTypeChange("weekly")}
+         >
+           <span className="text-center text-md text-[#f5f5f5]">Weekly</span>
+         </button>
+       </div>
             </div>
-            <div>
+            {dbData?.data?.sale_records.length !== 0 ? (<div>
               <Line data={data} options={options} height={80} />
-            </div>
+            </div>) : (<h1 className=" text-end me-32 my-20">There is no data</h1>)}
           </div>
           {/* info section */}
           <div className="w-[30%] mx-5">
-            <div className=" w-[50%]">
+            {dbData?.data?.sale_records.length!==0 ? (
+            <>
+            <div className="">
               <div className=" mt-3">
                 <p className=" text-[1.2rem]  font-thin tracking-wide">
                   982.85k
@@ -330,11 +332,12 @@ if(dbDataMonthly?.data?.sale_records){
                 </div>
               </div>
             </div>
-            <div className=" mb-3">
+          
               <button className="py-1 text-[#161618] px-2 w-full font-semibold text-md rounded-md bg-[#8AB4F8]">
                 SALE REPORT
               </button>
-            </div>
+            </>) :(<></>)}
+        
           </div>
         </div>
       </div>

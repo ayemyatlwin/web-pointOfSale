@@ -5,30 +5,8 @@ export const dbApi = createApi({
   tagTypes: ["dbApi"],
   endpoints: (builder) => ({
     getDashboardData: builder.query({
-        query: ({token}) => ({
-          url:`/dashboard-overview/yearly`,
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-          
-        }),
-        providesTags:['dbApi']
-  
-      }),
-      getDashboardDataMonthly: builder.query({
-        query: ({token}) => ({
-          url:`/dashboard-overview/monthly`,
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-          
-        }),
-        providesTags:['dbApi']
-  
-      }),
-      getDashboardDataWeekly: builder.query({
-        query: ({token}) => ({
-          url:`/dashboard-overview/weekly`,
+        query: ({token,dataType}) => ({
+          url:`/dashboard-overview/${dataType}`,
           headers: {
             authorization: `Bearer ${token}`,
           },
@@ -39,4 +17,4 @@ export const dbApi = createApi({
       }),
   })
 })
-export const {useGetDashboardDataQuery,useGetDashboardDataMonthlyQuery,useGetDashboardDataWeeklyQuery} = dbApi;
+export const {useGetDashboardDataQuery} = dbApi;
