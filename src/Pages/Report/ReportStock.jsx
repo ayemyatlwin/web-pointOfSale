@@ -31,7 +31,7 @@ const ReportStock = () => {
     token,
     currentPage
   );
-  console.log(stockOverviewData?.meta.to);
+  console.log(stockOverviewData?.meta.last_page);
   function getBackgroundColorClass(stockLevel) {
     switch (stockLevel) {
       case "instock":
@@ -476,7 +476,7 @@ const ReportStock = () => {
                 <Pagination
                   setCurrentPage={setCurrentPage}
                   currentPage={currentPage}
-                  last_page={stockOverviewData?.meta.to}
+                  last_page={stockOverviewData?.meta.last_page}
                 />
               </div>
             </div>

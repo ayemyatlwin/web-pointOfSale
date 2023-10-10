@@ -18,8 +18,8 @@ export const productApi = createApi({
       invalidatesTags: ["productApi"],
     }),
     getProductInfo: builder.query({
-      query: ({token,currentPage}) => ({
-        url:`/products?page=${currentPage}`,
+      query: ({token,currentPage,search}) => ({
+        url:`/products?page=${currentPage}&search=${search}`,
         headers: {
           authorization: `Bearer ${token}`,
         },
