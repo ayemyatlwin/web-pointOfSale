@@ -38,13 +38,14 @@ import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 
 const StockControl = () => {
+  const [search,setSearch]=useState('');
   const [opened, { open, close }] = useDisclosure(false);
   const nav = useNavigate();
   const token = Cookies.get("token");
   const [currentPage, setCurrentPage] = useState(1);
-  const { data } = useGetProductInfoQuery({ token, currentPage });
+  const { data } = useGetProductInfoQuery({ token, currentPage ,search});
   const productDetailedInfo = data?.data;
-  console.log(productDetailedInfo);
+  console.log(data);
 const[quantity,setQuantity]=useState('');
 const[more_information,setMore_Information]=useState('');
   const theme = useMantineTheme();
@@ -60,24 +61,17 @@ console.log(more_information);
  
     <tr key={element.product_id} className="border-b border-[#3f4245]">
       <td className="px-6 py-4">{i + 1}</td>
-      <td className="px-6 py-4">{element.name}</td>
-      <td className="px-6 py-4">{element.brand_name}</td>
-      <td className="px-6 py-4">{element.unit}</td>
-      <td className="px-6 py-4">{element.total_stock}</td>
+      <td className="px-6 py-4 capitalize text-start">{element.name.slice(0,8)}...</td>
+      <td className="px-6 py-4 capitalize text-start">{element.brand_name.slice(0,9)}...</td>
+      <td className="px-6 py-4 capitalize text-start">{element.unit}</td>
+      <td className="px-6 py-4  text-end">{element.sale_price}</td>
+      <td className="px-6 py-4 text-end">{element.total_stock}</td>
+
  
 
-      <td className=" text-white">
-   
-        <div className="  ms-4 flex  ">
-      
-          <Group position="center">
-            <Button   onClick={()=>nav(`/stock-adding/${element.product_id}`)}>
-              <IoMdAddCircleOutline  className=" cursor-pointer hover:text-blue-700" />
-            </Button>
-          </Group>
-          
-          
-        </div>
+      <td className="flex gap-5 px-6 py-3 justify-end text-white">
+      <IoMdAddCircleOutline  onClick={()=>nav(`/stock-adding/${element.product_id}`)} className="text-3xl hover:bg-gray-50 hover:text-gray-500 rounded-full bg-gray-500 text-gray-50 p-1.5 cursor-pointer transition-all duration-200 ease-in" />
+       
       </td>
     </tr>
   ));
@@ -94,9 +88,11 @@ console.log(more_information);
    
       </div>
       <div>
-      <h2 className=" my-5 tracking-wide text-[1.5rem]">Today Sales Overview</h2>
+      <h2 className=" my-5 tracking-wide text-[1.5rem]">Stock Overview</h2>
       <div className="flex items-center justify-between">
         <Input
+        onChange={(e)=>setSearch(e.target.value)}
+        value={search}
           styles={() => ({
             input: {
               color: '#F8F9FA',
@@ -170,16 +166,17 @@ console.log(more_information);
         <div
           className={`${!displayState ? "block" : "hidden"} overflow-y-auto`}
         >
-          <main className="border border-[#3f4245] rounded-sm mt-7 ">
+          <main className="border border-[#3f4245] rounded-sm  mt-7 ">
             <table className="w-full text-sm text-center text-[#f5f5f5]">
               <thead className="text-xs text-[#f5f5f5] uppercase ">
                 <tr className="border-b border-[#3f4245]">
                   <th className="px-6 py-4">No.</th>
-                  <th className="px-6 py-4">Name</th>
-                  <th className="px-6 py-4">Brand</th>
-                  <th className="px-6 py-4">Unit</th>
-                  <th className="px-6 py-4">Stock</th>
-                  <th className="px-6 py-4">Actions</th>
+                  <th className="px-6 py-4  text-start">Name</th>
+                  <th className="px-6 py-4  text-start">Brand</th>
+                  <th className="px-6 py-4  text-start">Unit</th>
+                  <th className="px-6 py-4  text-end">Sale Price</th>
+                  <th className="px-6 py-4 text-end">Total Stock</th>
+                  <th className="px-6 py-4 text-end"></th>
                 </tr>
               </thead>
               {/* map data from old recorded voucher list from api */}
@@ -191,7 +188,7 @@ console.log(more_information);
             <Pagination
               setCurrentPage={setCurrentPage}
               currentPage={currentPage}
-              last_page={data?.meta.to}
+              last_page={data?.meta.last_page}
             />
           </div>
         </div>

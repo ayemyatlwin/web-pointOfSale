@@ -19,13 +19,10 @@ import {
 } from "react-icons/ai";
 import { BsFillGridFill } from "react-icons/bs";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import { PiCopyDuotone } from "react-icons/pi";
-import {
-  IoMdAdd,
-  IoMdRemoveCircle,
-  IoMdRemoveCircleOutline,
-} from "react-icons/io";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { BsArrowRight, BsDash } from "react-icons/bs";
+import { MdOutlineEdit } from "react-icons/md";
+
+import {  useNavigate } from "react-router-dom";
 import {
   useDeleteProductsMutation,
   useGetProductInfoQuery,
@@ -41,13 +38,15 @@ const InventoryOverview = () => {
   const nav = useNavigate();
   const token = Cookies.get("token");
   const [currentPage, setCurrentPage] = useState(1);
-  const { data } = useGetProductInfoQuery({ token, currentPage });
+  const [search,setSearch]=useState('');
+  const { data } = useGetProductInfoQuery({ token, currentPage,search });
   const productDetailedInfo = data?.data;
   console.log(productDetailedInfo);
   const [opened, { open, close }] = useDisclosure(false);
   const theme = useMantineTheme();
   const [displayState, setDisplayState] = useState(false);
   const [displayState2, setDisplayState2] = useState(false);
+  console.log(search);
   const handleDelete = async (id, token) => {
     Swal.fire({
       title: `Are you sure you want to delete this product??`,
@@ -91,36 +90,24 @@ const InventoryOverview = () => {
   const rows = productDetailedInfo?.map((element, i) => (
     <tr key={element.product_id} className="border-b border-[#3f4245]">
       <td className="px-6 py-4">{i + 1}</td>
-      <td className="px-6 py-4">{element.name}</td>
-      <td className="px-6 py-4">{element.brand_name.slice(0,6)}...</td>
+      <td className="px-6 py-4 capitalize text-start">{element.name.slice(0,10)}...</td>
+      <td className="px-6 py-4 capitalize text-start">{element.brand_name.slice(0,8)}...</td>
       <td className="px-6 py-4">{element.unit}</td>
-      <td className="px-6 py-4">{element.sale_price}</td>
-      <td className="px-6 py-4">{element.actual_price}</td>
-
-      <td className=" text-white">
-        {" "}
-        <div className="  flex  ">
-          <Group>
-            <Button onClick={() => handleDelete(element?.product_id, token)}>
-              <IoMdRemoveCircleOutline className=" cursor-pointer hover:text-blue-700" />
-            </Button>
-          </Group>
-          <Group position="center">
-            <Link to={`/product-editing/${element.product_id}`}>
-              <Button>
-                <AiFillEdit className="cursor-pointer hover:text-blue-700" />
-              </Button>
-            </Link>
-          </Group>
-          <Group position="center">
-            <Link to={`/product-detail/${element.product_id}`}>
-              <Button>
-                <AiOutlineArrowRight className="cursor-pointer hover:text-blue-700" />
-              </Button>
-            </Link>
-          </Group>
-        </div>
-      </td>
+      <td className="px-6 py-4 text-end">{element.sale_price}</td>
+      <td className="px-6 py-4 text-end">{element.total_stock
+}</td>
+      <td  className="flex gap-5 px-6 py-3 justify-end">
+                  <BsDash onClick={() => handleDelete(element?.product_id, token)} className="text-3xl hover:bg-gray-50 hover:text-gray-500 rounded-full bg-gray-500 text-gray-50 p-1.5 cursor-pointer transition-all duration-200 ease-in" />
+                  <MdOutlineEdit
+                    onClick={() => nav(`/product-editing/${element.product_id}`)}
+                    className="text-3xl hover:bg-gray-50 hover:text-gray-500 rounded-full bg-gray-500 text-gray-50 p-1.5 cursor-pointer transition-all duration-200 ease-in"
+                  />
+                  <BsArrowRight
+                    onClick={() => nav(`/product-detail/${element.product_id}`)}
+                    className="text-3xl hover:bg-gray-50 hover:text-gray-500 rounded-full bg-gray-500 text-gray-50 p-1.5 cursor-pointer transition-all duration-200 ease-in"
+                  />
+                </td>
+      
     </tr>
   ));
 
@@ -153,6 +140,8 @@ const InventoryOverview = () => {
       <h2 className=" my-5 tracking-wide text-[1.5rem]">Products Overview</h2>
         <div className="flex items-center justify-between">
         <Input
+        onChange={(e)=>setSearch(e.target.value)}
+        value={search}
           styles={() => ({
             input: {
               color: '#F8F9FA',
@@ -231,12 +220,12 @@ const InventoryOverview = () => {
               <thead className="text-xs text-[#f5f5f5] uppercase ">
                 <tr className="border-b border-[#3f4245]">
                   <th className="px-6 py-4">No.</th>
-                  <th className="px-6 py-4">Name</th>
-                  <th className="px-6 py-4">Brand</th>
+                  <th className="px-6 py-4  text-start">Name</th>
+                  <th className="px-6 py-4  text-start">Brand</th>
                   <th className="px-6 py-4">Unit</th>
-                  <th className="px-6 py-4">Sale price</th>
-                  <th className="px-6 py-4">Actual price</th>
-                  <th className="px-6 py-4">Actions</th>
+                  <th className="px-6 py-4 text-end">Sale price</th>
+                  <th className="px-6 py-4 text-end">Total Stock</th>
+                  <th className="px-6 py-4 text-end"></th>
                 </tr>
               </thead>
               {/* map data from old recorded voucher list from api */}

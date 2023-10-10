@@ -282,6 +282,16 @@ const SidebarItems = () => {
               Create User
             </NavLink>
           </Accordion.Panel>
+          <Accordion.Panel className="">
+            <NavLink
+              to={"/banned-user"}
+              className={`pt-1 pb-2 border-s-2 block active:text-[#8AB4F8] border-[#3f4245] hover:bg-[#202124] cursor-pointer text-[#f5f5f5]  px-2 ${
+                location.pathname === "/banned-user" ? `active-link` : ``
+              }`}
+            >
+              Banned User
+            </NavLink>
+          </Accordion.Panel>
         </Accordion.Item>
         {/* media */}
         <Accordion.Item value="media">

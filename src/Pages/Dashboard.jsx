@@ -8,7 +8,6 @@ import {
 import { GiIdCard, GiPayMoney } from "react-icons/gi";
 import { BsGraphUpArrow, BsPlusLg, BsShop } from "react-icons/bs";
 import { Line } from "react-chartjs-2";
-import Recent from './Sale/Recent';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -19,13 +18,12 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { PiCalculatorDuotone, PiCoinsDuotone } from "react-icons/pi";
-import { Loader } from "@mantine/core";
-import Pagination from "../Components/Pagination";
+import {  PiCoinsDuotone } from "react-icons/pi";
 import { Link } from "react-router-dom";
 
 import Cookies from "js-cookie";
 import {  useGetDashboardDataQuery } from "../Feature/API/dbApi";
+import RecentSaleTable from "../Components/Sale/RecentSaleTable";
 
 ChartJS.register(
   CategoryScale,
@@ -38,10 +36,24 @@ ChartJS.register(
 );
 
 export default function Dashboard() {
-const [dataType,setDataType]=useState("weekly")
+const [dataType,setDataType]=useState("yearly")
 const token = Cookies.get("token");
 const dbData=useGetDashboardDataQuery({token,dataType});
 console.log(dbData);
+
+function formatMoney(number) {
+  if (number < 1000) {
+    return number;
+  } else if (number >= 1000 && number < 1_000_000) {
+    return (number / 1000).toFixed(1) + "K";
+  } else if (number >= 1_000_000 && number < 1_000_000_000) {
+    return (number / 1_000_000).toFixed(1) + "M";
+  } else if (number >= 1_000_000_000 && number < 1_000_000_000_000) {
+    return (number / 1_000_000_000).toFixed(1) + "B";
+  } else if (number >= 1_000_000_000_000 && number < 1_000_000_000_000_000) {
+    return (number / 1_000_000_000_000).toFixed(1) + "T";
+  }
+}
 
 const handleTypeChange=(type)=>{
   setDataType(type)
@@ -135,6 +147,7 @@ const dayLabels = getLabelsByDataType();
       },
     ],
   };
+
  
   
   return (
@@ -183,7 +196,7 @@ const dayLabels = getLabelsByDataType();
               />
             </div>
             <div className=" self-end">
-              <p className=" text-2xl font-extrabold tracking-wide"> {dbData?.data?.total_staff}</p>
+              <p className=" text-2xl font-extrabold tracking-wide"> {formatMoney(dbData?.data?.total_staff)}</p>
               <p className=" tracking-tight font-thin text-sm">Total Staff</p>
             </div>
           </div>
@@ -240,7 +253,7 @@ const dayLabels = getLabelsByDataType();
       </div>
       {/* second row */}
       <div className=" my-5 border me-4 border-[#3f4245] rounded-md">
-        <div className=" ms-10 flex ">
+        <div className=" ms-10 flex mb-5 ">
           {/* chart section */}
           <div className=" w-[70%]">
             <div className=" flex  justify-between my-2">
@@ -295,7 +308,7 @@ const dayLabels = getLabelsByDataType();
                   <div className=" flex flex-col">
                     <span className="text-lg font-thin  tracking-wide">
                       {" "}
-                  {dbData?.data?.stats?.total_profit.toLocaleString()}
+                  {formatMoney(dbData?.data?.stats?.total_profit)}
                     </span>
                     <span className="tracking-tight w-96 font-thin text-sm  text-[#7e7f80]">
                       {" "}
@@ -310,7 +323,7 @@ const dayLabels = getLabelsByDataType();
                   <div className=" flex flex-col">
                     <span className="text-lg font-thin  tracking-wide">
                       {" "}
-                      {dbData?.data?.stats?.total_income.toLocaleString()}
+                      {formatMoney(dbData?.data?.stats?.total_income)}
                     </span>
                     <span className="tracking-tight w-96 font-thin text-sm  text-[#7e7f80]">
                       Total Income
@@ -323,7 +336,7 @@ const dayLabels = getLabelsByDataType();
                   </div>
                   <div className=" flex flex-col">
                     <span className="text-lg font-thin  tracking-wide">
-                    {dbData?.data?.stats?.total_expense.toLocaleString()}
+                    {formatMoney(dbData?.data?.stats?.total_expense)}
                     </span>
                     <span className="tracking-tight w-96 font-thin text-sm  text-[#7e7f80]">
                       Total Expense
@@ -333,9 +346,11 @@ const dayLabels = getLabelsByDataType();
               </div>
             </div>
           
+              <Link to={"/report-sale"}>
               <button className="py-1 text-[#161618] px-2 w-full font-semibold text-md rounded-md bg-[#8AB4F8]">
                 SALE REPORT
               </button>
+              </Link>
             </>) :(<></>)}
         
           </div>
@@ -344,54 +359,9 @@ const dayLabels = getLabelsByDataType();
       {/* Third row */}
       <div>
         <div className="py-5 pb-3 ">
-         <Recent/>
+         <RecentSaleTable />
         </div>
 
-    
-        {/* total and tax */}
-        <div className="flex justify-between ">
-          {/* {oldData ? (
-          <div className="flex gap-3 mb-2 mt-5 border border-[#3f4245] rounded-md">
-            <button className="border-r border-[#3f4245] flex flex-col w-[7rem] py-2 px-2 ">
-              <span className="text-xs self-end text-[#8AB4F8] ">
-                Total Vouchers
-              </span>
-              <span className="text-md self-end">{totals?.total_voucher}</span>
-            </button>
-            <button className="border-r border-[#3f4245]  flex flex-col w-[7rem] py-2 px-2 ">
-              <span className="text-xs self-end text-[#8AB4F8] ">
-                Total Cash
-              </span>
-              <span className="text-md self-end">
-                {totals?.total_cash.toFixed(2)}
-              </span>
-            </button>
-            <button className="border-r border-[#3f4245] flex flex-col w-[7rem] py-2 px-2 ">
-              <span className="text-xs self-end text-[#8AB4F8] ">
-                Total Tax
-              </span>
-              <span className="text-md self-end">
-                {totals?.total_tax.toFixed(2)}
-              </span>
-            </button>
-            <button className="  flex flex-col w-[7rem] py-2 px-2 ">
-              <span className="text-xs self-end text-[#8AB4F8] ">Total </span>
-              <span className="text-md self-end">
-                {totals?.total.toFixed(2)}
-              </span>
-            </button>
-          </div>
-        ) : (
-          <Loader variant="dots" color="gray" />
-        )} */}
-          <div className=" py-5 place-self-end">
-            {/* <Pagination
-            setCurrentPage={setCurrentPage}
-            currentPage={currentPage}
-            last_page={recordedVoucher?.currentData?.meta?.last_page}
-          /> */}
-          </div>
-        </div>
       </div>
     </div>
   );
