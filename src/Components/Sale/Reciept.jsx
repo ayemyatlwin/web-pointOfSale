@@ -50,7 +50,7 @@ const Reciept = () => {
         navigate("/sale-reciept");
         dispatch(clearList());
       } else if (data?.error) {
-        toast.error("Something is wrong!", {
+        toast.error(`${data?.error?.data?.message}`, {
           position: "top-right",
           autoClose: 2000,
           theme: "light",

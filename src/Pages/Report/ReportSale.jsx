@@ -121,6 +121,7 @@ const ReportSale = () => {
             <span className="text-sm">Total 84k Sales</span>
           </div>
           <div className="flex gap-2">
+           {weeklyData?.data?.sale_records ? (<>
             <div className="w-[55%]">
               <VertiChart />
             </div>
@@ -196,6 +197,7 @@ const ReportSale = () => {
                 </Link>
               </div>
             </div>
+           </>) : (<h1 className=" mx-auto my-20">{weeklyData?.data?.message}</h1>)}
           </div></>
         </div>
       </div>
@@ -215,11 +217,12 @@ const ReportSale = () => {
                     <th className="px-1 py-3">Sale Price</th>
                   </tr>
                 </thead>
+                {weeklyData?.data?.sale_records ? (<tbody  className="text-[#f5f5f5]">
                 {/* map data from from api */}
                 {productSaleData?.map((data, i) => {
                   return (
-                    <tbody key={i} className="text-[#f5f5f5]">
-                      <tr className="border-b border-[#3f4245]">
+                    
+                      <tr key={i} className="border-b border-[#3f4245]">
                         <td className=" py-1">{i + 1}</td>
                         <td className=" py-1">
                           {data?.product_name.slice(0, 5)}
@@ -235,9 +238,14 @@ const ReportSale = () => {
                           </button>
                         </td>
                       </tr>
-                    </tbody>
+                   
                   );
                 })}
+                </tbody>) : (
+                  <tr> 
+                    <td className="py-3 mx-auto" colSpan={4}> {weeklyData?.data?.message}</td>
+                  </tr>
+                )}
               </table>
             </div>
         </div>

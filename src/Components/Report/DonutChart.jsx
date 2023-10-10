@@ -92,7 +92,7 @@ const DonutChart = () => {
       {brandName && brandName.length > 0 ? (
         <Doughnut data={data} options={options} />
       ) : (
-        <div className=" text-center">No data available</div>
+        <div className=" text-center my-16">{weeklyData?.data?.message}</div>
       )}
     </div>
   );

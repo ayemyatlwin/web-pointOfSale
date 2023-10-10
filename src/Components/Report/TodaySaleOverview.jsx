@@ -30,7 +30,7 @@ const TodaySaleOverview = () => {
     const tdySaleVouchers=data?.vouchers;
   return (
     <div className="w-[35%] border border-[#3f4245] py-2 px-3 rounded-md">
-          {tdySaleVouchers && tdySaleVouchers.length===0 ? (<div  className="flex justify-center items-center ">The sale data is empty right now. </div>):(
+          {tdySaleVouchers && tdySaleVouchers.length===0 ? (<div  className="flex justify-center items-center mt-24 ">The sale data is empty right now. </div>):(
             <div className=' flex flex-col'>
             <div className="flex justify-between">
               <h1 className="text-xl">Today Sales</h1>
