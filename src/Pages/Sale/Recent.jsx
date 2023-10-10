@@ -14,6 +14,7 @@ import { AiOutlineArrowRight } from "react-icons/ai";
 import { Loader } from "@mantine/core";
 import { setSaleClose } from "../../Feature/Service/recieptSlice";
 import ExportBtn from "../../Components/ExportBtn";
+import { useNavigate } from "react-router-dom";
 
 const Recent = () => {
   const token = Cookies.get("token");
@@ -22,7 +23,7 @@ const Recent = () => {
   const recordedVoucher = useRecordedVoucherQuery({ token, currentPage });
   //console.log(recordedVoucher);
   const [loading, setLoading] = useState(true); // Step 1: Create a loading state
-
+  const navigate=useNavigate();
   const oldData = recordedVoucher?.data?.data;
   const totals = recordedVoucher?.data?.total;
   //console.log(totals);
@@ -61,8 +62,9 @@ const Recent = () => {
           console.log(data);
           responseData = data?.data?.message;
           console.log("Sale Opened--:", responseData);
-
           dispatch(setSaleClose(false));
+          navigate("/sale-cashier")
+          
         } else {
           const data = await saleCloseApi(token);
           console.log(data);
