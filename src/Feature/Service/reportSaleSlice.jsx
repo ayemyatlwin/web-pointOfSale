@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState={
-    dataType:"weekly"
+    dataType:"monthly"
 }
 
 export const reportSaleSlice=createSlice({

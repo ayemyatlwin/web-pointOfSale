@@ -17,21 +17,16 @@ import {
   AiFillEdit,
   AiOutlineArrowRight,
 } from "react-icons/ai";
-import { BsFillGridFill } from "react-icons/bs";
-import { RiDeleteBin5Line } from "react-icons/ri";
-import { PiCopyDuotone } from "react-icons/pi";
-import {
-  IoMdAdd,
-  IoMdRemoveCircle,
-  IoMdRemoveCircleOutline,
-} from "react-icons/io";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { BsArrowRight, BsDash, BsFillGridFill } from "react-icons/bs";
+
+import {useNavigate } from "react-router-dom";
 
 import Cookies from "js-cookie";
 import Pagination from "../../Components/Pagination";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { useDeleteBrandMutation, useGetBrandInfoQuery } from "../../Feature/API/brandApi";
+import { MdOutlineEdit } from "react-icons/md";
 
 const BrandOverview = () => {
 
@@ -87,35 +82,25 @@ console.log(brandDetailedInfo);
   const rows = brandDetailedInfo?.map((element, i) => (
     <tr key={element.brand_id} className="border-b border-[#3f4245]">
       <td className="px-6 py-4">{i + 1}</td>
-      <td className="px-6 py-4">{element.name.slice(0,6)}..</td>
-      <td className="px-6 py-4">{element.company.slice(0,6)}..</td>
-      <td className="px-6 py-4">{element.agent}</td>
+      <td className="px-6 py-4 capitalize text-start">{element.name.slice(0,6)}..</td>
+      <td className="px-6 py-4 capitalize text-start">{element.company.slice(0,6)}..</td>
+      <td className="px-6 py-4 capitalize text-start">{element.agent.slice(0,10)}...</td>
       <td className="px-6 py-4">{element.phone}</td>
-      <td className="px-6 py-4 w-[50px]">{element.information.slice(0,6)}..</td>
-
+      <td className="px-6 py-4 capitalize text-start">{element.information.slice(0,6)}..</td>
+      <td  className="flex gap-5 px-6 py-3 justify-end">
+                  <BsDash onClick={() => handleDelete(element?.brand_id, token)} className="text-3xl hover:bg-gray-50 hover:text-gray-500 rounded-full bg-gray-500 text-gray-50 p-1.5 cursor-pointer transition-all duration-200 ease-in" />
+                  <MdOutlineEdit
+                    onClick={() => nav(`/brand-editing/${element?.brand_id}`)}
+                    className="text-3xl hover:bg-gray-50 hover:text-gray-500 rounded-full bg-gray-500 text-gray-50 p-1.5 cursor-pointer transition-all duration-200 ease-in"
+                  />
+                  <BsArrowRight
+                    onClick={() => nav(`/brand-detail/${element?.brand_id}`)}
+                    className="text-3xl hover:bg-gray-50 hover:text-gray-500 rounded-full bg-gray-500 text-gray-50 p-1.5 cursor-pointer transition-all duration-200 ease-in"
+                  />
+                </td>
       <td className=" text-white">
  
-        <div className="  flex  ">
-          <Group>
-            <Button onClick={() => handleDelete(element?.brand_id, token)}>
-              <IoMdRemoveCircleOutline className=" cursor-pointer hover:text-blue-700" />
-            </Button>
-          </Group>
-          <Group position="center">
-            <Link to={`/brand-editing/${element?.brand_id}`}>
-              <Button>
-                <AiFillEdit className="cursor-pointer hover:text-blue-700" />
-              </Button>
-            </Link>
-          </Group>
-          <Group position="center">
-            <Link  to={`/brand-detail/${element?.brand_id}`}>
-              <Button>
-                <AiOutlineArrowRight className="cursor-pointer hover:text-blue-700" />
-              </Button>
-            </Link>
-          </Group>
-        </div>
+        
       </td>
     </tr>
   ));
@@ -225,11 +210,11 @@ console.log(brandDetailedInfo);
               <thead className="text-xs text-[#f5f5f5] uppercase ">
                 <tr className="border-b border-[#3f4245]">
                   <th className="px-6 py-4">No.</th>
-                  <th className="px-6 py-4">Brand Name</th>
-                  <th className="px-6 py-4">Company Name</th>
-                  <th className="px-6 py-4">Agent</th>
+                  <th className="px-6 py-4  text-start">Brand Name</th>
+                  <th className="px-6 py-4  text-start">Company Name</th>
+                  <th className="px-6 py-4  text-start">Agent</th>
                   <th className="px-6 py-4">Phone</th>
-                  <th className="px-6 py-4">Description</th>
+                  <th className="px-6 py-4  text-start">Description</th>
                   <th className="px-6 py-4">Actions</th>
                 </tr>
               </thead>

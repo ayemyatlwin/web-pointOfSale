@@ -46,7 +46,6 @@ export default function Breadcrumb({
                 color: "#f5f5f5",
                 marginLeft: "0.3rem",
               }}
-              underline="always"
               color="#f5f5f5"
               href="#"
             >
