@@ -27,7 +27,14 @@ export const reportSaleApi = createApi({
         headers: { authorization: `Bearer ${token}` },
       }),
       providesTags:["sale"]
+    }),
+    getStockOverviewList:builder.query({
+      query:(token,currentPage)=>({
+        url:`/stock-overview-lists?page=${currentPage}`,
+        headers: { authorization: `Bearer ${token}` },
+      }),
+      providesTags:["sale"]
     })
   }),
 });
-export const { useGetTodaySaleReportQuery,useGetWeeklySaleReportQuery,useGetStockOverviewQuery } = reportSaleApi;
+export const { useGetTodaySaleReportQuery,useGetWeeklySaleReportQuery,useGetStockOverviewQuery,useGetStockOverviewListQuery } = reportSaleApi;
