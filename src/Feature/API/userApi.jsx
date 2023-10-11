@@ -6,8 +6,8 @@ export const userApi = createApi({
   tagTypes: ["userApi"],
   endpoints: (builder) => ({
     getAllUsers: builder.query({
-      query: ({ currentPage, token }) => ({
-        url: `/users?page=${currentPage}`,
+      query: ({ currentPage, token,search,orderBy,sort }) => ({
+        url: `/users?page=${currentPage}&search=${search}&orderBy=${orderBy}&sort=${sort}`,
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -55,6 +55,26 @@ export const userApi = createApi({
       }),
       invalidatesTags: ["userApi"],
     }),
+    bannedUser: builder.query({
+      query:({currentPage,token,search,orderBy,sort})=>({
+        url:  `/ban-users?page=${currentPage}&search=${search}&orderBy=${orderBy}&sort=${sort}`,
+        headers:{
+          authorization: `Bearer ${token}`,
+        }
+      }),
+      providesTags:["userApi"]
+    }),
+    banSingleUser:builder.mutation({
+      query:({token,id,banUserData})=>({
+        url:`users/${id}/ban`,
+        method:"PATCH",
+        body:banUserData,
+        headers:{
+          authorization:`Bearer ${token}`,
+        },
+      }),
+      invalidatesTags:["userApi"],
+    })
     
   }),
 });
@@ -65,4 +85,6 @@ export const {
   useGetSingleUserQuery,
   useDeleteUserMutation,
   useUpdateUserMutation,
+  useBannedUserQuery,
+  useBanSingleUserMutation
 } = userApi;

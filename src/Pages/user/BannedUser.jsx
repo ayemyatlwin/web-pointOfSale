@@ -4,31 +4,21 @@ import {MdOutlineEdit} from 'react-icons/md'
 import Breadcrumb from '../../Components/Breadcrumb';
 import Pagination from '../../Components/Pagination';
 import Cookies from 'js-cookie';
-import { useGetAllUsersQuery } from '../../Feature/API/userApi';
+import { useBannedUserQuery, useGetAllUsersQuery } from '../../Feature/API/userApi';
 import { useNavigate } from 'react-router-dom';
 import ManageOverview from '../../Components/ManageOverview';
 
 export default function BannedUser() {
   const token = Cookies.get("token")
+  const [sort,setSort]=useState("asc");
+  const [search,setSearch]=useState("");
+  const [orderBy,setOrderBy]=useState("name");
   const nav = useNavigate()
   const [currentPage, setCurrentPage] = useState(1)
-  const {data} = useGetAllUsersQuery({token, currentPage})
+  const {data} = useBannedUserQuery({token, currentPage,search,orderBy,sort})
   const users = (data?.users.data)
   console.log(data)
 
-  // const rows = users?.map((i, index) => (
-  //   <tr  key={i.id}>
-  //     <td>{index +1}</td>
-  //     <td>{i.name}</td>
-  //     <td>{i.role}</td>
-  //     <td>{i.email}</td>
-  //     <td className="flex gap-5">
-  //       <button className='text-[#f5f5f5] text-sm px-4 py-1 rounded border border-[#f5f5f5]'>
-  //           RESTORE
-  //       </button>
-  //       </td>
-  //   </tr>
-  // ));
 
   return (
     
@@ -39,7 +29,7 @@ export default function BannedUser() {
     </div>
     {/* path breadcrumbs */}
     <div>
-      <ManageOverview tableType={"Banned User Overview"}/>
+      <ManageOverview tableType={"Banned User Overview"} setOrderBy={setOrderBy} setSort={setSort} search={search} setSearch={setSearch}/>
     </div>
     <main className='border border-[#3f4245] rounded-sm mt-7'>
       <table className='w-full text-sm text-center text-[#f5f5f5]' >
