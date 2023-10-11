@@ -35,11 +35,11 @@ const ReportStock = () => {
   function getBackgroundColorClass(stockLevel) {
     switch (stockLevel) {
       case "instock":
-        return "bg-green-700"; // Replace with the desired Tailwind CSS class for "instock"
+        return " border border-[#56CA00] bg-[#56CA00] bg-opacity-20 capitalize leading-4 font-bold text-[#56CA00]"; // Replace with the desired Tailwind CSS class for "instock"
       case "out of stock":
-        return "bg-red-900"; // Replace with the desired Tailwind CSS class for "outofstock"
+        return " bg-[#FEB2E2] border border-[#FEB2E2] bg-opacity-20 capitalize leading-4 font-bold text-[#FEB2E2]  "; // Replace with the desired Tailwind CSS class for "outofstock"
       case "low stock":
-        return "bg-red-600"; // Replace with the desired Tailwind CSS class for "lowstock"
+        return "bg-[#F8CE8A] border border-[#F8CE8A] bg-opacity-20 capitalize leading-4 font-bold text-[#F8CE8A]"; // Replace with the desired Tailwind CSS class for "lowstock"
       default:
         return ""; // No additional class for other cases
     }
@@ -131,7 +131,7 @@ const ReportStock = () => {
 
     plugins: {
       legend: {
-        position: "bottom", // Display the legend below the chart
+        display:false,// Display the legend below the chart
         labels: {
           usePointStyle: true, // Use dot style for legend items
           fontSize: 20, // Adjust the font size of the legend labels
@@ -189,7 +189,7 @@ const ReportStock = () => {
               {/* left side graph */}
               <div className="w-[50%]">
                 {/* upper section graph */}
-                <div className=" mb-4 flex justify-around items-center">
+                <div className=" mb-7 flex justify-around items-center">
                   {/* total product */}
                   <div className="w-[50%] me-4 border border-[#3f4245] py-2 px-3 rounded-md">
                     <div className=" my-6 flex items-center justify-around">
@@ -234,9 +234,9 @@ const ReportStock = () => {
                   </div>
                 </div>
                 {/* lower section(bar section) */}
-                <div className="  border border-[#3f4245]">
+                <div className="  border border-[#3f4245] rounded-md">
                   <div className=" my-4 flex items-center justify-around">
-                    <div>
+                    <div className="py-4">
                       <Progress
                         className=" w-[300px]"
                         animate
@@ -277,13 +277,13 @@ const ReportStock = () => {
 
                   <div className="my-4">
                     <div className=" flex items-center justify-between  border-b-2 border-[#3f4245]">
-                      <div className=" flex items-center justify-around">
+                      <div className=" flex items-center justify-around py-4">
                         <AiTwotonePlusCircle className=" text-[#07f51b] mx-2" />
                         <p>Instock</p>
                       </div>
-                      <div className=" flex items-center justify-around">
+                      <div className=" flex gap-4 items-center justify-around py-4">
                         <p className="  mx-2">{Math.round(instockProduct)}</p>
-                        <div className=" flex items-center justify-around">
+                        <div className=" flex gap-4 items-center justify-around">
                           <p className="mx-2">
                             {Math.round(stockData?.data?.overview?.instock)}%
                           </p>
@@ -292,13 +292,13 @@ const ReportStock = () => {
                       </div>
                     </div>
                     <div className=" flex items-center justify-between  border-b-2 border-[#3f4245]">
-                      <div className=" flex items-center justify-around">
+                      <div className=" flex  items-center justify-around py-4">
                         <AiTwotonePlusCircle className=" text-[#26e2f0] mx-2" />
                         <p>Low Stock</p>
                       </div>
-                      <div className=" flex items-center justify-around">
+                      <div className=" flex gap-4 items-center justify-around">
                         <p className=" mx-2">{Math.round(lowStockProduct)}</p>
-                        <div className=" flex items-center justify-around">
+                        <div className=" flex gap-4 items-center justify-around">
                           <p className="mx-2">
                             {Math.round(stockData?.data?.overview?.low_stock)}%
                           </p>
@@ -307,13 +307,13 @@ const ReportStock = () => {
                       </div>
                     </div>
                     <div className=" flex items-center justify-between  ">
-                      <div className=" flex items-center justify-around">
+                      <div className=" flex items-center justify-around py-4">
                         <AiTwotonePlusCircle className=" text-[#e3293f] mx-2" />
                         <p>Out of Stock</p>
                       </div>
-                      <div className=" flex items-center justify-around">
+                      <div className=" flex gap-4 items-center justify-around">
                         <p className=" mx-2">{Math.round(outOfStockProduct)}</p>
-                        <div className=" flex items-center justify-around">
+                        <div className=" flex gap-4 items-center justify-around">
                           <p className="mx-2">
                             {Math.round(
                               stockData?.data?.overview?.out_of_stock
@@ -344,10 +344,10 @@ const ReportStock = () => {
                     </h1>
                   </div>
                   <div className=" flex items-center justify-center">
-                    <div className="w-[50%] h-[200px]">
+                    <div className="w-[60%] h-[300px]">
                       <Doughnut data={data} options={options} />
                     </div>
-                    <div className="my-4">
+                    <div className="my-2">
                       {updatedBrands?.map((e) => (
                         <div className="  my-4 flex items-center justify-between  border-b-2 border-[#3f4245]">
                           <div className=" flex items-center justify-around">
@@ -369,7 +369,7 @@ const ReportStock = () => {
                     </div>
                     <div></div>
                   </div>
-                  <div className=" ms-[400px]">
+                  <div className=" text-end">
                     <button className=" hover:opacity-60 rounded-lg px-3 py-2 border-2 border-[#3f4245]">
                       RECENT SALES
                     </button>
@@ -388,7 +388,7 @@ const ReportStock = () => {
         <div>
           <div>
             <h2 className=" my-5 tracking-wide text-[1.5rem]">
-              Today Sales Overview
+              Stock Overview
             </h2>
             <div className="flex items-center justify-between">
               <Input
@@ -401,7 +401,7 @@ const ReportStock = () => {
                 variant="unstyled"
                 placeholder="Search"
                 radius="xs"
-                className=" border border-gray-400 w-[400px] rounded-xl text-gray-400"
+                className=" border border-[#3f4245] w-[400px] rounded-xl text-gray-400"
               />
               <div className=" flex  items-center gap-5  justify-around ">
                 <span className=" flex mt-1  ">Sort: </span>
