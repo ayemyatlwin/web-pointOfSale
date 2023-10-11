@@ -147,45 +147,18 @@ console.log(brandDetailedInfo);
         />
         <div className=" flex  items-center gap-5  justify-around ">
           <span className=" flex mt-1  ">Sort: </span>
-          <Select
-            placeholder="Pick one"
-            defaultValue="Last"
-            radius="xs"
-            variant="unstyled"
-            className="  "
-            transitionProps={{
-              transition: "pop-top-left",
-              duration: 80,
-              timingFunction: "ease",
-            }}
-            data={[
-              { value: "react", label: "Last" },
-              { value: "ng", label: "First" },
+          <select data-te-select-init className="bg-inherit outline-none focus:bg-inherit">
+              <option className="bg-[#3f4245] mx-5" value="1">Last</option>
+              <option className="bg-[#3f4245] mx-5" value="2">First</option>
 
-              ,
-            ]}
-          />
+            </select>
         </div>
         <div className=" flex  items-center gap-5  justify-around ">
           <span className=" flex mt-1  ">Sort: </span>
-          <Select
-            placeholder="Pick one"
-            defaultValue="Last"
-            radius="xs"
-            variant="unstyled"
-            className="  "
-            transitionProps={{
-              transition: "pop-top-left",
-              duration: 80,
-              timingFunction: "ease",
-            }}
-            data={[
-              { value: "react", label: "Last" },
-              { value: "ng", label: "First" },
-
-              ,
-            ]}
-          />
+          <select data-te-select-init className="bg-inherit outline-none focus:bg-inherit">
+              <option className="bg-[#3f4245] mx-5 " value="1">All Files</option>
+              <option className="bg-[#3f4245] mx-5" value="2">Recent</option>
+            </select>
         </div>
           <div className="">
             <AiOutlineOrderedList

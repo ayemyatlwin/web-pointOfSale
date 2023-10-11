@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsArrowRight, BsDash } from "react-icons/bs";
 import { MdOutlineEdit } from "react-icons/md";
 import Breadcrumb from "../../Components/Breadcrumb";
 import Pagination from "../../Components/Pagination";
 import Cookies from "js-cookie";
-import { useDeleteUserMutation, useGetAllUsersQuery } from "../../Feature/API/userApi";
+import { useBanSingleUserMutation, useDeleteUserMutation, useGetAllUsersQuery } from "../../Feature/API/userApi";
 import { useNavigate } from "react-router-dom";
 import ManageOverview from "../../Components/ManageOverview";
 import Swal from "sweetalert2";
@@ -14,8 +14,11 @@ export default function UserList() {
   const token = Cookies.get("token");
   const nav = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
-  const { data } = useGetAllUsersQuery({ token, currentPage });
-  const [delUser]=useDeleteUserMutation();
+  const [sort,setSort]=useState("asc");
+  const [search,setSearch]=useState("");
+  const [orderBy,setOrderBy]=useState("name");
+  const { data } = useGetAllUsersQuery({ token, currentPage,search,orderBy,sort });
+  const [banUser]=useBanSingleUserMutation();
   const users = data?.users.data;
   console.log(data);
 const handleDeleteUser=async(id,token)=>{
@@ -32,8 +35,7 @@ const handleDeleteUser=async(id,token)=>{
   }).then(async (result) => {
     if (result.isConfirmed) {
       try {
-        // Call the deleteMedia mutation with the id of the picture to delete
-        const resulted = await delUser({ id, token });
+        const resulted = await banUser({ id, token });
         console.log(resulted);
 
         if (resulted.error) {
@@ -58,6 +60,11 @@ const handleDeleteUser=async(id,token)=>{
 }
 console.log(data);
 const lastPage=data?.users?.last_page;
+
+console.log("Sort"+ sort);
+console.log("order"+ orderBy)
+
+
  
 
   return (
@@ -75,7 +82,7 @@ const lastPage=data?.users?.last_page;
       </div>
       {/* path breadcrumbs */}
       <div>
-        <ManageOverview tableType={"Staff Overview"} />
+        <ManageOverview tableType={"Staff Overview"} setOrderBy={setOrderBy} setSort={setSort} search={search} setSearch={setSearch} />
       </div>
       <main className="border border-[#3f4245] rounded-sm mt-7">
         <table className="w-full text-sm text-center text-[#f5f5f5]">
