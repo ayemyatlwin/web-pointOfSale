@@ -29,11 +29,20 @@ import { useDeleteBrandMutation, useGetBrandInfoQuery } from "../../Feature/API/
 import { MdOutlineEdit } from "react-icons/md";
 
 const BrandOverview = () => {
+  const [sort,setSort]=useState("asc");
+  const [orderBy,setOrderBy]=useState("name");
+  const handleOrderChange = (selectedValue) => {
+    setOrderBy(selectedValue);
+  }
+
+  const handleSortChange = (selectedValue) => {
+    setSort(selectedValue);
+  }
   const [search,setSearch]=useState('');
   const nav = useNavigate();
   const token = Cookies.get("token");
   const [currentPage, setCurrentPage] = useState(1);
-  const {data}=useGetBrandInfoQuery({ token, currentPage ,search})
+  const {data}=useGetBrandInfoQuery({ token, currentPage ,search,orderBy,sort})
   const [opened, { open, close }] = useDisclosure(false);
   const theme = useMantineTheme();
   const [displayState, setDisplayState] = useState(false);
@@ -147,17 +156,20 @@ console.log(brandDetailedInfo);
         />
         <div className=" flex  items-center gap-5  justify-around ">
           <span className=" flex mt-1  ">Sort: </span>
-          <select data-te-select-init className="bg-inherit outline-none focus:bg-inherit">
-              <option className="bg-[#3f4245] mx-5" value="1">Last</option>
-              <option className="bg-[#3f4245] mx-5" value="2">First</option>
+          <select onChange={(event) => handleSortChange(event.target.value)} data-te-select-init className="bg-inherit outline-none focus:bg-inherit">
+              <option className="bg-[#3f4245] mx-5" value="asc">asc</option>
+              <option className="bg-[#3f4245] mx-5" value="desc">desc</option>
 
             </select>
         </div>
         <div className=" flex  items-center gap-5  justify-around ">
           <span className=" flex mt-1  ">Sort: </span>
-          <select data-te-select-init className="bg-inherit outline-none focus:bg-inherit">
-              <option className="bg-[#3f4245] mx-5 " value="1">All Files</option>
-              <option className="bg-[#3f4245] mx-5" value="2">Recent</option>
+          <select  onChange={(event) => handleOrderChange(event.target.value)} data-te-select-init className="bg-inherit outline-none focus:bg-inherit">
+              <option className="bg-[#3f4245] mx-5 " value="name">name</option>
+              <option className="bg-[#3f4245] mx-5" value="company">company</option>
+              <option className="bg-[#3f4245] mx-5" value="agent">agent</option>
+              <option className="bg-[#3f4245] mx-5" value="phone">phone</option>
+              <option className="bg-[#3f4245] mx-5" value="information">information</option>
             </select>
         </div>
           <div className="">
