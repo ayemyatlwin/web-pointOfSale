@@ -60,11 +60,11 @@ const InventoryOverview = () => {
     Swal.fire({
       title: `Are you sure you want to delete this product??`,
       icon: "question",
-      iconColor: "#FF0000",
+      iconColor: "#d33",
       background: "#161618",
       showCancelButton: true,
       showCloseButton: true,
-      confirmButtonColor: "#FF0000",
+      confirmButtonColor: "#d33",
       cancelButtonColor: "#24262b",
       confirmButtonText: `Delete`,
     }).then(async (result) => {
@@ -103,6 +103,7 @@ const InventoryOverview = () => {
       <td className="px-6 py-4 capitalize text-start">{element.brand_name.slice(0,8)}...</td>
       <td className="px-6 py-4">{element.unit}</td>
       <td className="px-6 py-4 text-end">{element.sale_price}</td>
+      <td className="px-6 py-4 text-end">{element.actual_price}</td>
       <td className="px-6 py-4 text-end">{element.total_stock
 }</td>
       <td  className="flex gap-5 px-6 py-3 justify-end">
@@ -211,6 +212,7 @@ const InventoryOverview = () => {
                   <th className="px-6 py-4  text-start">Brand</th>
                   <th className="px-6 py-4">Unit</th>
                   <th className="px-6 py-4 text-end">Sale price</th>
+                  <th className="px-6 py-4 text-end">Actual price</th>
                   <th className="px-6 py-4 text-end">Total Stock</th>
                   <th className="px-6 py-4 text-end"></th>
                 </tr>

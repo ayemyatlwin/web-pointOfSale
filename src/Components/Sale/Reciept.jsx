@@ -67,7 +67,7 @@ const Reciept = () => {
 
 
   return (
-    <div className="text-[#f5f5f5] bg-[#161618] h-screen   ">
+    <div className="text-[#f5f5f5] bg-[#161618] h-screen fixed reciept-width   ">
       <div className="flex flex-col h-full">
         {/* bought list Header */}
         <div className='h-[50%]  overflow-scroll overflow-x-hidden bg-[#161618]'>

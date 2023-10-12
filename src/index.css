@@ -74,18 +74,22 @@ input::-webkit-inner-spin-button {
 }
  
 @media (min-width: 1536px)  {
-  .calc-width{
+  .calc-width,.reciept-width{
     width: 31.7rem ;
   }
+  
+
  }
  @media screen and  (min-width: 1280px) and (max-width:1536px) {
-  .calc-width{
+  .calc-width,.reciept-width{
     width: 28.3rem ;
   }
+ 
  }
 
 @media screen and  (min-width:1024px) and (max-width:1366px){
-  .calc-width{
+  .calc-width,.reciept-width{
     width: 25.3rem ;
   }
+  
 }

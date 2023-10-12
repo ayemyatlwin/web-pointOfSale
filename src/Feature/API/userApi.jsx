@@ -74,7 +74,18 @@ export const userApi = createApi({
         },
       }),
       invalidatesTags:["userApi"],
-    })
+    }),
+    retoreSingleUser:builder.mutation({
+      query:({token,id,restoreUserData})=>({
+        url:`/users/${id}/restore`,
+        method:"PATCH",
+        body:restoreUserData,
+        headers:{
+          authorization:`Bearer ${token}`
+        },
+      }),
+      invalidatesTags:["userApi"]
+    }),
     
   }),
 });
@@ -86,5 +97,6 @@ export const {
   useDeleteUserMutation,
   useUpdateUserMutation,
   useBannedUserQuery,
-  useBanSingleUserMutation
+  useBanSingleUserMutation,
+  useRetoreSingleUserMutation
 } = userApi;
