@@ -52,11 +52,11 @@ const BrandOverview = () => {
     Swal.fire({
       title: `Are you sure you want to delete this product??`,
       icon: "question",
-      iconColor: "#FF0000",
+      iconColor: "#d33",
       background: "#161618",
       showCancelButton: true,
       showCloseButton: true,
-      confirmButtonColor: "#FF0000",
+      confirmButtonColor: "#d33",
       cancelButtonColor: "#24262b",
       confirmButtonText: `Delete`,
     }).then(async (result) => {

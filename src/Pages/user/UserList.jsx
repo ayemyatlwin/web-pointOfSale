@@ -23,15 +23,15 @@ export default function UserList() {
   console.log(data);
 const handleDeleteUser=async(id,token)=>{
   Swal.fire({
-    title: `Are you sure you want to delete this product??`,
+    title: `Are you sure you want to ban this user?`,
     icon: "question",
-    iconColor: "#FF0000",
+    iconColor: "#d33",
     background: "#161618",
     showCancelButton: true,
     showCloseButton: true,
-    confirmButtonColor: "#FF0000",
+    confirmButtonColor: "#d33",
     cancelButtonColor: "#24262b",
-    confirmButtonText: `Delete`,
+    confirmButtonText: `BAN`,
   }).then(async (result) => {
     if (result.isConfirmed) {
       try {

@@ -26,6 +26,7 @@ export default function Breadcrumb({
           <h2 className="tracking-wide text-[1.5rem]">{title}</h2>
           <div>
             <Link
+            underline="none"
               sx={{
                 fontSize: "0.9rem",
                 color: "#f5f5f5", // Set the text color for the breadcrumb
@@ -41,6 +42,7 @@ export default function Breadcrumb({
               {firstRoute}
             </Link>
             <Link
+            underline="none"
               sx={{
                 fontSize: "0.9rem",
                 color: "#f5f5f5",
