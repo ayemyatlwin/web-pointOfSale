@@ -11,6 +11,7 @@ import Cookies from "js-cookie";
 import SelectPhotoModal from "../../Components/SelectPhotoModal";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Password from "../../Components/Profile/Password";
 
 export default function MyAccount() {
   const nav = useNavigate()
@@ -160,6 +161,11 @@ export default function MyAccount() {
             {state.login && (
               <div>
                 <LoginInfo edit data={data} />
+              </div>
+            )}
+             {state.password &&(
+              <div className="">
+                <Password/>
               </div>
             )}
           </div>

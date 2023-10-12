@@ -30,13 +30,13 @@ const DailyFinance = () => {
     currentPage,
     date: formattedDate,
   });
-  //console.log(getDailyData);
+  console.log(getDailyData);
 
   const totals = getDailyData?.currentData?.total;
   const lastPage = getDailyData?.currentData?.meta?.last_page;
 
   const getAllDailyData = getDailyData?.data?.data;
-  //console.log(getAllDailyData);
+  // console.log(getAllDailyData);
 
   useEffect(() => {
     // Step 2: Update loading state based on query status
