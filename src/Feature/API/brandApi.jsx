@@ -16,8 +16,8 @@ export const brandApi = createApi({
         invalidatesTags: ["brandApi"],
     }),
     getBrandInfo: builder.query({
-        query: ({token,currentPage,search}) => ({
-          url:`/brands?page=${currentPage}&search=${search}`,
+        query: ({token,currentPage,search,orderBy,sort}) => ({
+          url:`/brands?page=${currentPage}&search=${search}&orderBy=${orderBy}&sort=${sort}`,
           headers: {
             authorization: `Bearer ${token}`,
           },
