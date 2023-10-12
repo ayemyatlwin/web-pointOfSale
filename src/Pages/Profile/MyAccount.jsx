@@ -108,7 +108,7 @@ export default function MyAccount() {
                 <BiSolidUser />
                 <h4>Login Information</h4>
               </div>
-              <div
+              {/* <div
                 onClick={passwordTab}
                 className={`flex items-center gap-2 text-gray-400 cursor-pointer ${
                   state.password && "text-white"
@@ -116,7 +116,7 @@ export default function MyAccount() {
               >
                 <BiSolidUser />
                 <h4>Password</h4>
-              </div>
+              </div> */}
             </div>
             {state.personal && (
               <div>
@@ -128,11 +128,11 @@ export default function MyAccount() {
                 <LoginInfo data={data}/>
               </div>
             )}
-            {state.password &&(
+            {/* {state.password &&(
               <div className="">
                 <Password/>
               </div>
-            )}
+            )} */}
           </div>
         </section>
       </main>
