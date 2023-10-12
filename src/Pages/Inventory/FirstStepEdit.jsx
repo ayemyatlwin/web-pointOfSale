@@ -7,11 +7,14 @@ import Cookies from 'js-cookie';
 import { useGetBrandInfoQuery } from '../../Feature/API/brandApi';
 
 const FirstStepEdit = ({toggleSelect, display, setDisplay, select,setEditProduct,editProduct}) => {
+  const [sort,setSort]=useState("asc");
+  const [orderBy,setOrderBy]=useState("name");
+  const [search,setSearch]=useState('');
 const [brName,setBrName]=useState('');
 const dispatch=useDispatch();
 const token = Cookies.get("token");
 const [currentPage, setCurrentPage] = useState(1);
-const {data}=useGetBrandInfoQuery({ token, currentPage });
+const {data}=useGetBrandInfoQuery({ token, currentPage ,search,orderBy,sort});
 const brandInfo=data?.data;
 useEffect(()=>{
 dispatch(addProductName({name:editProduct?.name}))
