@@ -66,7 +66,7 @@ console.log(data?.data);
     <div className={`w-full flex justify-around items-center`}>
       <main className={`flex items-center mt-24`}>
         <section className={`w-full  p-1`}>
-          <div className={`w-full relative p-8 bg-[#171717]`}>
+          <div className={`w-[600px] relative p-8 bg-[#171717] `}>
             <div
               className={`w-40 h-40 absolute -top-16 rounded-full border p-1 flex justify-center items-center`}
             >
@@ -83,7 +83,7 @@ console.log(data?.data);
                 <input className="file hidden" type="file" name="" id="" />
               </div>
             </div>
-            <div className={`flex items-center justify-between mx-10 ml-52`}>
+            <div className={`flex items-center justify-between mx-10 ml-52 `}>
               <div className={``}>
                 <h2>{data?.data?.name}</h2>
                 <div className=" my-4 block">
@@ -106,7 +106,7 @@ console.log(data?.data);
                 </div>
               </NavLink>
             </div>
-            <div className=" w-[800px] px-10 py-5 flex flex-col gap-5 bg-[#1a1a1a]">
+            <div className=" w-[600px] overflow-y-scroll px-10 py-5 flex flex-col gap-5 bg-[#1a1a1a]">
               <div className="flex">
                 <p className="w-[30%]">Company</p>
                 <p className="w-[70%]">: {data?.data?.company}</p>

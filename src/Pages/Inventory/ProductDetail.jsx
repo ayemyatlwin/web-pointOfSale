@@ -109,7 +109,7 @@ console.log(data?.data);
                 </div>
               </NavLink>
             </div>
-            <div className=" w-[800px] px-10 py-5 flex flex-col gap-5 bg-[#1a1a1a]">
+            <div className=" w-[600px] h-[250px] overflow-y-scroll px-10 py-5 flex flex-col gap-5 bg-[#1a1a1a]">
               <div className="flex">
                 <p className="w-[30%]">Name</p>
                 <p className="w-[70%]">: {data?.data?.name}</p>
