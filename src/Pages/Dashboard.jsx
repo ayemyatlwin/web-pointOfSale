@@ -134,6 +134,10 @@ const dayLabels = getLabelsByDataType();
     },
   };
 
+  
+
+  
+
   const data = {
     labels : dayLabels,
     datasets: [

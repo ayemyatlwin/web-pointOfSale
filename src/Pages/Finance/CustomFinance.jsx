@@ -68,7 +68,7 @@ const CustomFinance = () => {
 
       <div className="py-5 pb-3 ">
         <div className=" flex justify-between">
-          <h2 className=" tracking-wide text-[1.5rem]">Today Sales Overview</h2>
+          <h2 className=" tracking-wide text-[1.5rem]">{formattedStartDate===formattedEndDate ? `${formattedStartDate}`: `${formattedStartDate} - ${formattedEndDate}`} Sales Overview</h2>
           <div className="flex gap-3">
             <ExportBtn />
             <RangeDatePickers
