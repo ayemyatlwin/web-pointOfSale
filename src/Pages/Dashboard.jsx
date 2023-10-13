@@ -116,16 +116,16 @@ if (sale_records) {
         const dayOfWeek = createdDate.getDay();
         const today=new Date();
         if (dayOfWeek >= 0 && dayOfWeek < dayLabels.length) {
-          dataForDays[dayOfWeek] = data.total_net_total;
+          dataForDays[dayOfWeek] = data.total_cash;
         }
       } else if (dataType === "monthly") {
         const dayOfMonth = createdDate.getDate();
         if (dayOfMonth >= 1 && dayOfMonth <= dayLabels.length) {
-          dataForDays[dayOfMonth - 1] = data.total_net_total;
+          dataForDays[dayOfMonth - 1] = data.total_cash;
         }
       } else if (dataType === "yearly") {
         const monthIndex = createdDate.getMonth();
-        dataForDays[monthIndex] = data.total_net_total;
+        dataForDays[monthIndex] = data.total_cash;
       }
     }
 
