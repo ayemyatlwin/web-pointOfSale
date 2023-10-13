@@ -148,7 +148,7 @@ console.log(dataForDays);
           color: "#3f4245", 
         },
         ticks: {
-          values: [0, 100, 200, 300, 400,500,600], // Set specific values
+          values: [0, 100, 200, 300, 400,500,600], 
           callback: function (value, index, values) {
             if (value === 0) {
               return "0";
@@ -161,7 +161,7 @@ console.log(dataForDays);
     responsive: true,
     plugins: {
       legend: {
-        display: false, // Hide the legend (color selection option)
+        display: false,
       },
       title: {
         display: false,
