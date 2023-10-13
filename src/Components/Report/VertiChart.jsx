@@ -68,7 +68,7 @@ const VertiChart = () => {
       if (dataType === "weekly") {
         const dayOfWeek = createdDate.getDay();
         if (dayOfWeek >= 0 && dayOfWeek < dayLabels.length) {
-          dataForDays[dayOfWeek] = data.total_net_total;
+          dataForDays[dayOfWeek -1] = data.total_net_total;
         }
       } else if (dataType === "monthly") {
         const dayOfMonth = createdDate.getDate();
@@ -82,12 +82,8 @@ const VertiChart = () => {
     });
   }
 
-  const dataVertValue = sale_records?.map((data) => data?.total_net_total);
 
-  // console.log(dataVertValue);
-
-  const dataHoriValue = sale_records?.map((data) => data?.created_at);
-
+  
 
  
 

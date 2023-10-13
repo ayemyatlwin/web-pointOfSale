@@ -100,25 +100,61 @@ const getLabelsByDataType = () => {
       return [];
   }
 };
+const sale_records = dbData?.data?.sale_records;
+  console.log(sale_records);
 
 const dayLabels = getLabelsByDataType();
-// console.log(dayLabels);
+console.log(dayLabels);
+const dataForDays = Array(dayLabels.length).fill(0);
+if (sale_records) {
+
+  sale_records.forEach((data) => {
+    const createdDate = new Date(data?.created_at);
+
+    if( createdDate <= new Date()){
+      if (dataType === "weekly") {
+        const dayOfWeek = createdDate.getDay();
+        const today=new Date();
+        if (dayOfWeek >= 0 && dayOfWeek < dayLabels.length) {
+          dataForDays[dayOfWeek] = data.total_net_total;
+        }
+      } else if (dataType === "monthly") {
+        const dayOfMonth = createdDate.getDate();
+        if (dayOfMonth >= 1 && dayOfMonth <= dayLabels.length) {
+          dataForDays[dayOfMonth - 1] = data.total_net_total;
+        }
+      } else if (dataType === "yearly") {
+        const monthIndex = createdDate.getMonth();
+        dataForDays[monthIndex] = data.total_net_total;
+      }
+    }
+
+   
+  });
+}
+console.log(dataForDays);
+
+
 
   const options = {
     scales: {
       x: {
         grid: {
-          color: "#3f4245", // Set the border color for the x-axis
+          color: "#3f4245", 
         },
       },
       y: {
         grid: {
-          color: "#3f4245", // Set the border color for the x-axis
+          color: "#3f4245", 
         },
         ticks: {
-          beginAtZero: true,
-          stepSize: 250, // Set the step size to 250
-          max: 1000, // Set the maximum value to 1000
+          values: [0, 100, 200, 300, 400,500,600], // Set specific values
+          callback: function (value, index, values) {
+            if (value === 0) {
+              return "0";
+            } else {
+              return value / 1000 + "K";
+            }}
         },
       },
     },
@@ -136,18 +172,27 @@ const dayLabels = getLabelsByDataType();
 
   
 
-  
+  const today = new Date();
+const todayIndex = today.getDate() - 1;
 
   const data = {
     labels : dayLabels,
     datasets: [
       {
         label: "Dataset 1",
-        data: dbData?.data?.sale_records.map((e)=>e.total_net_total), // Sample data
+        // data: dbData?.data?.sale_records.map((e)=>e.total_net_total), // Sample data
+        data:dataForDays,
         borderColor: "#8AB4F8",
         borderWidth: 1,
         backgroundColor: "rgba(255, 99, 132, 0.5)",
         pointBackgroundColor: "#f5f5f5",
+        // pointRadius: (context) => {
+        //   const dataIndex = context.dataIndex;
+        //   if (dataIndex >= todayIndex) {
+        //     return 0; // Hide data points for past and today
+        //   }
+        //   return 3; // Show data points for future dates
+        // },
       },
     ],
   };

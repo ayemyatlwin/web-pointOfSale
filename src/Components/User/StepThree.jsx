@@ -4,7 +4,7 @@ import { MdOutlineEdit } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 // import { addPhoto } from "../../Feature/Service/userSlice";
 
-export default function StepThree({toggleShow}) {
+export default function StepThree({toggleSelect}) {
 
   const {user_photo} = useSelector(state => state.userSlice)
   console.log(user_photo)
@@ -23,7 +23,7 @@ export default function StepThree({toggleShow}) {
               alt=""
             />
             <div
-              onClick={toggleShow}
+              onClick={toggleSelect}
               className={`flex justify-center cursor-pointer z-50 absolute bg-slate-50 text-slate-900 right-3  bottom-1 items-center text-xs gap-1 border-2 rounded-full w-8 h-8 px-1 py-0.5`}
             >
               <MdOutlineEdit />
