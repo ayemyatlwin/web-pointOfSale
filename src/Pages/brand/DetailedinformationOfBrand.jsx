@@ -66,7 +66,7 @@ console.log(data?.data);
     <div className={`w-full flex justify-around items-center`}>
       <main className={`flex items-center mt-24`}>
         <section className={`w-full  p-1`}>
-          <div className={`w-[600px] relative p-8 bg-[#171717] `}>
+          <div className={`w-full[600px] relative p-8 bg-[#171717] `}>
             <div
               className={`w-40 h-40 absolute -top-16 rounded-full border p-1 flex justify-center items-center`}
             >
@@ -106,7 +106,7 @@ console.log(data?.data);
                 </div>
               </NavLink>
             </div>
-            <div className=" w-[600px] overflow-y-scroll px-10 py-5 flex flex-col gap-5 bg-[#1a1a1a]">
+            <div className=" w-full overflow-y-scroll px-10 py-5 flex flex-col gap-5 bg-[#1a1a1a]">
               <div className="flex">
                 <p className="w-[30%]">Company</p>
                 <p className="w-[70%]">: {data?.data?.company}</p>
@@ -125,7 +125,7 @@ console.log(data?.data);
           </div>
         </section>
       </main>
-    <div className=' flex-col'>
+    {/* <div className=' flex-col'>
     <div className=' m-2 p-6 bg-[#171717]'>
      <p>STOCK HISTORY</p>
       <Table>
@@ -161,7 +161,7 @@ console.log(data?.data);
           </Table>
       </div>
       <Pagination currentPage={'1'} last_page={'5'}/>
-    </div>
+    </div> */}
     </div>
   )
 }

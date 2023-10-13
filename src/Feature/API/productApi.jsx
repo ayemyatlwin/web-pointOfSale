@@ -59,6 +59,24 @@ export const productApi = createApi({
 
       })
     }),
+    getStockHistoryInfo:builder.query({
+      query:({token,id})=>({
+        url:`/stock-history/${id}`,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+
+      })
+    }),
+    getSaleHistoryInfo:builder.query({
+      query:({token,id})=>({
+        url:`/sale-history/${id}`,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+
+      })
+    }),
     //for stock adding
     addingStockQuantity:builder.mutation({
       query:({token,productData}) => ({
@@ -75,4 +93,4 @@ export const productApi = createApi({
   }),
 });
 
-export const { useCreateProductMutation ,useGetProductInfoQuery,useGetSingleProductInfoQuery,useDeleteProductsMutation,useUpdateProductMutation,useAddingStockQuantityMutation} = productApi;
+export const { useCreateProductMutation ,useGetProductInfoQuery,useGetSingleProductInfoQuery,useDeleteProductsMutation,useUpdateProductMutation,useAddingStockQuantityMutation,useGetStockHistoryInfoQuery,useGetSaleHistoryInfoQuery} = productApi;
