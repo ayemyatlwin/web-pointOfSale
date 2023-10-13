@@ -200,7 +200,7 @@ const todayIndex = today.getDate() - 1;
  
   
   return (
-    <div className=" ">
+    <div className=" overflow-x-hidden ">
       {/* //breadcrumb */}
       <div>
         <Breadcrumb
