@@ -17,19 +17,33 @@ import {
   useUpdateUserMutation,
 } from "../../Feature/API/userApi";
 import { useSelector } from "react-redux";
+import ProductSelectPhotoModalEdit from "../Inventory/ProductSelectPhotoModalEdit";
+import UserPhotoSelect from "./UserPhotoSelect";
+import { toast } from "react-toastify";
 
 export default function EditUser() {
   const nav = useNavigate();
   const token = Cookies.get("token");
   const { id } = useParams();
   const editImage = document.querySelector(".file");
+  
   const [state, setState] = useState({
     stepOne: true,
     stepTwo: false,
+    stepThree:false
+    
   });
   const handleStep2 = () => {
     setState({
       stepTwo: true,
+      stepOne: false,
+      stepThree:false
+    });
+  };
+  const handleStep3 = () => {
+    setState({
+      stepThree:true,
+      stepTwo: false,
       stepOne: false,
     });
   };
@@ -40,6 +54,8 @@ export default function EditUser() {
   const toggleSelect = () => {
     setSelect(!select);
   };
+  const data  = useGetSingleUserQuery({ token, id });
+  console.log(data);
 
   const editUserData = useSelector((state) => state.userSlice);
   console.log(editUserData);
@@ -49,6 +65,7 @@ export default function EditUser() {
   const gender = editUserData?.gender;
   const address = editUserData?.address;
   const date_of_birth = editUserData?.date_of_birth;
+  const user_photo=editUserData?.user_photo;
   const password = editUserData?.password;
   const password_confirmation = editUserData?.password_confirmation;
   const updateUserData = {
@@ -58,21 +75,35 @@ export default function EditUser() {
     gender,
     address,
     date_of_birth,
+    user_photo,
     password,
     password_confirmation,
   };
-  console.log(updateUserData);
+   console.log(updateUserData);
 
-  const { data } = useGetSingleUserQuery({ token, id });
 
   const [updateUser] = useUpdateUserMutation();
 
+ 
+
   const handleEditUser = async (e) => {
     e.preventDefault();
-    const { data } = await updateUser({ updateUserData, id, token });
+    const { data } = await updateUser({ editUserData, id, token });
     console.log(data);
-    data?.message === "User info is updated successfully" &&
-      nav("/user-overview");
+    if(data?.error){
+      console.log('error',error);
+     }else{
+      console.log(data?.message);
+      nav('/user-overview');
+      toast.success("User Data updated! !", {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 2000,
+    
+        hideProgressBar: true,
+        theme: "dark",
+      });
+     }
+    
   };
   return (
     <>
@@ -88,6 +119,13 @@ export default function EditUser() {
         />
       </div>
       {/* path breadcrumbs */}
+      <div
+        className={`${
+          select ? "scale-y-1" : "scale-y-0"
+        } transition-all duration-400 origin-center absolute z-20 items-center bg-[#202124] justify-center`}
+      >
+        <UserPhotoSelect updateUserData={updateUserData} setSelect={setSelect}  toggleSelect={toggleSelect} />
+      </div>
 
       <main className="mt-7">
         <form action="" className={`flex gap-10`}>
@@ -111,12 +149,26 @@ export default function EditUser() {
               />
             </div>
           )}
+          {state.stepThree && (
+            <div className="w-[70%]">
+            <StepThree
+              select={select}
+              toggleSelect={toggleSelect}
+              display={display}
+              setDisplay={setDisplay}
+              userEdit
+              token={token}
+              id={id}
+            />
+          </div>
+
+          )}
 
           {/* Step Indicator  */}
           <section className={`w-[30%] flex flex-col justify-center`}>
             <div className="flex items-center gap-3 my-3">
               <div
-                className={`w-10 h-10 border rounded-full p-1 flex items-center justify-center`}
+                className={`${state.stepOne && "bg-[#8ab4b6] text-[#161618]"} w-10 h-10 border rounded-full p-1 flex items-center font-semibold justify-center`}
               >
                 <p>1</p>
               </div>
@@ -125,12 +177,22 @@ export default function EditUser() {
             <div className="border-l py-10 ml-5"></div>
             <div className="flex items-center gap-3 my-3">
               <div
-                className={`w-10 h-10 border rounded-full p-1 flex items-center justify-center`}
+                className={`${state.stepTwo && "bg-[#8ab4b6] text-[#161618]"} w-10 h-10 border rounded-full p-1 flex font-semibold items-center justify-center `}
               >
                 <p>2</p>
               </div>
               <p>Password</p>
             </div>
+            <div className="border-l py-10 ml-5"></div>
+            <div className="flex items-center gap-3 my-3">
+              <div
+                className={`${state.stepThree && "bg-[#8ab4b6] text-[#161618]"} w-10 h-10 border rounded-full p-1 flex font-semibold items-center justify-center `}
+              >
+                <p>3</p>
+              </div>
+              <p>Password</p>
+            </div>
+
 
             {state.stepOne && (
               <div
@@ -142,6 +204,15 @@ export default function EditUser() {
               </div>
             )}
             {state.stepTwo && (
+              <div
+                type="button"
+                onClick={handleStep3}
+                className="my-5 cursor-pointer"
+              >
+                <Button icon={true} text={"Next"} />
+              </div>
+            )}
+            {state.stepThree && (
               <div onClick={handleEditUser} className="my-5 cursor-pointer">
                 <Button text={"Submit"} />
               </div>
