@@ -25,11 +25,25 @@ import Pagination from "../../Components/Pagination";
 ChartJS.register(...registerables);
 
 const ReportStock = () => {
+  const [sort, setSort] = useState("asc");
+  const [orderBy, setOrderBy] = useState("name");
+  const [search,setSearch]=useState('');
+  console.log(sort);
+  console.log(orderBy);
+  console.log(search);
+  const handleOrderChange = (selectedValue) => {
+    setOrderBy(selectedValue);
+  };
+
+  const handleSortChange = (selectedValue) => {
+    setSort(selectedValue);
+  };
   const [currentPage, setCurrentPage] = useState(1);
   const token = Cookies.get("token");
   const { data: stockOverviewData } = useGetStockOverviewListQuery(
     token,
-    currentPage
+    currentPage,
+   
   );
   console.log(stockOverviewData?.meta.last_page);
   function getBackgroundColorClass(stockLevel) {
@@ -131,7 +145,7 @@ const ReportStock = () => {
 
     plugins: {
       legend: {
-        display:false,// Display the legend below the chart
+        display: false, // Display the legend below the chart
         labels: {
           usePointStyle: true, // Use dot style for legend items
           fontSize: 20, // Adjust the font size of the legend labels
@@ -391,60 +405,57 @@ const ReportStock = () => {
               Stock Overview
             </h2>
             <div className="flex items-center justify-between">
-              <Input
-                styles={() => ({
-                  input: {
-                    color: "#F8F9FA",
-                  },
-                })}
-                icon={<FiSearch />}
-                variant="unstyled"
-                placeholder="Search"
-                radius="xs"
-                className=" border border-[#3f4245] w-[400px] rounded-xl text-gray-400"
-              />
-              <div className=" flex  items-center gap-5  justify-around ">
+            <Input
+        onChange={(e)=>setSearch(e.target.value)}
+        value={search}
+          styles={() => ({
+            input: {
+              color: '#F8F9FA',
+            },
+          })}
+          icon={<FiSearch />}
+          variant="unstyled"
+          placeholder="Search"
+          radius="xs"
+          className=" border border-[#3f4245] w-[400px] rounded-xl text-gray-400"
+        />
+              {/* <div className=" flex  items-center gap-5  justify-around ">
                 <span className=" flex mt-1  ">Sort: </span>
-                <Select
-                  placeholder="Pick one"
-                  defaultValue="Last"
-                  radius="xs"
-                  variant="unstyled"
-                  className="  "
-                  transitionProps={{
-                    transition: "pop-top-left",
-                    duration: 80,
-                    timingFunction: "ease",
-                  }}
-                  data={[
-                    { value: "react", label: "Last" },
-                    { value: "ng", label: "First" },
-
-                    ,
-                  ]}
-                />
-              </div>
-              <div className=" flex  items-center gap-5  justify-around ">
+                <select
+                  onChange={(event) => handleSortChange(event.target.value)}
+                  data-te-select-init
+                  className="bg-inherit outline-none focus:bg-inherit"
+                >
+                  <option className="bg-[#3f4245] mx-5" value="asc">
+                    asc
+                  </option>
+                  <option className="bg-[#3f4245] mx-5" value="desc">
+                    desc
+                  </option>
+                </select>
+              </div> */}
+              {/* <div className=" flex  items-center gap-5  justify-around ">
                 <span className=" flex mt-1  ">Sort: </span>
-                <Select
-                  placeholder="Pick one"
-                  defaultValue="Last"
-                  radius="xs"
-                  variant="unstyled"
-                  className="  "
-                  transitionProps={{
-                    transition: "pop-top-left",
-                    duration: 80,
-                    timingFunction: "ease",
-                  }}
-                  data={[
-                    { value: "react", label: "Last" },
-                    { value: "ng", label: "First" },
+                <select
+                  onChange={(event) => handleOrderChange(event.target.value)}
+                  data-te-select-init
+                  className="bg-inherit outline-none focus:bg-inherit"
+                >
+                  <option className="bg-[#3f4245] mx-5 " value="name">
+                    name
+                  </option>
 
-                    ,
-                  ]}
-                />
-              </div>
+                  <option className="bg-[#3f4245] mx-5" value="sale_price">
+                    sale price
+                  </option>
+                  <option className="bg-[#3f4245] mx-5" value="total_stock">
+                    total stock
+                  </option>
+                  <option className="bg-[#3f4245] mx-5" value="unit">
+                    unit
+                  </option>
+                </select>
+              </div> */}
             </div>
             <div className={`block overflow-y-auto`}>
               {stockOverviewData?.data ? (

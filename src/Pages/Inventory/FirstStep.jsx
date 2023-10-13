@@ -7,12 +7,16 @@ import Cookies from 'js-cookie';
 
 
 const FirstStep = ({toggleSelect, display, setDisplay, select}) => {
+  const [sort,setSort]=useState("asc");
+  const [orderBy,setOrderBy]=useState("name");
+  const [search,setSearch]=useState('');
   const [bName,setBName]=useState('');
  
   const token = Cookies.get("token");
   const [currentPage, setCurrentPage] = useState(1);
-  const {data}=useGetBrandInfoQuery({ token, currentPage });
+  const {data}=useGetBrandInfoQuery({ token, currentPage ,search,orderBy,sort});
 const brandInfo=data?.data;
+console.log(brandInfo);
   const dispatch=useDispatch()
   return (
     <div>

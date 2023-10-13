@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { MdOutlineEdit } from "react-icons/md";
 import { TbMailOpenedFilled } from "react-icons/tb";
 import { FaPhoneVolume } from "react-icons/fa";
@@ -6,58 +6,71 @@ import { BiSolidUser } from "react-icons/bi";
 import { NavLink, useParams } from "react-router-dom";
 import { Table } from '@mantine/core';
 import Pagination from '../../Components/Pagination';
-import { useGetSingleProductInfoQuery } from '../../Feature/API/productApi';
+import { useGetSaleHistoryInfoQuery, useGetSingleProductInfoQuery, useGetStockHistoryInfoQuery } from '../../Feature/API/productApi';
 import Cookies from 'js-cookie';
 
 const ProductDetail = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [cPage, setCPage] = useState(1);
 const {id}=useParams();
 const token=Cookies.get('token');
 const {data}=useGetSingleProductInfoQuery({id,token});
-console.log(data?.data);
+const stockHistoryData=useGetStockHistoryInfoQuery({id,token});
+const saleHistoryData=useGetSaleHistoryInfoQuery({id,token})
+console.log(saleHistoryData?.data);
     const editImage = document.querySelector(".file");
-    const elements = [
-        {
-          No: 1,
-          name: "abcd",
-          account: "123",
-          date: "-",
+    // const elements = [
+    //     {
+    //       No: 1,
+    //       name: "abcd",
+    //       account: "123",
+    //       date: "-",
        
-        },
-        {
-          No: 2,
-          name: "efgh",
-          account: "345",
-          date: "-",
+    //     },
+    //     {
+    //       No: 2,
+    //       name: "efgh",
+    //       account: "345",
+    //       date: "-",
          
-        },
-        {
-          No: 3,
-          name: "ijkl",
-          account: "569",
-          date: "-",
+    //     },
+    //     {
+    //       No: 3,
+    //       name: "ijkl",
+    //       account: "569",
+    //       date: "-",
         
-        },
-        {
-          No: 4,
-          name: "mnop",
-          account: "mn",
-          date: "-",
+    //     },
+    //     {
+    //       No: 4,
+    //       name: "mnop",
+    //       account: "mn",
+    //       date: "-",
          
-        },
-        {
-          No: 5,
-          name: "qrst",
-          account: "qr",
-          date: "-",
+    //     },
+    //     {
+    //       No: 5,
+    //       name: "qrst",
+    //       account: "qr",
+    //       date: "-",
          
-        },
-      ];
-      const rows = elements.map((element) => (
-        <tr key={element.No}>
-          <td className=" text-white">{element.No}</td>
-          <td className=" text-white">{element.name}</td>
-          <td className=" text-white">{element.account}</td>
+    //     },
+    //   ];
+      const rows = saleHistoryData?.data?.data?.map((element,i) => (
+        <tr key={element.id}>
+          <td className=" text-white">{i+1}</td>
+      
+          <td className=" text-white">{element.cost}</td>
           <td className=" text-white">{element.date}</td>
+         
+        </tr>
+      ));
+      const rows2 = stockHistoryData?.data?.data?.map((element,i) => (
+        <tr key={element.id}>
+          <td className=" text-white">{i+1}</td>
+          <td className=" text-white">{element.user_name}</td>
+          <td className=" text-white">{element.quantity}</td>
+          <td className=" text-white">{element.created_at}</td>
          
         </tr>
       ));
@@ -109,7 +122,7 @@ console.log(data?.data);
                 </div>
               </NavLink>
             </div>
-            <div className=" w-[800px] px-10 py-5 flex flex-col gap-5 bg-[#1a1a1a]">
+            <div className=" w-full h-[250px] overflow-y-scroll px-10 py-5 flex flex-col gap-5 bg-[#1a1a1a]">
               <div className="flex">
                 <p className="w-[30%]">Name</p>
                 <p className="w-[70%]">: {data?.data?.name}</p>
@@ -148,19 +161,23 @@ console.log(data?.data);
                 
               </tr>
             </thead>
-            <tbody>{rows}</tbody>
+            <tbody>{rows2}</tbody>
           </Table>
           
       </div>
-      <Pagination currentPage={'1'} last_page={'5'}/>
+      <Pagination
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+              last_page={stockHistoryData?.data?.meta?.last_page}
+            />
       <div className=' m-2 p-6 bg-[#171717]'>
      <p>SALE HISTORY</p>
       <Table>
             <thead>
               <tr>
                 <th className=" text-gray-300">NO</th>
-                <th className=" text-gray-300">USER NAME</th>
-                <th className=" text-gray-300">ADDED QUANTITY </th>
+              
+                <th className=" text-gray-300">COSTS </th>
                 <th className=" text-gray-300">CREATED AT</th>
                
                 
@@ -169,7 +186,11 @@ console.log(data?.data);
             <tbody>{rows}</tbody>
           </Table>
       </div>
-      <Pagination currentPage={'1'} last_page={'5'}/>
+      <Pagination
+              setCurrentPage={setCPage}
+              currentPage={cPage}
+              last_page={saleHistoryData?.data?.meta?.last_page}
+            />
     </div>
     </div>
   )

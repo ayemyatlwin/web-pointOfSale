@@ -45,9 +45,8 @@ const ManageOverview = ({ tableType,setSort,setOrderBy,search,setSearch }) => {
             <span className="text-gray-400">order by :</span>
             <select  onChange={(event) => handleOrderChange(event.target.value)} data-te-select-init className="bg-inherit outline-none focus:bg-inherit">
               <option className="bg-[#3f4245] mx-5 " value="name">name</option>
-              <option className="bg-[#3f4245] mx-5" value="address">address</option>
               <option className="bg-[#3f4245] mx-5" value="email">email</option>
-              <option className="bg-[#3f4245] mx-5" value="role">role</option>
+              <option className="bg-[#3f4245] mx-5" value="role">position</option>
             </select>
           </span>
         </div>

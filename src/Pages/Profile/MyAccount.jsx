@@ -66,18 +66,18 @@ export default function MyAccount() {
                 src={data?.user.user_photo}
                 alt=""
               />
-              <div
+              {/* <div
                 onClick={() => editImage.click()}
                 className={`flex justify-center cursor-pointer absolute bg-[#f5f5f5] right-3  bottom-1 items-center text-xs gap-1 border-2 rounded-full w-8 h-8 px-1 py-0.5`}
               >
                 <MdOutlineEdit className="text-slate-700" />
                 <input className="file hidden" type="file" name="" id="" />
-              </div>
+              </div> */}
             </div>
             <div className={`flex items-center justify-between mx-10 ml-52`}>
               <div className={``}>
                 <h2>{data?.user.name}</h2>
-                <p>Sale Executive</p>
+                <p>{data?.user.role}</p>
               </div>
               <div className="flex items-center gap-5">
                 <TbMailOpenedFilled className="text-3xl bg-gray-50 text-gray-500 rounded-full hover:bg-gray-500 hover:text-gray-50 p-1.5 cursor-pointer transition-all duration-200 ease-in" />
@@ -108,7 +108,7 @@ export default function MyAccount() {
                 <BiSolidUser />
                 <h4>Login Information</h4>
               </div>
-              <div
+              {/* <div
                 onClick={passwordTab}
                 className={`flex items-center gap-2 text-gray-400 cursor-pointer ${
                   state.password && "text-white"
@@ -116,7 +116,7 @@ export default function MyAccount() {
               >
                 <BiSolidUser />
                 <h4>Password</h4>
-              </div>
+              </div> */}
             </div>
             {state.personal && (
               <div>
@@ -128,11 +128,11 @@ export default function MyAccount() {
                 <LoginInfo data={data}/>
               </div>
             )}
-            {state.password &&(
+            {/* {state.password &&(
               <div className="">
                 <Password/>
               </div>
-            )}
+            )} */}
           </div>
         </section>
       </main>

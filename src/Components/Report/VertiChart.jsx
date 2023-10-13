@@ -60,13 +60,37 @@ const VertiChart = () => {
   const dayLabels = getLabelsByDataType();
   // console.log(dayLabels);
 
-  const dataVertValue = sale_records?.map((data) => data?.total_net_total);
-  // console.log(dataVertValue);
+  const dataForDays = Array(dayLabels.length).fill(null);
+  if (sale_records) {
+    sale_records.forEach((data) => {
+      const createdDate = new Date(data.created_at);
+
+      if (dataType === "weekly") {
+        const dayOfWeek = createdDate.getDay();
+        if (dayOfWeek >= 0 && dayOfWeek < dayLabels.length) {
+          dataForDays[dayOfWeek -1] = data.total_net_total;
+        }
+      } else if (dataType === "monthly") {
+        const dayOfMonth = createdDate.getDate();
+        if (dayOfMonth >= 1 && dayOfMonth <= dayLabels.length) {
+          dataForDays[dayOfMonth - 1] = data.total_net_total;
+        }
+      } else if (dataType === "yearly") {
+        const monthIndex = createdDate.getMonth();
+        dataForDays[monthIndex] = data.total_net_total;
+      }
+    });
+  }
+
 
   
-  const maxIndex = dataVertValue ? dataVertValue.indexOf(Math.max(...dataVertValue)) : -1;
 
-  const backgroundColors = dataVertValue?.map((value, index) =>
+ 
+
+  
+  const maxIndex = dataForDays ? dataForDays.indexOf(Math.max(...dataForDays)) : -1;
+
+  const backgroundColors = dataForDays?.map((value, index) =>
     index === maxIndex ? "#8AB4F8" : "#3f4249"
   );
 
@@ -79,7 +103,7 @@ const VertiChart = () => {
         borderColor: "#3f4249",
         borderWidth: 1,
         borderRadius: 5,
-        data: dataVertValue,
+        data: dataForDays,
       },
     ],
   };
