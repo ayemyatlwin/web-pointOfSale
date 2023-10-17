@@ -30,6 +30,7 @@ dispatch(addProductBrand_id({brand_id:editProduct?.brand_id}))
               <div className="flex">
                 <label className="w-[30%]">Name</label>
                 <input
+                required
                value={editProduct?.name}
                onChange={(e) => setEditProduct((prevState) => ({
                  ...prevState,
@@ -87,6 +88,7 @@ dispatch(addProductBrand_id({brand_id:editProduct?.brand_id}))
               <div className="flex">
                 <label className="w-[30%]">Unit</label>
                 <input
+                required
                     value={editProduct?.unit}
                     onChange={(e) => setEditProduct((prevState) => ({
                       ...prevState,
@@ -102,6 +104,7 @@ dispatch(addProductBrand_id({brand_id:editProduct?.brand_id}))
               <div className="flex">
                 <label className="w-[30%]">More info</label>
                 <textarea
+                required
                   value={editProduct?.more_information}
                   onChange={(e) => setEditProduct((prevState) => ({
                     ...prevState,

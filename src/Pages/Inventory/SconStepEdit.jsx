@@ -19,6 +19,7 @@ const SconStepEdit = ({editProduct,setEditProduct}) => {
           <div className="flex">
             <label className="w-[30%]">actual-price</label>
             <input
+            required
                 value={editProduct?.actual_price}
                 onChange={(e) => setEditProduct((prevState) => ({
                   ...prevState,
@@ -34,6 +35,7 @@ const SconStepEdit = ({editProduct,setEditProduct}) => {
           <div className="flex">
             <label className="w-[30%]">sale-price</label>
             <input
+            required
                 value={editProduct?.sale_price}
                 onChange={(e) => setEditProduct((prevState) => ({
                   ...prevState,

@@ -26,6 +26,7 @@ console.log(brandInfo);
               <div className="flex">
                 <label className="w-[30%]">Name</label>
                 <input
+                required
                 onChange={e=>dispatch(addProductName({name:e.target.value}))}
                   placeholder="Enter product name"
                   className={`w-[70%] outline-none border rounded px-5 py-2`}
@@ -90,6 +91,7 @@ console.log(brandInfo);
               <div className="flex">
                 <label className="w-[30%]">Unit</label>
                 <input
+                required
                 onChange={(e)=>dispatch(addProductUnit({unit:e.target.value}))}
                   placeholder="Enter unit"
                   className={`w-[70%] outline-none border rounded px-5 py-2`}
@@ -101,6 +103,7 @@ console.log(brandInfo);
               <div className="flex">
                 <label className="w-[30%]">More info</label>
                 <textarea
+                required
                 onChange={e=>dispatch(addProductMore_information({more_information:e.target.value}))}
                   rows={3}
                   placeholder="Enter more info about the product"
