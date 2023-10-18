@@ -42,10 +42,10 @@ const ReportStock = () => {
   const token = Cookies.get("token");
   const { data: stockOverviewData } = useGetStockOverviewListQuery(
     token,
-    currentPage,
-   
+    currentPage
   );
-  console.log(stockOverviewData?.meta.last_page);
+  const lastpage=stockOverviewData?.meta?.last_page
+  console.log(stockOverviewData);
   function getBackgroundColorClass(stockLevel) {
     switch (stockLevel) {
       case "instock":
@@ -374,7 +374,7 @@ const ReportStock = () => {
                           <div className=" flex items-center justify-around">
                             <p className=" mx-2">{e?.total_quantity}</p>
                             <div className=" flex items-center justify-around">
-                              <p className="mx-2">70%</p>
+                              <p className="mx-2">{e?.percentage}</p>
                               <MdKeyboardArrowUp className=" text-3xl font-bold text-[#07f51b]" />
                             </div>
                           </div>
@@ -487,7 +487,7 @@ const ReportStock = () => {
                 <Pagination
                   setCurrentPage={setCurrentPage}
                   currentPage={currentPage}
-                  last_page={stockOverviewData?.meta.last_page}
+                  last_page={lastpage}
                 />
               </div>
             </div>
