@@ -40,12 +40,9 @@ const ReportStock = () => {
   };
   const [currentPage, setCurrentPage] = useState(1);
   const token = Cookies.get("token");
-  const { data: stockOverviewData } = useGetStockOverviewListQuery(
-    token,
-    currentPage,
-   
-  );
-  console.log(stockOverviewData?.meta.last_page);
+ 
+  const  {data:stockOverviewData} = useGetStockOverviewListQuery( {token, currentPage,search ,orderBy,sort});
+  console.log(stockOverviewData);
   function getBackgroundColorClass(stockLevel) {
     switch (stockLevel) {
       case "instock":
@@ -374,7 +371,7 @@ const ReportStock = () => {
                           <div className=" flex items-center justify-around">
                             <p className=" mx-2">{e?.total_quantity}</p>
                             <div className=" flex items-center justify-around">
-                              <p className="mx-2">70%</p>
+                              <p className="mx-2">{e?.percentage}</p>
                               <MdKeyboardArrowUp className=" text-3xl font-bold text-[#07f51b]" />
                             </div>
                           </div>
@@ -419,7 +416,7 @@ const ReportStock = () => {
           radius="xs"
           className=" border border-[#3f4245] w-[400px] rounded-xl text-gray-400"
         />
-              {/* <div className=" flex  items-center gap-5  justify-around ">
+              <div className=" flex  items-center gap-5  justify-around ">
                 <span className=" flex mt-1  ">Sort: </span>
                 <select
                   onChange={(event) => handleSortChange(event.target.value)}
@@ -433,8 +430,8 @@ const ReportStock = () => {
                     desc
                   </option>
                 </select>
-              </div> */}
-              {/* <div className=" flex  items-center gap-5  justify-around ">
+              </div>
+              <div className=" flex  items-center gap-5  justify-around ">
                 <span className=" flex mt-1  ">Sort: </span>
                 <select
                   onChange={(event) => handleOrderChange(event.target.value)}
@@ -455,7 +452,7 @@ const ReportStock = () => {
                     unit
                   </option>
                 </select>
-              </div> */}
+              </div>
             </div>
             <div className={`block overflow-y-auto`}>
               {stockOverviewData?.data ? (
@@ -484,11 +481,11 @@ const ReportStock = () => {
                 </h1>
               )}
               <div className=" my-8">
-                <Pagination
+                {/* <Pagination
                   setCurrentPage={setCurrentPage}
                   currentPage={currentPage}
                   last_page={stockOverviewData?.meta.last_page}
-                />
+                /> */}
               </div>
             </div>
             {/* <div
