@@ -25,6 +25,7 @@ const Login = () => {
     //tth123@gmail.com changed email 28.8.23
     try {
       const user = { email, password };
+      console.log(user);
       const { data } = await login(user);
       console.log(data);
       dispatch(addUser({ user: data?.user?.email, token: data?.token }));
